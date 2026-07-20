@@ -36,7 +36,7 @@ export default function Pengumuman() {
             <div className="timeline-item__body">
               <div className="timeline-item__head">
                 <span className={`timeline-item__badge timeline-item__badge--${item.urgensi}`}>
-                  {URGENSI_LABEL[item.urgensi]}
+                  {URGENSI_LABEL[item.urgensi as keyof typeof URGENSI_LABEL]}
                 </span>
                 <span className="mono timeline-item__date">{item.tanggal}</span>
               </div>
