@@ -45,3 +45,11 @@ export interface ThreadDiskusi {
   jumlahBalasan: number;
   waktu: string;
 }
+
+export interface TestimoniItem {
+  id: string;
+  nama: string;
+  peran?: string;
+  tipe: 'pendapat' | 'saran' | 'kritik';
+  pesan: string;
+}

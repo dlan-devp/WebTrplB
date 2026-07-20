@@ -5,6 +5,7 @@ import type {
   FotoGaleri,
   LinkGrupItem,
   ThreadDiskusi,
+  TestimoniItem,
 } from '../types';
 
 export const jadwalKelas: JadwalItem[] = [
@@ -51,4 +52,13 @@ export const threadDiskusi: ThreadDiskusi[] = [
   { id: 't1', judul: 'Ada yang paham materi normalisasi database bab 4?', penulis: 'Farhan', jumlahBalasan: 12, waktu: '2 jam lalu' },
   { id: 't2', judul: 'Rekomendasi tools buat UML diagram apa ya?', penulis: 'Indah', jumlahBalasan: 7, waktu: '5 jam lalu' },
   { id: 't3', judul: 'Yuk atur jadwal belajar bareng buat UAS', penulis: 'Citra', jumlahBalasan: 21, waktu: 'Kemarin' },
+];
+
+export const testimoniKelas: TestimoniItem[] = [
+  { id: 'ts1', nama: 'Gita Lestari', peran: 'Anggota', tipe: 'pendapat', pesan: 'Seneng banget kelas kita kompak, grup WA gak pernah sepi info tugas.' },
+  { id: 'ts2', nama: 'Hafiz Ramadhan', peran: 'Anggota', tipe: 'saran', pesan: 'Mungkin bisa bikin jadwal belajar kelompok rutin tiap minggu sebelum UTS/UAS.' },
+  { id: 'ts3', nama: 'Indah Sari', peran: 'Anggota', tipe: 'kritik', pesan: 'Notulen rapat kelas suka telat diupload, semoga ke depannya bisa lebih cepat.' },
+  { id: 'ts4', nama: 'Dimas Aditya', peran: 'Sekretaris', tipe: 'pendapat', pesan: 'Bangga jadi bagian kelas ini, semua saling bantu kalau ada yang kesulitan materi.' },
+  { id: 'ts5', nama: 'Eka Putri', peran: 'Bendahara', tipe: 'saran', pesan: 'Kas kelas bisa dipakai buat beli konsumsi pas kelas praktikum yang lama.' },
+  { id: 'ts6', nama: 'Farhan Maulana', peran: 'Anggota', tipe: 'kritik', pesan: 'Beberapa masih suka telat submit tugas kelompok, perlu reminder H-1.' },
 ];

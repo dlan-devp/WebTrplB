@@ -9,6 +9,7 @@ import JadwalKelas from '@/components/JadwalKelas';
 import LinkGrup from '@/components/LinkGrup';
 import Navbar from '@/components/Navbar';
 import Pengumuman from '@/components/Pengumuman';
+import TestimoniKelas from '@/components/TestimoniKelas';
 
 interface Mahasiswa {
     kodeMahasiswa: number;
@@ -48,6 +49,7 @@ export default function Welcome({ mahasiswa }: Props) {
         <Galeri />
         <LinkGrup />
         <ForumDiskusi />
+        <TestimoniKelas />
         <Footer />
       </main>
     </>
