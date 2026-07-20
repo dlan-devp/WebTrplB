@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_mahasiswa', function (Blueprint $table) {
-            $table->id('kodeMahasiswa');
-            $table->string('foto')->nullable();
+        Schema::create('tb_testimoni', function (Blueprint $table) {
+            $table->id();
             $table->string('nama');
-            $table->integer('umur');
-            $table->string('fakultas');
-            $table->string('jurusan');
-            $table->string('prodi');
-            $table->string('hobi')->nullable();
+            $table->string('type');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mahasiswas');
+        Schema::dropIfExists('testimonis');
     }
 };
