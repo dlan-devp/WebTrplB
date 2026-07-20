@@ -105,10 +105,7 @@ export default function TestimoniKelas() {
             <p className="testimoni-card__pesan">&ldquo;{t.pesan}&rdquo;</p>
             <div className="testimoni-card__footer">
               <span className="testimoni-card__avatar">{t.nama.charAt(0)}</span>
-              <div>
-                <div className="testimoni-card__nama">{t.nama}</div>
-                {t.peran && <div className="testimoni-card__peran">{t.peran}</div>}
-              </div>
+              <div className="testimoni-card__nama">{t.nama}</div>
             </div>
           </article>
         ))}
@@ -134,7 +131,6 @@ function TestimoniForm({
   onSubmit: (data: Omit<TestimoniItem, 'id'>) => void;
 }) {
   const [nama, setNama] = useState('');
-  const [peran, setPeran] = useState('');
   const [tipe, setTipe] = useState<TestimoniItem['tipe']>('pendapat');
   const [pesan, setPesan] = useState('');
 
@@ -143,7 +139,7 @@ function TestimoniForm({
   const handleSubmit = (e: NewType) => {
     e.preventDefault();
     if (!nama.trim() || !pesan.trim()) return;
-    onSubmit({ nama: nama.trim(), peran: peran.trim() || undefined, tipe, pesan: pesan.trim() });
+    onSubmit({ nama: nama.trim(), tipe, pesan: pesan.trim() });
   };
 
   return (
@@ -173,11 +169,6 @@ function TestimoniForm({
           <label className="testimoni-form__field">
             <span>Nama</span>
             <input value={nama} onChange={(e) => setNama(e.target.value)} placeholder="Nama kamu" required />
-          </label>
-
-          <label className="testimoni-form__field">
-            <span>Peran (opsional)</span>
-            <input value={peran} onChange={(e) => setPeran(e.target.value)} placeholder="mis. Anggota, Ketua Kelas" />
           </label>
 
           <label className="testimoni-form__field">

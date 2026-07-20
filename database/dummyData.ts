@@ -6,7 +6,7 @@ import type {
   LinkGrupItem,
   ThreadDiskusi,
   TestimoniItem,
-} from '../types';
+} from '../resources/js/types/home-types';
 
 export const jadwalKelas: JadwalItem[] = [
   { id: 'j1', hari: 'Senin', waktu: '08:00 - 10:00', matkul: 'Struktur Data', dosen: 'Bu Rina', ruang: 'R.301', tipe: 'teori' },
@@ -24,14 +24,14 @@ export const pengumuman: PengumumanItem[] = [
 ];
 
 export const anggotaKelas: AnggotaItem[] = [
-  { id: 'a1', nama: 'Bagas Pratama', peran: 'Ketua Kelas', inisial: 'BP', online: true },
-  { id: 'a2', nama: 'Citra Ayu', peran: 'Wakil Ketua', inisial: 'CA', online: true },
-  { id: 'a3', nama: 'Dimas Aditya', peran: 'Sekretaris', inisial: 'DA' },
-  { id: 'a4', nama: 'Eka Putri', peran: 'Bendahara', inisial: 'EP', online: true },
-  { id: 'a5', nama: 'Farhan Maulana', peran: 'Anggota', inisial: 'FM' },
-  { id: 'a6', nama: 'Gita Lestari', peran: 'Anggota', inisial: 'GL' },
-  { id: 'a7', nama: 'Hafiz Ramadhan', peran: 'Anggota', inisial: 'HR' },
-  { id: 'a8', nama: 'Indah Sari', peran: 'Anggota', inisial: 'IS', online: true },
+  { id: 'a1', nama: 'Bagas Pratama', inisial: 'BP', online: true },
+  { id: 'a2', nama: 'Citra Ayu', inisial: 'CA', online: true },
+  { id: 'a3', nama: 'Dimas Aditya', inisial: 'DA' },
+  { id: 'a4', nama: 'Eka Putri', inisial: 'EP', online: true },
+  { id: 'a5', nama: 'Farhan Maulana', inisial: 'FM' },
+  { id: 'a6', nama: 'Gita Lestari', inisial: 'GL' },
+  { id: 'a7', nama: 'Hafiz Ramadhan', inisial: 'HR' },
+  { id: 'a8', nama: 'Indah Sari', inisial: 'IS', online: true },
 ];
 
 export const fotoGaleri: FotoGaleri[] = [
@@ -55,10 +55,10 @@ export const threadDiskusi: ThreadDiskusi[] = [
 ];
 
 export const testimoniKelas: TestimoniItem[] = [
-  { id: 'ts1', nama: 'Gita Lestari', peran: 'Anggota', tipe: 'pendapat', pesan: 'Seneng banget kelas kita kompak, grup WA gak pernah sepi info tugas.' },
-  { id: 'ts2', nama: 'Hafiz Ramadhan', peran: 'Anggota', tipe: 'saran', pesan: 'Mungkin bisa bikin jadwal belajar kelompok rutin tiap minggu sebelum UTS/UAS.' },
-  { id: 'ts3', nama: 'Indah Sari', peran: 'Anggota', tipe: 'kritik', pesan: 'Notulen rapat kelas suka telat diupload, semoga ke depannya bisa lebih cepat.' },
-  { id: 'ts4', nama: 'Dimas Aditya', peran: 'Sekretaris', tipe: 'pendapat', pesan: 'Bangga jadi bagian kelas ini, semua saling bantu kalau ada yang kesulitan materi.' },
-  { id: 'ts5', nama: 'Eka Putri', peran: 'Bendahara', tipe: 'saran', pesan: 'Kas kelas bisa dipakai buat beli konsumsi pas kelas praktikum yang lama.' },
-  { id: 'ts6', nama: 'Farhan Maulana', peran: 'Anggota', tipe: 'kritik', pesan: 'Beberapa masih suka telat submit tugas kelompok, perlu reminder H-1.' },
+  { id: 'ts1', nama: 'Gita Lestari', tipe: 'pendapat', pesan: 'Seneng banget kelas kita kompak, grup WA gak pernah sepi info tugas.' },
+  { id: 'ts2', nama: 'Hafiz Ramadhan', tipe: 'saran', pesan: 'Mungkin bisa bikin jadwal belajar kelompok rutin tiap minggu sebelum UTS/UAS.' },
+  { id: 'ts3', nama: 'Indah Sari', tipe: 'kritik', pesan: 'Notulen rapat kelas suka telat diupload, semoga ke depannya bisa lebih cepat.' },
+  { id: 'ts4', nama: 'Dimas Aditya', tipe: 'pendapat', pesan: 'Bangga jadi bagian kelas ini, semua saling bantu kalau ada yang kesulitan materi.' },
+  { id: 'ts5', nama: 'Eka Putri', tipe: 'saran', pesan: 'Kas kelas bisa dipakai buat beli konsumsi pas kelas praktikum yang lama.' },
+  { id: 'ts6', nama: 'Farhan Maulana', tipe: 'kritik', pesan: 'Beberapa masih suka telat submit tugas kelompok, perlu reminder H-1.' },
 ];

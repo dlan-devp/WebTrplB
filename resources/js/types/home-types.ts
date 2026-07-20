@@ -19,7 +19,6 @@ export interface PengumumanItem {
 export interface AnggotaItem {
   id: string;
   nama: string;
-  peran: 'Ketua Kelas' | 'Wakil Ketua' | 'Sekretaris' | 'Bendahara' | 'Anggota';
   inisial: string;
   online?: boolean;
 }
@@ -49,7 +48,6 @@ export interface ThreadDiskusi {
 export interface TestimoniItem {
   id: string;
   nama: string;
-  peran?: string;
   tipe: 'pendapat' | 'saran' | 'kritik';
   pesan: string;
 }
