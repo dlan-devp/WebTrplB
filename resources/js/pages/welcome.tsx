@@ -1,13 +1,13 @@
 import '../../css/app.css';
-import Navbar from '../../js/components/Navbar';
+import AnggotaKelas from '../../js/components/AnggotaKelas';
+import Footer from '../../js/components/Footer';
+import ForumDiskusi from '../../js/components/ForumDiskusi';
+import Galeri from '../../js/components/Galeri';
 import Hero from '../../js/components/Hero';
 import JadwalKelas from '../../js/components/JadwalKelas';
-import Pengumuman from '../../js/components/Pengumuman';
-import AnggotaKelas from '../../js/components/AnggotaKelas';
-import Galeri from '../../js/components/Galeri';
 import LinkGrup from '../../js/components/LinkGrup';
-import ForumDiskusi from '../../js/components/ForumDiskusi';
-import Footer from '../../js/components/Footer';
+import Navbar from '../../js/components/Navbar';
+import Pengumuman from '../../js/components/Pengumuman';
 
 interface Mahasiswa{
     kodeMahasiswa: number;
