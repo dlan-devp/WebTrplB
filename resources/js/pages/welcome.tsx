@@ -1,14 +1,14 @@
 import '../../css/app.css';
 import { Head } from '@inertiajs/react';
-import AnggotaKelas from '../../js/components/AnggotaKelas';
-import Footer from '../../js/components/Footer';
-import ForumDiskusi from '../../js/components/ForumDiskusi';
-import Galeri from '../../js/components/Galeri';
-import Hero from '../../js/components/Hero';
-import JadwalKelas from '../../js/components/JadwalKelas';
-import LinkGrup from '../../js/components/LinkGrup';
-import Navbar from '../../js/components/Navbar';
-import Pengumuman from '../../js/components/Pengumuman';
+import AnggotaKelas from '@/components/AnggotaKelas';
+import Footer from '@/components/Footer';
+import ForumDiskusi from '@/components/ForumDiskusi';
+import Galeri from '@/components/Galeri';
+import Hero from '@/components/Hero';
+import JadwalKelas from '@/components/JadwalKelas';
+import LinkGrup from '@/components/LinkGrup';
+import Navbar from '@/components/Navbar';
+import Pengumuman from '@/components/Pengumuman';
 
 interface Mahasiswa {
     kodeMahasiswa: number;
