@@ -198,3 +198,7 @@ h1, h2, h3, .display {
     scroll-behavior: auto !important;
   }
 }
+
+html{
+  scroll-behavior: smooth;
+}

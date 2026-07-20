@@ -12,6 +12,7 @@ class MahasiswaController extends Controller
 
         return Inertia::render('welcome', [
             'mahasiswa' => Mahasiswa::all(),
+            'test' => 'mantap'
         ]);
     }
 }
