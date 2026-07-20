@@ -1,0 +1,57 @@
+.linkgrup-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.linkgrup-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+}
+
+.linkgrup-card__icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.linkgrup-card__icon--whatsapp { background: #22C55E; }
+.linkgrup-card__icon--discord { background: var(--color-purple); }
+.linkgrup-card__icon--drive { background: var(--color-blue); }
+
+.linkgrup-card__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.linkgrup-card__nama {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.linkgrup-card__desk {
+  font-size: 12px;
+  color: var(--color-muted);
+  margin-top: 2px;
+}
+
+.linkgrup-card__arrow {
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .linkgrup-grid { grid-template-columns: 1fr; }
+}

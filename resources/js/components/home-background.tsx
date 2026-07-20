@@ -39,7 +39,7 @@ const animations = pathData.map((_, i) => ({
 
 export const BackgroundBeams = React.memo(({ className }: BackgroundBeamsProps) => {
   return (
-    <div className={cn("z-0 pointer-events-none absolute inset-0 h-full w-full", className)}>
+    <div className={cn("z-0 pointer-events-none absolute inset-0 h-[150%] w-full", className)}>
       <svg
         aria-hidden="true"
         className="absolute h-full w-full"

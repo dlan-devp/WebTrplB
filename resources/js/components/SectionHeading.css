@@ -1,0 +1,26 @@
+.section-heading {
+  max-width: 640px;
+  margin: 0 0 40px;
+}
+
+.section-heading__eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.section-heading__title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 8px 0 8px;
+  color: var(--color-ink);
+}
+
+.section-heading__subtitle {
+  font-size: 15px;
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin: 0;
+}

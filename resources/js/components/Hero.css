@@ -1,0 +1,160 @@
+.hero {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 88px 24px 64px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.hero__eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-purple);
+  background: var(--color-purple-dim);
+  padding: 6px 14px;
+  margin-bottom: 20px;
+}
+
+.hero__title {
+  font-size: 44px;
+  line-height: 1.12;
+  font-weight: 700;
+  margin: 0 0 18px;
+  color: var(--color-ink);
+}
+
+.hero__subtitle {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-muted);
+  max-width: 46ch;
+  margin: 0 0 32px;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero__btn {
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 12px 22px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hero__btn--primary {
+  color: #fff;
+  background: var(--gradient-primary);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+}
+
+.hero__btn--ghost {
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.hero__btn:hover {
+  transform: translateY(-2px);
+}
+
+/* --- The signature card --- */
+.hero__card {
+  position: relative;
+  background: linear-gradient(160deg, #1E1B3A 0%, #171425 55%, #10101c 100%);
+  border-radius: 24px;
+  padding: 28px;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(23, 20, 37, 0.28);
+  transform-style: preserve-3d;
+}
+
+.hero__glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero__card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.hero__card-tag {
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+.hero__card-live {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.85;
+}
+
+.hero__card-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34D399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.25);
+}
+
+.hero__card-title {
+  font-size: 30px;
+  font-weight: 700;
+  position: relative;
+}
+
+.hero__card-sub {
+  font-size: 14px;
+  opacity: 0.65;
+  margin-top: 4px;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.hero__card-avatars {
+  display: flex;
+  position: relative;
+}
+
+.hero__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #171425;
+  margin-left: -10px;
+}
+
+.hero__avatar:first-child { margin-left: 0; }
+
+.hero__avatar--more {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 48px;
+  }
+  .hero__title { font-size: 32px; }
+}
