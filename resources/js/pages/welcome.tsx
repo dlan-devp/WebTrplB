@@ -1,5 +1,4 @@
 import '../../css/app.css';
-import { BackgroundBeams } from '@/components/home-background';
 import Navbar from '../../js/components/Navbar';
 import Hero from '../../js/components/Hero';
 import JadwalKelas from '../../js/components/JadwalKelas';
@@ -14,7 +13,6 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <BackgroundBeams />
       <main className="relative z-10">
         <Hero />
         <JadwalKelas />
