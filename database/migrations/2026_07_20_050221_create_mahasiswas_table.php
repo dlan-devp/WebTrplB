@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('fakultas');
             $table->string('jurusan');
             $table->string('prodi');
-            $table->string('hobi');
+            $table->string('hobi')->nullable();
             $table->timestamps();
         });
     }
