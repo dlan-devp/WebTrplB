@@ -1,4 +1,5 @@
 import '../../css/app.css';
+import { Head } from '@inertiajs/react';
 import AnggotaKelas from '../../js/components/AnggotaKelas';
 import Footer from '../../js/components/Footer';
 import ForumDiskusi from '../../js/components/ForumDiskusi';
@@ -9,35 +10,37 @@ import LinkGrup from '../../js/components/LinkGrup';
 import Navbar from '../../js/components/Navbar';
 import Pengumuman from '../../js/components/Pengumuman';
 
-interface Mahasiswa{
+interface Mahasiswa {
     kodeMahasiswa: number;
     nama: string;
     umur: number;
     fakultas: string;
     jurusan: string;
     prodi: string;
-    hobi: string
+    hobi: string;
 }
 
-interface Props{
+interface Props {
     mahasiswa: Mahasiswa[];
 }
 
-export default function Welcome({mahasiswa}: Props) {
+export default function Welcome({ mahasiswa }: Props) {
   return (
     <>
-    {/* testing ambil data db */}
-    <div className='flex'>
+      <Head title="Website Trpl-B" />
+
+      {/* testing ambil data db */}
+      <div className="flex">
         {mahasiswa.map((mhs) => (
             <div key={mhs.kodeMahasiswa}>
-                <h1>{mhs.nama}</h1>
-                <p>{mhs.umur}</p>
+              <h1>{mhs.nama}</h1>
+              <p>{mhs.umur}</p>
             </div>
         ))}
-    </div>
+      </div>
 
-      <Navbar />
       <main className="relative z-10">
+        <Navbar />
         <Hero />
         <JadwalKelas />
         <Pengumuman />
@@ -45,8 +48,8 @@ export default function Welcome({mahasiswa}: Props) {
         <Galeri />
         <LinkGrup />
         <ForumDiskusi />
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }
