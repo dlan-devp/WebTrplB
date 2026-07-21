@@ -4,7 +4,6 @@ import { router } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'motion/react';
 import '../../css/components/AuthPage.css';
 import Navbar from '@/components/ui/Navbar';
-// import Navbar from '@/components/ui/Navbar';
 
 type Mode = 'login' | 'register';
 type FieldId = 'name' | 'email' | 'password' | 'password_confirmation';

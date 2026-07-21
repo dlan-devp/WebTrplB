@@ -1,13 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Link } from '@inertiajs/react';
-import { Search, Plus, Pencil, Trash2, Quote, ArrowLeft, LogOut } from 'lucide-react';
+import { Search, Plus, Pencil, Trash2, Quote, ArrowLeft } from 'lucide-react';
 
 import TestimoniForm from '../components/ui/TestimoniForm';
 import AuthModal from '../components/ui/AuthModal';
 import Navbar from '../components/ui/Navbar';
 import type { Testimoni } from '../types/TestimoniKelas.props';
 import '../../css/pages/TestimoniPage.css';
+import { testimoniKelas as testimoniAwal } from '../../../database/dummyData';
+
+
 
 const TIPE_LABEL = { pendapat: 'Pendapat', saran: 'Saran', kritik: 'Kritik' } as const;
 const FILTERS: Array<{ value: 'semua' | Testimoni['tipe']; label: string }> = [
@@ -17,21 +20,46 @@ const FILTERS: Array<{ value: 'semua' | Testimoni['tipe']; label: string }> = [
   { value: 'kritik', label: 'Kritik' },
 ];
 
-export default function TestimoniPage() {
-  const [items, setItems] = useState<Testimoni[]>(() => {
+const getInitialItems = (): Testimoni[] => {
+  if (typeof window === 'undefined') {
+    return testimoniAwal.map((item) => ({
+      id: item.id,
+      nama: item.nama,
+      tipe: item.tipe,
+      pesan: item.pesan,
+      authorId: undefined,
+    }));
+  }
 
-    const stored = localStorage.getItem('testimoni');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) return parsed;
-      } catch (err) {
-        console.error('Gagal memuat testimoni dari localStorage:', err);
+  const stored = window.localStorage.getItem('testimoni');
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) {
+        return parsed as Testimoni[];
       }
+    } catch (err) {
+      console.error('Gagal memuat testimoni dari localStorage:', err);
     }
+  }
 
-    return [];
-  });
+  return testimoniAwal.map((item) => ({
+    id: item.id,
+    nama: item.nama,
+    tipe: item.tipe,
+    pesan: item.pesan,
+    authorId: undefined,
+  }));
+};
+
+export default function TestimoniPage() {
+  const [items, setItems] = useState<Testimoni[]>(() => getInitialItems());
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('testimoni', JSON.stringify(items));
+    }
+  }, [items]);
 
   const [currentUser, setCurrentUser] = useState<{ id: string; nama: string } | null>(() => {
     const stored = localStorage.getItem('currentUser');
@@ -83,9 +111,7 @@ export default function TestimoniPage() {
           <span className="section-heading__eyebrow mono">Suara Anak Kelas</span>
           <h1 className="tpage-title display">Semua Testimoni Kelas</h1>
           <p className="tpage-subtitle">
-            Cari, saring berdasarkan kategori, atau tambahkan testimoni kamu sendiri. Testimoni
-            hanya bisa diedit atau dihapus oleh akun yang menuliskannya — jadi masuk dulu ya
-            kalau mau testimoni kamu bisa dikelola nanti.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
 
