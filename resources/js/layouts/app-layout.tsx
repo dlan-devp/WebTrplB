@@ -9,8 +9,14 @@ export default function AppLayout({
     children: React.ReactNode;
 }) {
     return (
+<<<<<<< HEAD
         <AppLayoutTemplate breadcrumbs={breadcrumbs}>
             {children}
         </AppLayoutTemplate>
+=======
+        <main>
+            {children}
+        </main>
+>>>>>>> 6cfcb2d (tambah halaman login publik)
     );
 }

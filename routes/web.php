@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\PublicAuthController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/public-auth', [PublicAuthController::class, 'index'])->name('auth');
 Route::get('/', [MahasiswaController::class, 'index'])->name('home');
 
 // Route::middleware(['auth', 'verified'])->group(function () {

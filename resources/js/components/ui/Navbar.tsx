@@ -20,7 +20,7 @@ export default function Navbar() {
       <div className="navbar__inner">
         <a href="#top" className="navbar__brand">
           <span className="navbar__dot" />
-          Kelas TRPLB
+          Kelas TRPL-B
         </a>
         <nav className="navbar__links">
           {NAV_LINKS.map((link) => (
@@ -29,7 +29,11 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
+<<<<<<< HEAD
         <a href="/login" className="navbar__cta">
+=======
+        <a href="/public-auth" className="navbar__cta">
+>>>>>>> 6cfcb2d (tambah halaman login publik)
           Login / Register
         </a>
       </div>

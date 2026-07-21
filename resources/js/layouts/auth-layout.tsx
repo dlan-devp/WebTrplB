@@ -9,9 +9,14 @@ export default function AuthLayout({
     description?: string;
     children: React.ReactNode;
 }) {
+<<<<<<< HEAD
     return (
         <AuthLayoutTemplate title={title} description={description}>
             {children}
         </AuthLayoutTemplate>
     );
 }
+=======
+    return <>{children}</>;
+}
+>>>>>>> 6cfcb2d (tambah halaman login publik)
