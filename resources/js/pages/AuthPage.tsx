@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { router } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'motion/react';
 import '../../css/components/AuthPage.css';
+import Navbar from '@/components/ui/Navbar';
 // import Navbar from '@/components/ui/Navbar';
 
 type Mode = 'login' | 'register';
@@ -162,6 +163,8 @@ export default function AuthPage() {
     <>
 
       <Head title="Masuk / Daftar" />
+
+      <Navbar />
   
       <div className="auth">
 
