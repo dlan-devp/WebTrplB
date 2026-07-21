@@ -29,7 +29,7 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
-        <a href="/admin/login" className="navbar__cta">
+        <a href="/login" className="navbar__cta">
           Login / Register
         </a>
       </div>
