@@ -29,11 +29,7 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
-<<<<<<< HEAD
-        <a href="/login" className="navbar__cta">
-=======
         <a href="/public-auth" className="navbar__cta">
->>>>>>> 6cfcb2d (tambah halaman login publik)
           Login / Register
         </a>
       </div>

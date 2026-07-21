@@ -1,6 +1,6 @@
 .auth {
-  min-height: 100vh;
   display: grid;
+  min-height: 90vh;
   grid-template-columns: 0.95fr 1.05fr;
   background: var(--color-bg);
 }
@@ -8,11 +8,15 @@
 /* --- Left: brand panel --- */
 .auth__brand {
   position: relative;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 24px;
   background: linear-gradient(160deg, #1E1B3A 0%, #171425 55%, #10101c 100%);
   color: #fff;
   overflow: hidden;
-  display: flex;
-  align-items: center;
   padding: 64px;
 }
 
@@ -111,22 +115,25 @@
 .auth__panel {
   display: flex;
   align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 0 24px;
   justify-content: center;
-  padding: 48px 24px;
 }
 
 .auth__form-wrap {
-  width: 100%;
-  height: 580px;
   max-width: 380px;
+  padding-block: 48px;
 }
 
 .auth__tabs {
+  width: 100%;
   position: relative;
   display: flex;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  padding: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px;
+  backdrop-filter: blur(6px);
   margin-bottom: 36px;
 }
 
@@ -144,6 +151,10 @@
 
 .auth__tab.is-active {
   color: #fff;
+}
+
+.auth__tab {
+  color: var(--color-muted-foreground);
 }
 
 .auth__tab-pill {
