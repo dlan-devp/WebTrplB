@@ -1,16 +1,16 @@
 import { Head } from '@inertiajs/react';
-
 import { useState } from 'react';
+import { router } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'motion/react';
 import '../../css/components/AuthPage.css';
-import Navbar from '@/components/ui/Navbar';
+// import Navbar from '@/components/ui/Navbar';
 
 type Mode = 'login' | 'register';
-type FieldId = 'nama' | 'email' | 'password' | 'konfirmasi';
+type FieldId = 'name' | 'email' | 'password' | 'password_confirmation';
 
 const FIELDS_BY_MODE: Record<Mode, FieldId[]> = {
   login: ['email', 'password'],
-  register: ['nama', 'email', 'password', 'konfirmasi'],
+  register: ['name', 'email', 'password', 'password_confirmation'],
 };
 
 function validateField(
@@ -20,7 +20,7 @@ function validateField(
   allValues: Record<FieldId, string>
 ): string {
   switch (id) {
-    case 'nama': {
+    case 'name': {
       const trimmed = value.trim();
       if (!trimmed) return 'Nama tidak boleh kosong.';
       if (trimmed.length < 3) return 'Nama minimal 3 karakter.';
@@ -43,7 +43,7 @@ function validateField(
       }
       return '';
     }
-    case 'konfirmasi': {
+    case 'password_confirmation': {
       if (!value) return 'Konfirmasi kata sandi tidak boleh kosong.';
       if (value !== allValues.password) return 'Konfirmasi tidak cocok dengan kata sandi.';
       return '';
@@ -67,10 +67,10 @@ export default function AuthPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [values, setValues] = useState<Record<FieldId, string>>({
-    nama: '',
+    name: '',
     email: '',
     password: '',
-    konfirmasi: '',
+    password_confirmation: '',
   });
   const [errors, setErrors] = useState<Partial<Record<FieldId, string>>>({});
   const [touched, setTouched] = useState<Partial<Record<FieldId, boolean>>>({});
@@ -96,10 +96,10 @@ export default function AuthPage() {
       }
 
       // Kalau kata sandi berubah dan konfirmasi sudah dsentuh, re-validasi konfirmasi juga.
-      if (id === 'password' && touched.konfirmasi) {
+      if (id === 'password' && touched.password_confirmation) {
         setErrors((e) => ({
           ...e,
-          konfirmasi: validateField('konfirmasi', next.konfirmasi, mode, next),
+          password_confirmation: validateField('password_confirmation', next.password_confirmation, mode, next),
         }));
       }
 
@@ -132,25 +132,34 @@ export default function AuthPage() {
     const invalidFields = activeFields.filter((id) => newErrors[id]);
 
     if (invalidFields.length > 0) {
-      // Trigger animasi "shake" cuma di field yang gak valid.
-      setShakeMap((prev) => {
-        const next = { ...prev };
-        invalidFields.forEach((id) => {
-          next[id] = (next[id] ?? 0) + 1;
-        });
-        return next;
-      });
       return;
     }
 
     setIsSubmitting(true);
-    // TODO, sambungin ke API/auth provider sini.
-    setTimeout(() => setIsSubmitting(false), 1200);
+
+    if (mode === 'register') {
+      router.post('/register', {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        password_confirmation: values.password_confirmation,
+      }, {
+        onFinish: () => setIsSubmitting(false),
+      });
+    }
+
+    if (mode === 'login') {
+      router.post('/login', {
+        email: values.email,
+        password: values.password,
+      }, {
+        onFinish: () => setIsSubmitting(false),
+      });
+    }
   }
 
   return (
     <>
-      <Navbar />
 
       <Head title="Masuk / Daftar" />
   
@@ -247,17 +256,17 @@ export default function AuthPage() {
 
                 {mode === 'register' && (
                   <FloatingField
-                    id="nama"
+                    id="name"
                     label="Nama Lengkap"
                     type="text"
-                    value={values.nama}
-                    onChange={(v) => handleChange('nama', v)}
-                    onBlur={() => handleBlur('nama')}
+                    value={values.name}
+                    onChange={(v) => handleChange('name', v)}
+                    onBlur={() => handleBlur('name')}
                     autoComplete="name"
-                    error={errors.nama}
-                    touched={touched.nama}
-                    isValid={!errors.nama && values.nama.length > 0}
-                    shakeSignal={shakeMap.nama ?? 0}
+                    error={errors.name}
+                    touched={touched.name}
+                    isValid={!errors.name && values.name.length > 0}
+                    shakeSignal={shakeMap.name ?? 0}
                   />
                 )}
 
@@ -295,17 +304,17 @@ export default function AuthPage() {
 
                 {mode === 'register' && (
                   <FloatingField
-                    id="konfirmasi"
+                    id="password_confirmation"
                     label="Konfirmasi Kata Sandi"
                     type="password"
-                    value={values.konfirmasi}
-                    onChange={(v) => handleChange('konfirmasi', v)}
-                    onBlur={() => handleBlur('konfirmasi')}
+                    value={values.password_confirmation}
+                    onChange={(v) => handleChange('password_confirmation', v)}
+                    onBlur={() => handleBlur('password_confirmation')}
                     autoComplete="new-password"
-                    error={errors.konfirmasi}
-                    touched={touched.konfirmasi}
-                    isValid={!errors.konfirmasi && values.konfirmasi.length > 0}
-                    shakeSignal={shakeMap.konfirmasi ?? 0}
+                    error={errors.password_confirmation}
+                    touched={touched.password_confirmation}
+                    isValid={!errors.password_confirmation && values.password_confirmation.length > 0}
+                    shakeSignal={shakeMap.password_confirmation ?? 0}
                   />
                 )}
 
