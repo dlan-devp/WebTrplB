@@ -95,6 +95,7 @@ export default function TestimoniKelas() {
         onPointerLeave={onPointerUp}
         onMouseEnter={pauseAutoplay}
         onMouseLeave={resumeAutoplay}
+        data-native-scroll
       >
         {items.map((t) => (
           <article key={t.id} className="testimoni-card">
@@ -183,6 +184,7 @@ function TestimoniForm({
           <label className="testimoni-form__field">
             <span>Pesan</span>
             <textarea
+              data-native-scroll
               value={pesan}
               onChange={(e) => setPesan(e.target.value)}
               placeholder="Tulis pendapat, saran, atau kritik kamu untuk kelas..."

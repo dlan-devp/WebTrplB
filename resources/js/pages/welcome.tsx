@@ -22,25 +22,49 @@ export default function Welcome({ mahasiswa }: WelcomeProps) {
     let current = window.scrollY;
     let target = current;
     let rafId = 0;
+    let isAnimating = false;
 
     const ease = 0.05;
+
+    const startAnimation = () => {
+      if (!isAnimating) {
+        isAnimating = true;
+        rafId = requestAnimationFrame(update);
+      }
+    };
 
     const update = () => {
       current += (target - current) * ease;
 
-      if (Math.abs(target - current) < 0.3) {
-        current = target;
+      if (Math.abs(target - current) > 0.3) {
+        window.scrollTo({
+            top: current,
+            behavior: "instant",
+        });
+
+        rafId = requestAnimationFrame(update);
+      } else {
+          current = target;
+          window.scrollTo({
+              top: current,
+              behavior: "instant",
+          });
+
+          isAnimating = false;
       }
-
-      window.scrollTo({
-          top: current,
-          behavior: "instant",
-      });
-
-      rafId = requestAnimationFrame(update);
     };
 
     const onWheel = (e: WheelEvent) => {
+      const targetElement = e.target as HTMLElement;
+
+      if (targetElement.closest("[data-native-scroll]")) {
+        return;
+      }
+      if (!isAnimating) {
+        current = window.scrollY;
+        target = window.scrollY;
+      }
+
       e.preventDefault();
 
       const wheelMultiplier = 0.4;
@@ -49,14 +73,13 @@ export default function Welcome({ mahasiswa }: WelcomeProps) {
       
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
 
-
       target = Math.max(
           0,
-          Math.min(target + e.deltaY * wheelMultiplier, maxScroll)
+          Math.min(target, maxScroll)
       );
-    };
 
-    rafId = requestAnimationFrame(update);
+      startAnimation();
+    };
 
     window.addEventListener("wheel", onWheel, {
       passive: false,
@@ -94,7 +117,7 @@ export default function Welcome({ mahasiswa }: WelcomeProps) {
         <Galeri />
         <LinkGrup />
         <ForumDiskusi />
-        <TestimoniKelas />
+        <TestimoniKelas/>
         <Footer />
       </main>
     </>
