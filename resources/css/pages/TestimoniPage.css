@@ -1,0 +1,284 @@
+.testimoni-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+/* --- Header --- */
+.tpage-header {
+  margin-block-start: 32px; 
+}
+
+.tpage-header__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tpage-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.tpage-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tpage-auth__avatar {
+  width: 30px;
+  height: 30px;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tpage-auth__nama {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.tpage-auth__logout {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.tpage-auth__login-btn {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--gradient-primary);
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+/* --- Content --- */
+.tpage-content {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+.tpage-intro {
+  max-width: 640px;
+  margin-bottom: 36px;
+}
+
+.tpage-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 8px 0 12px;
+  color: var(--color-ink);
+}
+
+.tpage-subtitle {
+  font-size: 15px;
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- Toolbar --- */
+.tpage-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.tpage-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 10px 16px;
+  flex: 1;
+  min-width: 220px;
+  color: var(--color-muted);
+}
+
+.tpage-search input {
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-ink);
+  flex: 1;
+  outline: none;
+}
+
+.tpage-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tpage-filter-pill {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tpage-filter-pill.is-active {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: #fff;
+}
+
+.testimoni-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--gradient-primary);
+  border: none;
+  padding: 10px 18px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* --- Grid & Cards --- */
+.tpage-empty {
+  font-size: 14px;
+  color: var(--color-muted);
+  padding: 48px 0;
+  text-align: center;
+}
+
+.tpage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.tpage-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 22px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+}
+
+.tpage-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.testimoni-card__badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  color: #fff;
+}
+
+.testimoni-card__badge--pendapat { background: var(--color-blue); }
+.testimoni-card__badge--saran { background: var(--color-muted); }
+.testimoni-card__badge--kritik { background: var(--color-purple); }
+
+.tpage-card__actions {
+  display: flex;
+  gap: 6px;
+}
+
+.tpage-card__actions button {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: var(--color-bg);
+  color: var(--color-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tpage-card__actions button:hover {
+  background: var(--color-purple-dim);
+  color: var(--color-purple);
+}
+
+.tpage-card__quote-icon {
+  color: var(--color-purple-dim);
+  margin: 8px 0;
+}
+
+.tpage-card__pesan {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink);
+  flex: 1;
+  margin: 0 0 20px;
+}
+
+.tpage-card__footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tpage-card__avatar {
+  width: 34px;
+  height: 34px;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tpage-card__nama {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.tpage-card__peran {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+@media (max-width: 900px) {
+  .tpage-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .tpage-grid { grid-template-columns: 1fr; }
+  .tpage-toolbar { flex-direction: column; align-items: stretch; }
+}
