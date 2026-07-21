@@ -1,5 +1,7 @@
+import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'motion/react';
 import '../../../css/components/Navbar.css';
+import { logout } from '@/routes';
 
 const NAV_LINKS = [
   { href: '#jadwal', label: 'Jadwal' },
@@ -11,6 +13,9 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
+  const { auth } = usePage<{ auth: { user?: { name?: string | null } } }>().props;
+  const isAuthenticated = Boolean(auth.user);
+
   return (
     <motion.header
       className="navbar"
@@ -30,9 +35,15 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
-        <a href="/public-auth" className="navbar__cta">
-          Login / Register
-        </a>
+        {isAuthenticated ? (
+          <Link href={logout()} as="button" method="post" className="navbar__cta">
+            Logout
+          </Link>
+        ) : (
+          <a href="/public-auth" className="navbar__cta">
+            Login / Register
+          </a>
+        )}
       </div>
     </motion.header>
   );
