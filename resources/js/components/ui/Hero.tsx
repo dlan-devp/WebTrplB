@@ -2,9 +2,13 @@ import { useRef } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'motion/react';
 import { anggotaKelas } from '../../../../database/dummyData';
 import '../../../css/components/Hero.css';
+import { Mahasiswa } from '@/types/AnggotaKelas.props';
 
+interface HeroProps{
+  mahasiswa: Mahasiswa[];
+}
 
-export default function Hero() {
+export default function Hero({mahasiswa}: HeroProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
@@ -26,7 +30,7 @@ export default function Hero() {
     mouseY.set(0.5);
   };
 
-  const onlineCount = anggotaKelas.filter((a) => a.online).length;
+  const onlineCount = mahasiswa.filter((a) => a.online).length;
 
   return (
     <section id="top" className="hero">
@@ -38,9 +42,9 @@ export default function Hero() {
       >
         <span className="hero__eyebrow">Ruang kelas kita, versi digital</span>
         <h1 className="hero__title display">
-          Anjay,
+          Kelazz
           <br />
-          Adili Jokow.
+          Web TRPL B Nih Boszzz
         </h1>
         <p className="hero__subtitle">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
@@ -80,12 +84,12 @@ export default function Hero() {
         <div className="hero__card-title display">Kelas TRPLB</div>
         <div className="hero__card-sub">Teknik Rekayasa Perangkat Lunak &middot; Semester 3</div>
         <div className="hero__card-avatars">
-          {anggotaKelas.slice(0, 6).map((a) => (
-            <span key={a.id} className="hero__avatar" title={a.nama}>
-              {a.inisial}
+          {mahasiswa.slice(0, 6).map((a) => (
+            <span key={a.kodeMahasiswa} className="hero__avatar" title={a.nama}>
+              {a.nama.charAt(0).toUpperCase()}
             </span>
           ))}
-          <span className="hero__avatar hero__avatar--more">+{anggotaKelas.length - 6}</span>
+          <span className="hero__avatar hero__avatar--more">+{mahasiswa.length - 6}</span>
         </div>
       </motion.div>
     </section>

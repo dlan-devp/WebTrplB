@@ -53,7 +53,7 @@ export default function Welcome({ mahasiswa, testimoni }: WelcomeProps) {
 
       <main className="relative z-10">
         <Navbar />
-        <Hero />
+        <Hero mahasiswa={mahasiswa} />
         <JadwalKelas />
         <Pengumuman />
         <AnggotaKelas mahasiswa={mahasiswa} />

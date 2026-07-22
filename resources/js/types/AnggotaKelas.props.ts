@@ -1,8 +1,7 @@
 export interface Mahasiswa {
-  id: string;
-  inisial: string;
-  online?: boolean;
   kodeMahasiswa: number;
+  online?: boolean;
+  foto: string;
   nama: string;
   umur: number;
   fakultas: string;
