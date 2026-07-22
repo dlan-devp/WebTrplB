@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { href: '/#anggota', label: 'Anggota' },
   { href: '/#galeri', label: 'Galeri' },
   { href: '/#forum', label: 'Forum' },
-  { href: '/testimoni', label: 'Testimoni' },
+  { href: '/#testimoni', label: 'Testimoni' },
 ];
 
 export default function Navbar() {
