@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Plus, X, Quote } from 'lucide-react';
+import { Plus, X, Quote, LogIn } from 'lucide-react';
 import { testimoniKelas as testimoniAwal } from '../../../../database/dummyData';
 import type { Testimoni } from '../../types/TestimoniKelas.props';
 import SectionHeading from './SectionHeading';
@@ -15,8 +16,10 @@ const TIPE_LABEL: Record<Testimoni['tipe'], string> = {
 const AUTOPLAY_DELAY = 5000;
 
 export default function TestimoniKelas() {
+  const { auth } = usePage<{ auth: { user?: { id?: string | null; name?: string | null } } }>().props;
   const [items, setItems] = useState<Testimoni[]>(testimoniAwal);
   const [showForm, setShowForm] = useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
   const isDragging = useRef(false);
@@ -73,6 +76,15 @@ export default function TestimoniKelas() {
     setShowForm(false);
   };
 
+  const handleAddButtonClick = () => {
+    if (auth.user) {
+      setShowForm(true);
+      return;
+    }
+
+    setShowAuthPrompt(true);
+  };
+
   return (
     <section id="testimoni" className="section">
       <div className="testimoni-heading-row">
@@ -81,7 +93,7 @@ export default function TestimoniKelas() {
           title="Testimoni Kelas"
           subtitle="Lorem ipsum dolor sit amet — consectetur adipiscing elit."
         />
-        <button className="testimoni-add-btn" onClick={() => setShowForm(true)}>
+        <button className="testimoni-add-btn" onClick={handleAddButtonClick} type="button">
           <Plus size={16} /> Tambah Testimoni
         </button>
       </div>
@@ -118,6 +130,47 @@ export default function TestimoniKelas() {
             onClose={() => setShowForm(false)}
             onSubmit={handleAddTestimoni}
           />
+        )}
+
+        {showAuthPrompt && (
+          <motion.div
+            className="testimoni-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowAuthPrompt(false)}
+          >
+            <motion.div
+              className="testimoni-modal"
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 16, scale: 0.96 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="testimoni-modal__head">
+                <h3 className="display">Login dulu</h3>
+                <button
+                  className="testimoni-modal__close"
+                  onClick={() => setShowAuthPrompt(false)}
+                  aria-label="Tutup"
+                  type="button"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="testimoni-form">
+                <p className="testimoni-card__pesan" style={{ marginBottom: '1rem' }}>
+                  Kamu perlu masuk terlebih dahulu sebelum menambahkan testimoni.
+                </p>
+                <Link href="/public-auth" className="testimoni-form__submit" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <LogIn size={16} style={{ marginRight: '0.5rem' }} />
+                  Masuk / Daftar
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>
