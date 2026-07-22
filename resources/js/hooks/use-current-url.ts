@@ -1,6 +1,26 @@
 import type { InertiaLinkProps } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import { toUrl } from '@/lib/utils';
+
+function resolvePathname(url?: string | null): string {
+    if (!url) {
+        return '/';
+    }
+
+    try {
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            return new URL(url).pathname;
+        }
+
+        return new URL(
+            url,
+            typeof window !== 'undefined' ? window.location.origin : 'http://localhost',
+        ).pathname;
+    } catch {
+        return url.startsWith('/') ? url : `/${url}`;
+    }
+}
 
 export type IsCurrentUrlFn = (
     urlToCheck: NonNullable<InertiaLinkProps['href']>,
@@ -28,12 +48,30 @@ export type UseCurrentUrlReturn = {
 
 export function useCurrentUrl(): UseCurrentUrlReturn {
     const page = usePage();
-    const currentUrlPath = new URL(
-        page.url,
-        typeof window !== 'undefined'
-            ? window.location.origin
-            : 'http://localhost',
-    ).pathname;
+    const [currentUrlPath, setCurrentUrlPath] = useState(() => resolvePathname(page.url));
+
+    useEffect(() => {
+        const syncCurrentUrlPath = () => {
+            const pathname =
+                typeof window !== 'undefined' ? window.location.pathname : page.url;
+
+            setCurrentUrlPath(resolvePathname(pathname));
+        };
+
+        syncCurrentUrlPath();
+
+        if (typeof window === 'undefined') {
+            return;
+        }
+
+        window.addEventListener('popstate', syncCurrentUrlPath);
+        window.addEventListener('pageshow', syncCurrentUrlPath);
+
+        return () => {
+            window.removeEventListener('popstate', syncCurrentUrlPath);
+            window.removeEventListener('pageshow', syncCurrentUrlPath);
+        };
+    }, [page.url]);
 
     const isCurrentUrl: IsCurrentUrlFn = (
         urlToCheck: NonNullable<InertiaLinkProps['href']>,

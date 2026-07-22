@@ -1,6 +1,7 @@
 import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'motion/react';
 import '../../../css/components/Navbar.css';
+import { useCurrentUrl } from '@/hooks/use-current-url';
 import { logout } from '@/routes';
 import PreviousPage from './PreviousPage';
 
@@ -14,10 +15,11 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
-  const page = usePage<{ auth: { user?: { name?: string | null } }; url?: string }>();
+  const page = usePage<{ auth: { user?: { name?: string | null } } }>();
   const { auth } = page.props;
+  const { currentUrl } = useCurrentUrl();
   const isAuthenticated = Boolean(auth.user);
-  const isHomePage = page.url === '/' || page.url === '';
+  const isHomePage = currentUrl === '/' || currentUrl === '';
 
   return (
     <motion.header

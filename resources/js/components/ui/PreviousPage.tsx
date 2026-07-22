@@ -1,7 +1,14 @@
 import { ArrowLeft } from 'lucide-react';
-import '../../../css/components/PreviousPage.css'
+import '../../../css/components/PreviousPage.css';
+import { useCurrentUrl } from '@/hooks/use-current-url';
 
 export default function PreviousPage() {
+    const { currentUrl } = useCurrentUrl();
+
+    if (currentUrl === '/' || currentUrl === '') {
+        return null;
+    }
+
     return (
         <div className="previous-page">
             <button onClick={() => history.back()} className="previous-page__link">
