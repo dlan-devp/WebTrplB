@@ -137,7 +137,7 @@
 
 .testimoni-card__badge--pendapat { background: var(--color-blue); }
 .testimoni-card__badge--saran { background: var(--color-muted); }
-.testimoni-card__badge--kritik { background: var(--color-purple); }
+.testimoni-card__badge--kitik { background: var(--color-purple); }
 
 .tpage-card__actions {
   display: flex;

@@ -2,23 +2,28 @@ import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Plus, X, Quote, LogIn, ArrowRight } from 'lucide-react';
-import { testimoniKelas as testimoniAwal } from '../../../../database/dummyData';
-import type { Testimoni } from '../../types/TestimoniKelas.props';
+// import { testimoniKelas as testimoniAwal } from '../../../../database/dummyData';
+// import type { Testimoni } from '../../types/TestimoniKelas.props';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/TestimoniKelas.css';
 import TestimoniForm from './TestimoniForm';
+import type { Testimoni } from '@/types/Testimoni.props';
 
-const TIPE_LABEL: Record<Testimoni['tipe'], string> = {
-  pendapat: 'Pendapat',
-  saran: 'Saran',
-  kritik: 'Kritik',
+const TIPE_LABEL: Record<Testimoni['type'], string> = {
+  Pendapat: 'Pendapat',
+  Saran: 'Saran',
+  Kritik: 'Kritik',
 };
+
+interface NavbarProps{
+  testimoni: Testimoni[];
+}
 
 const AUTOPLAY_DELAY = 5000;
 
-export default function TestimoniKelas() {
+export default function TestimoniKelas({testimoni}: NavbarProps) {
   const { auth } = usePage<{ auth: { user?: { id?: string | null; name?: string | null } } }>().props;
-  const [items, setItems] = useState<Testimoni[]>(testimoniAwal);
+  const [items, setItems] = useState<Testimoni[]>(testimoni);
   const [showForm, setShowForm] = useState(false);
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [authPromptMode, setAuthPromptMode] = useState<'tambah' | 'nav' | null>(null);
@@ -147,10 +152,10 @@ export default function TestimoniKelas() {
         {items.map((t) => (
           <article key={t.id} className="testimoni-card">
             <Quote size={20} className="testimoni-card__quote-icon" />
-            <span className={`testimoni-card__badge testimoni-card__badge--${t.tipe}`}>
-              {TIPE_LABEL[t.tipe]}
+            <span className={`testimoni-card__badge testimoni-card__badge--${t.type.toLowerCase()}`}>
+              {TIPE_LABEL[t.type]}
             </span>
-            <p className="testimoni-card__pesan">&ldquo;{t.pesan}&rdquo;</p>
+            <p className="testimoni-card__pesan">&ldquo;{t.deskripsi}&rdquo;</p>
             <div className="testimoni-card__footer">
               <span className="testimoni-card__avatar">{t.nama.charAt(0)}</span>
               <div className="testimoni-card__nama">{t.nama}</div>

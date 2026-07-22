@@ -8,7 +8,7 @@ import Navbar from '../components/ui/Navbar';
 import type { Testimoni } from '../types/TestimoniKelas.props';
 import '../../css/pages/TestimoniPage.css';
 import { testimoniKelas as testimoniAwal } from '../../../database/dummyData';
-
+import type { Testimoni } from '@/types/TestimoniKelas.props';
 
 
 const TIPE_LABEL = { pendapat: 'Pendapat', saran: 'Saran', kritik: 'Kritik' } as const;

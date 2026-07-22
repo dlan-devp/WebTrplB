@@ -16,12 +16,14 @@ import Pengumuman from '@/components/ui/Pengumuman';
 import TestimoniKelas from '@/components/ui/TestimoniKelas';
 
 import type { Mahasiswa } from '@/types/AnggotaKelas.props';
+import type { Testimoni } from '@/types/Testimoni.props';
 
 interface WelcomeProps {
   mahasiswa: Mahasiswa[];
+  testimoni: Testimoni[];
 }
 
-export default function Welcome({ mahasiswa }: WelcomeProps) {
+export default function Welcome({ mahasiswa, testimoni }: WelcomeProps) {
   useEffect(() => {
     const lenis = new Lenis({
       smoothWheel: true,
@@ -68,7 +70,7 @@ export default function Welcome({ mahasiswa }: WelcomeProps) {
         <Galeri />
         <LinkGrup />
         <ForumDiskusi />
-        <TestimoniKelas />
+        <TestimoniKelas testimoni={testimoni} />
         <Footer />
       </main>
     </>
