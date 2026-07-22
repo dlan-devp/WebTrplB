@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Link } from '@inertiajs/react';
 import { Search, Plus, Pencil, Trash2, Quote, ArrowLeft } from 'lucide-react';
 
 import TestimoniForm from '../components/ui/TestimoniForm';

@@ -23,6 +23,17 @@
 
 .testimoni-add-btn:hover { transform: translateY(-2px); }
 
+.testimoni-page-nav {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-purple);
+  background: var(--color-purple-dim);
+  padding: 6px 14px;
+  margin-bottom: 20px;
+}
+
 /* --- Track dari native horizontal scroll + snap, drag-scrollable --- */
 .testimoni-track {
   display: flex;

@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Plus, X, Quote, LogIn } from 'lucide-react';
+import { Plus, X, Quote, LogIn, ArrowRight } from 'lucide-react';
 import { testimoniKelas as testimoniAwal } from '../../../../database/dummyData';
 import type { Testimoni } from '../../types/TestimoniKelas.props';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/TestimoniKelas.css';
+import TestimoniForm from './TestimoniForm';
 
 const TIPE_LABEL: Record<Testimoni['tipe'], string> = {
   pendapat: 'Pendapat',
@@ -20,6 +21,7 @@ export default function TestimoniKelas() {
   const [items, setItems] = useState<Testimoni[]>(testimoniAwal);
   const [showForm, setShowForm] = useState(false);
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+  const [authPromptMode, setAuthPromptMode] = useState<'tambah' | 'nav' | null>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
   const isDragging = useRef(false);
@@ -76,14 +78,42 @@ export default function TestimoniKelas() {
     setShowForm(false);
   };
 
+  const openAuthPrompt = (mode: 'tambah' | 'nav') => {
+    setAuthPromptMode(mode);
+    setShowAuthPrompt(true);
+  };
+
+  const closeAuthPrompt = () => {
+    setShowAuthPrompt(false);
+    setAuthPromptMode(null);
+  };
+
   const handleAddButtonClick = () => {
     if (auth.user) {
       setShowForm(true);
       return;
     }
 
-    setShowAuthPrompt(true);
+    openAuthPrompt('tambah');
   };
+
+  const handleGoToTestimoniPage = (e: MouseEvent<Element>) => {
+    if (auth.user) {
+      return;
+    }
+
+    e.preventDefault();
+    openAuthPrompt('nav');
+  };
+
+  const handleContinueToAuth = () => {
+    closeAuthPrompt();
+    router.visit('/public-auth');
+  };
+
+  const authPromptMessage = authPromptMode === 'nav'
+    ? 'Kamu perlu masuk terlebih dahulu sebelum melihat halaman testimoni.'
+    : 'Kamu perlu masuk terlebih dahulu sebelum menambahkan testimoni.';
 
   return (
     <section id="testimoni" className="section">
@@ -93,9 +123,14 @@ export default function TestimoniKelas() {
           title="Testimoni Kelas"
           subtitle="Lorem ipsum dolor sit amet — consectetur adipiscing elit."
         />
-        <button className="testimoni-add-btn" onClick={handleAddButtonClick} type="button">
-          <Plus size={16} /> Tambah Testimoni
-        </button>
+        <div>
+          <button className="testimoni-add-btn" onClick={handleAddButtonClick} type="button">
+            <Plus size={16} /> Tambah Testimoni
+          </button>
+          <Link href="/testimoni" className="testimoni-page-nav" onClick={handleGoToTestimoniPage}>
+            Atau ke halamannya <ArrowRight size={18} />
+          </Link>
+        </div>
       </div>
 
       <div
@@ -127,6 +162,7 @@ export default function TestimoniKelas() {
       <AnimatePresence>
         {showForm && (
           <TestimoniForm
+            mode="tambah"
             onClose={() => setShowForm(false)}
             onSubmit={handleAddTestimoni}
           />
@@ -138,7 +174,7 @@ export default function TestimoniKelas() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setShowAuthPrompt(false)}
+            onClick={closeAuthPrompt}
           >
             <motion.div
               className="testimoni-modal"
@@ -152,7 +188,7 @@ export default function TestimoniKelas() {
                 <h3 className="display">Login dulu</h3>
                 <button
                   className="testimoni-modal__close"
-                  onClick={() => setShowAuthPrompt(false)}
+                  onClick={closeAuthPrompt}
                   aria-label="Tutup"
                   type="button"
                 >
@@ -162,93 +198,22 @@ export default function TestimoniKelas() {
 
               <div className="testimoni-form">
                 <p className="testimoni-card__pesan" style={{ marginBottom: '1rem' }}>
-                  Kamu perlu masuk terlebih dahulu sebelum menambahkan testimoni.
+                  {authPromptMessage}
                 </p>
-                <Link href="/public-auth" className="testimoni-form__submit" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                <button
+                  className="testimoni-form__submit"
+                  type="button"
+                  onClick={handleContinueToAuth}
+                  style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                >
                   <LogIn size={16} style={{ marginRight: '0.5rem' }} />
                   Masuk / Daftar
-                </Link>
+                </button>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </section>
-  );
-}
-
-function TestimoniForm({
-  onClose,
-  onSubmit,
-}: {
-  onClose: () => void;
-  onSubmit: (data: Omit<Testimoni, 'id'>) => void;
-}) {
-  const [nama, setNama] = useState('');
-  const [tipe, setTipe] = useState<Testimoni['tipe']>('pendapat');
-  const [pesan, setPesan] = useState('');
-
-  type NewType = React.FormEvent<HTMLFormElement>;
-
-  const handleSubmit = (e: NewType) => {
-    e.preventDefault();
-    if (!nama.trim() || !pesan.trim()) return;
-    onSubmit({ nama: nama.trim(), tipe, pesan: pesan.trim() });
-  };
-
-  return (
-    <motion.div
-      className="testimoni-modal-backdrop"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
-      <motion.div
-        className="testimoni-modal"
-        initial={{ opacity: 0, y: 24, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 16, scale: 0.96 }}
-        transition={{ duration: 0.25, ease: 'easeOut' }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="testimoni-modal__head">
-          <h3 className="display">Tambah Testimoni</h3>
-          <button className="testimoni-modal__close" onClick={onClose} aria-label="Tutup">
-            <X size={18} />
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="testimoni-form">
-          <label className="testimoni-form__field">
-            <span>Nama</span>
-            <input value={nama} onChange={(e) => setNama(e.target.value)} placeholder="Nama kamu" required />
-          </label>
-
-          <label className="testimoni-form__field">
-            <span>Jenis</span>
-            <select value={tipe} onChange={(e) => setTipe(e.target.value as Testimoni['tipe'])}>
-              <option value="pendapat">Pendapat</option>
-              <option value="saran">Saran</option>
-              <option value="kritik">Kritik</option>
-            </select>
-          </label>
-
-          <label className="testimoni-form__field">
-            <span>Pesan</span>
-            <textarea
-              data-native-scroll
-              value={pesan}
-              onChange={(e) => setPesan(e.target.value)}
-              placeholder="Tulis pendapat, saran, atau kritik kamu untuk kelas..."
-              rows={4}
-              required
-            />
-          </label>
-
-          <button type="submit" className="testimoni-form__submit">Kirim Testimoni</button>
-        </form>
-      </motion.div>
-    </motion.div>
   );
 }

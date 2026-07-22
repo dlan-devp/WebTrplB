@@ -3,11 +3,7 @@ import { motion, useMotionValue, useTransform, useSpring } from 'motion/react';
 import { anggotaKelas } from '../../../../database/dummyData';
 import '../../../css/components/Hero.css';
 
-/**
- * Signature element of the page: the hero is styled like a physical
- * class ID card. It tilts toward the cursor and catches a light "glare"
- * sweep, so the first thing you see is literally "this is our class's card".
- */
+
 export default function Hero() {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0.5);
