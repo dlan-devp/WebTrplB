@@ -3,10 +3,13 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 // import AuthModal from '../components/ui/AuthModal';
 import { router, usePage } from '@inertiajs/react';
+import useMomentumScroll from '@/animation/MomentumScroll';
 import Navbar from '../components/ui/Navbar';
+import Footer from '@/components/ui/Footer';
 import TestimoniForm from '../components/ui/TestimoniForm';
 import '../../css/pages/TestimoniPage.css';
 import type { Testimoni } from '@/types/Testimoni.props';
+
 // import { testimoniKelas as testimoniAwal } from '../../../database/dummyData';
 
 const TIPE_LABEL = { Pendapat: 'Pendapat', Saran: 'Saran', Kritik: 'Kritik' } as const;
@@ -55,6 +58,8 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
         });
     }, [testimoni, search, filter]);
 
+    useMomentumScroll();
+    
 
   return (
     <div className="testimoni-page">
@@ -173,6 +178,8 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
           />
         )}
       </AnimatePresence>
+
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,4 @@
 import '../../css/app.css';
-import { useEffect } from 'react';
-import Lenis from 'lenis';
 
 import { Head } from '@inertiajs/react';
 
@@ -15,6 +13,8 @@ import Navbar from '@/components/ui/Navbar';
 import Pengumuman from '@/components/ui/Pengumuman';
 import TestimoniKelas from '@/components/ui/TestimoniKelas';
 
+import useMomentumScroll from '@/animation/MomentumScroll';
+
 import type { Mahasiswa } from '@/types/AnggotaKelas.props';
 import type { Testimoni } from '@/types/Testimoni.props';
 
@@ -24,28 +24,7 @@ interface WelcomeProps {
 }
 
 export default function Welcome({ mahasiswa, testimoni }: WelcomeProps) {
-  useEffect(() => {
-    const lenis = new Lenis({
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
-      lerp: 0.04
-    });
-
-    let rafId: number;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-
-    rafId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-    };
-  }, []);
+  useMomentumScroll();
 
   return (
     <>
