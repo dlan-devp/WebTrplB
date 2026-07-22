@@ -18,6 +18,8 @@ Route::middleware('auth')->group(function () {
         ->name('testimoni.store');
     Route::post('/testimoniPage', [TestimoniController::class, 'store'])
         ->name('testimoni.store');
+    Route::put('/testimoni/{testimoni}', [TestimoniController::class, 'update'])->name('testimoni.update');
+    Route::delete('/testimoni/{testimoni}', [TestimoniController::class, 'destroy'])->name('testimoni.destroy');
 });
 
 // Route::middleware(['auth', 'verified'])->group(function () {

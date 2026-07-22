@@ -2,7 +2,7 @@ import { Search, Plus, Pencil, Trash2, Quote } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 // import AuthModal from '../components/ui/AuthModal';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import Navbar from '../components/ui/Navbar';
 import TestimoniForm from '../components/ui/TestimoniForm';
 import '../../css/pages/TestimoniPage.css';
@@ -19,9 +19,17 @@ const FILTERS: Array<{ value: 'semua' | Testimoni['type']; label: string }> = [
 
 interface PageProps {
     testimoni: Testimoni[];
+    auth?: {
+        user?: {
+            id?: number | null;
+            name?: string | null;
+        } | null;
+    };
 }
 
-export default function TestimoniPage({testimoni}: PageProps) {
+export default function TestimoniPage({testimoni, auth}: PageProps) {
+  const page = usePage<{ auth?: { user?: { id?: number | null } | null } }>();
+  const currentUserId = page.props.auth?.user?.id;
 
   const [search, setSearch] = useState('');
     const [filter, setFilter] =
@@ -107,16 +115,20 @@ export default function TestimoniPage({testimoni}: PageProps) {
                     <span className={`testimoni-card__badge testimoni-card__badge--${t.type.toLowerCase()}`}>
                       {TIPE_LABEL[t.type]}
                     </span>
-                    {/* {isOwner && (
+                    {currentUserId && t.user_id === currentUserId && (
                       <div className="tpage-card__actions">
-                        <button title="Edit testimoni">
+                        <button title="Edit testimoni" onClick={() => setEditingItem(t)}>
                           <Pencil size={14} />
                         </button>
-                        <button title="Hapus testimoni">
+                        <button title="Hapus testimoni" onClick={() => {
+                          if (window.confirm('Yakin ingin menghapus testimoni ini?')) {
+                            router.delete(`/testimoni/${t.id}`);
+                          }
+                        }}>
                           <Trash2 size={14} />
                         </button>
                       </div>
-                    )} */}
+                    )}
                   </div>
                   <Quote size={18} className="tpage-card__quote-icon" />
                   <p className="tpage-card__pesan">&ldquo;{t.deskripsi}&rdquo;</p>
@@ -152,7 +164,11 @@ export default function TestimoniPage({testimoni}: PageProps) {
             initialData={editingItem}
             onClose={() => setEditingItem(null)}
             onSubmit={(data) => {
-              // Handle form submission for editing
+              router.put(`/testimoni/${editingItem?.id}`, data, {
+                onSuccess: () => {
+                  setEditingItem(null);
+                },
+              });
             }}
           />
         )}
