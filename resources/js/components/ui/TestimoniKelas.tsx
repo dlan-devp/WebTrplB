@@ -24,6 +24,9 @@ const AUTOPLAY_DELAY = 5000;
 export default function TestimoniKelas({testimoni}: NavbarProps) {
   const { auth } = usePage<{ auth: { user?: { id?: string | null; name?: string | null } } }>().props;
   const [items, setItems] = useState<Testimoni[]>(testimoni);
+  useEffect(() => {
+    setItems(testimoni);
+  }, [testimoni]);
   const [showForm, setShowForm] = useState(false);
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [authPromptMode, setAuthPromptMode] = useState<'tambah' | 'nav' | null>(null);
@@ -79,9 +82,12 @@ export default function TestimoniKelas({testimoni}: NavbarProps) {
   };
 
   const handleAddTestimoni = (baru: Omit<Testimoni, 'id'>) => {
-    setItems((prev) => [...prev, { ...baru, id: `ts-${Date.now()}` }]);
-    setShowForm(false);
-  };
+    router.post('/testimoni', baru, {
+        onSuccess: () => {
+            setShowForm(false);
+        },
+    });
+};
 
   const openAuthPrompt = (mode: 'tambah' | 'nav') => {
     setAuthPromptMode(mode);

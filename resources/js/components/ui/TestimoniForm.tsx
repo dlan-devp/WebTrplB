@@ -1,26 +1,37 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { X } from 'lucide-react';
-import type { Testimoni } from '../../types/TestimoniKelas.props';
+// import type { Testimoni } from '../../types/TestimoniKelas.props';
 import '../../../css/components/TestimoniForm.css';
+import type { Testimoni } from '@/types/Testimoni.props';
 
 interface TestimoniFormProps {
-  mode: 'tambah' | 'edit';
-  initialData?: Testimoni;
-  onClose: () => void;
-  onSubmit: (data: { nama: string; peran?: string; tipe: Testimoni['tipe']; pesan: string }) => void;
+    mode: 'tambah' | 'edit';
+    initialData?: Testimoni;
+    onClose: () => void;
+    onSubmit: (data: {
+        nama: string;
+        type: Testimoni['type'];
+        deskripsi: string;
+    }) => void;
 }
 
 export default function TestimoniForm({ mode, initialData, onClose, onSubmit }: TestimoniFormProps) {
   const [nama, setNama] = useState(initialData?.nama ?? '');
-  const [tipe, setTipe] = useState<Testimoni['tipe']>(initialData?.tipe ?? 'pendapat');
-  const [pesan, setPesan] = useState(initialData?.pesan ?? '');
+  const [type, setType] = useState<Testimoni['type']>(initialData?.type ?? 'Pendapat');
+  const [deskripsi, setDeskripsi] = useState(initialData?.deskripsi ?? '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nama.trim() || !pesan.trim()) return;
-    onSubmit({ nama: nama.trim(), tipe, pesan: pesan.trim() });
-  };
+
+    if (!nama.trim() || !deskripsi.trim()) return;
+
+    onSubmit({
+        nama: nama.trim(),
+        type,
+        deskripsi: deskripsi.trim(),
+    });
+};
 
   return (
     <motion.div
@@ -53,18 +64,22 @@ export default function TestimoniForm({ mode, initialData, onClose, onSubmit }: 
 
           <label className="testimoni-form__field">
             <span>Jenis</span>
-            <select value={tipe} onChange={(e) => setTipe(e.target.value as Testimoni['tipe'])}>
-              <option value="pendapat">Pendapat</option>
-              <option value="saran">Saran</option>
-              <option value="kritik">Kritik</option>
+            <select
+                value={type}
+                onChange={(e) =>
+                    setType(e.target.value as Testimoni['type'])
+                    }>
+                <option value="Pendapat">Pendapat</option>
+                <option value="Saran">Saran</option>
+                <option value="Kritik">Kritik</option>
             </select>
           </label>
 
           <label className="testimoni-form__field">
             <span>Pesan</span>
             <textarea
-              value={pesan}
-              onChange={(e) => setPesan(e.target.value)}
+              value={deskripsi}
+              onChange={(e) => setDeskripsi(e.target.value)}
               placeholder="Tulis pendapat, saran, atau kritik kamu untuk kelas..."
               rows={4}
               required

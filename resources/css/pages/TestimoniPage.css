@@ -135,9 +135,9 @@
   color: #fff;
 }
 
-.testimoni-card__badge--pendapat { background: var(--color-blue); }
-.testimoni-card__badge--saran { background: var(--color-muted); }
-.testimoni-card__badge--kitik { background: var(--color-purple); }
+.testimoni-card__badge--pendapat { background: var(--color-green-400); }
+.testimoni-card__badge--saran { background: var(--color-yellow-300); }
+.testimoni-card__badge--kritik { background: var(--color-red-400); }
 
 .tpage-card__actions {
   display: flex;

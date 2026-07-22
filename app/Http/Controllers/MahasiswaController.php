@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
 use App\Models\Galeri;
 use App\Models\Jadwal;
 use App\Models\Mahasiswa;
 use App\Models\Testimoni;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class MahasiswaController extends Controller
@@ -15,10 +15,23 @@ class MahasiswaController extends Controller
 
         return Inertia::render('welcome', [
             'mahasiswa' => Mahasiswa::all(),
-            'testimoni' => Testimoni::all(),
+            'testimoni' => Testimoni::latest()->get(),
             'galeri' => Galeri::all(),
             'jadwal' => Jadwal::all(),
             'test' => 'mantap'
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'in:Pendapat,Saran,Kritik'],
+            'deskripsi' => ['required', 'string'],
+        ]);
+
+        Testimoni::create($validated);
+
+        return redirect('/#testimoni');
     }
 }

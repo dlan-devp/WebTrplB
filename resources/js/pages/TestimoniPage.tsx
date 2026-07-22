@@ -1,96 +1,50 @@
-import { useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
 import { Search, Plus, Pencil, Trash2, Quote, ArrowLeft } from 'lucide-react';
-
-import TestimoniForm from '../components/ui/TestimoniForm';
-import AuthModal from '../components/ui/AuthModal';
+import { AnimatePresence, motion } from 'motion/react';
+import { useMemo, useState } from 'react';
+// import AuthModal from '../components/ui/AuthModal';
 import Navbar from '../components/ui/Navbar';
-import type { Testimoni } from '../types/TestimoniKelas.props';
+import TestimoniForm from '../components/ui/TestimoniForm';
 import '../../css/pages/TestimoniPage.css';
-import { testimoniKelas as testimoniAwal } from '../../../database/dummyData';
-import type { Testimoni } from '@/types/TestimoniKelas.props';
+import type { Testimoni } from '@/types/Testimoni.props';
+// import { testimoniKelas as testimoniAwal } from '../../../database/dummyData';
 
-
-const TIPE_LABEL = { pendapat: 'Pendapat', saran: 'Saran', kritik: 'Kritik' } as const;
-const FILTERS: Array<{ value: 'semua' | Testimoni['tipe']; label: string }> = [
+const TIPE_LABEL = { Pendapat: 'Pendapat', Saran: 'Saran', Kritik: 'Kritik' } as const;
+const FILTERS: Array<{ value: 'semua' | Testimoni['type']; label: string }> = [
   { value: 'semua', label: 'Semua' },
-  { value: 'pendapat', label: 'Pendapat' },
-  { value: 'saran', label: 'Saran' },
-  { value: 'kritik', label: 'Kritik' },
+  { value: 'Pendapat', label: 'Pendapat' },
+  { value: 'Saran', label: 'Saran' },
+  { value: 'Kritik', label: 'Kritik' },
 ];
 
-const getInitialItems = (): Testimoni[] => {
-  if (typeof window === 'undefined') {
-    return testimoniAwal.map((item) => ({
-      id: item.id,
-      nama: item.nama,
-      tipe: item.tipe,
-      pesan: item.pesan,
-      authorId: undefined,
-    }));
-  }
+interface PageProps {
+    testimoni: Testimoni[];
+}
 
-  const stored = window.localStorage.getItem('testimoni');
-  if (stored) {
-    try {
-      const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed)) {
-        return parsed as Testimoni[];
-      }
-    } catch (err) {
-      console.error('Gagal memuat testimoni dari localStorage:', err);
-    }
-  }
-
-  return testimoniAwal.map((item) => ({
-    id: item.id,
-    nama: item.nama,
-    tipe: item.tipe,
-    pesan: item.pesan,
-    authorId: undefined,
-  }));
-};
-
-export default function TestimoniPage() {
-  const [items, setItems] = useState<Testimoni[]>(() => getInitialItems());
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem('testimoni', JSON.stringify(items));
-    }
-  }, [items]);
-
-  const [currentUser, setCurrentUser] = useState<{ id: string; nama: string } | null>(() => {
-    const stored = localStorage.getItem('currentUser');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        if (parsed && typeof parsed.id === 'string' && typeof parsed.nama === 'string') {
-          return parsed;
-        }
-      } catch (err) {
-        console.error('Gagal memuat currentUser dari localStorage:', err);
-      }
-    }
-    return null;
-  });
-
+export default function TestimoniPage({testimoni}: PageProps) {
 
   const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState<'semua' | Testimoni['tipe']>('semua');
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [editingItem, setEditingItem] = useState<Testimoni | null>(null);
-  const [showAuth, setShowAuth] = useState(false);
+    const [filter, setFilter] =
+        useState<'semua' | Testimoni['type']>('semua');
 
-  const filteredItems = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return items.filter((t) => {
-      const matchFilter = filter === 'semua' || t.tipe === filter;
-      const matchSearch =
-        !q || t.nama.toLowerCase().includes(q) || t.pesan.toLowerCase().includes(q);
-      return matchFilter && matchSearch;
-    });
-  }, [items, search, filter]);
+    const [showAddForm, setShowAddForm] = useState(false);
+    const [editingItem, setEditingItem] =
+        useState<Testimoni | null>(null);
+
+    const filteredItems = useMemo(() => {
+        const q = search.trim().toLowerCase();
+
+        return testimoni.filter((t) => {
+            const matchFilter =
+                filter === 'semua' || t.type === filter;
+
+            const matchSearch =
+                !q ||
+                t.nama.toLowerCase().includes(q) ||
+                t.deskripsi.toLowerCase().includes(q);
+
+            return matchFilter && matchSearch;
+        });
+    }, [testimoni, search, filter]);
 
 
   return (
@@ -138,7 +92,6 @@ export default function TestimoniPage() {
         ) : (
           <div className="tpage-grid">
             {filteredItems.map((t: Testimoni) => {
-              const isOwner = !!currentUser && t.authorId === currentUser.id;
               return (
                 <motion.article
                   key={t.id}
@@ -150,10 +103,10 @@ export default function TestimoniPage() {
                   transition={{ duration: 0.25 }}
                 >
                   <div className="tpage-card__top">
-                    <span className={`testimoni-card__badge testimoni-card__badge--${t.tipe}`}>
-                      {TIPE_LABEL[t.tipe]}
+                    <span className={`testimoni-card__badge testimoni-card__badge--${t.type.toLowerCase()}`}>
+                      {TIPE_LABEL[t.type]}
                     </span>
-                    {isOwner && (
+                    {/* {isOwner && (
                       <div className="tpage-card__actions">
                         <button title="Edit testimoni">
                           <Pencil size={14} />
@@ -162,12 +115,13 @@ export default function TestimoniPage() {
                           <Trash2 size={14} />
                         </button>
                       </div>
-                    )}
+                    )} */}
                   </div>
                   <Quote size={18} className="tpage-card__quote-icon" />
-                  <p className="tpage-card__pesan">&ldquo;{t.pesan}&rdquo;</p>
+                  <p className="tpage-card__pesan">&ldquo;{t.deskripsi}&rdquo;</p>
                   <div className="tpage-card__footer">
                     <span className="tpage-card__avatar">{t.nama.charAt(0)}</span>
+                    <div className="testimoni-card__nama">{t.nama}</div>
                   </div>
                 </motion.article>
               );
@@ -196,10 +150,6 @@ export default function TestimoniPage() {
               // Handle form submission for editing
             }}
           />
-        )}
-
-        {showAuth && (
-          <AuthModal />
         )}
       </AnimatePresence>
     </div>
