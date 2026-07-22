@@ -98,14 +98,6 @@ export default function TestimoniPage() {
     <div className="testimoni-page">
       <Navbar />
 
-      <header className="tpage-header">
-        <div className="tpage-header__inner">
-          <Link href="/" className="tpage-back">
-            <ArrowLeft size={16} /> Kembali ke Beranda
-          </Link>
-        </div>
-      </header>
-
       <div className="tpage-content">
         <div className="tpage-intro">
           <span className="section-heading__eyebrow mono">Suara Anak Kelas</span>

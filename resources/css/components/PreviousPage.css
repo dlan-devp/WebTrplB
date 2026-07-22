@@ -1,0 +1,7 @@
+.previous-page {
+  margin-right: 12px;
+}
+
+.previous-page, ArrowLeft, button {
+  cursor: pointer;
+}

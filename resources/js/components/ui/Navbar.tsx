@@ -2,6 +2,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'motion/react';
 import '../../../css/components/Navbar.css';
 import { logout } from '@/routes';
+import PreviousPage from './PreviousPage';
 
 const NAV_LINKS = [
   { href: '/#jadwal', label: 'Jadwal' },
@@ -13,8 +14,10 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
-  const { auth } = usePage<{ auth: { user?: { name?: string | null } } }>().props;
+  const page = usePage<{ auth: { user?: { name?: string | null } }; url?: string }>();
+  const { auth } = page.props;
   const isAuthenticated = Boolean(auth.user);
+  const isHomePage = page.url === '/' || page.url === '';
 
   return (
     <motion.header
@@ -24,6 +27,7 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <div className="navbar__inner">
+        {!isHomePage && <PreviousPage />}
         <a href="/#top" className="navbar__brand">
           <span className="navbar__dot" />
           Kelas TRPL-B

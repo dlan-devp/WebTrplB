@@ -4,7 +4,6 @@ import { X } from 'lucide-react';
 import '../../../css/components/AuthModal.css';
 
 
-
 export default function AuthModal() {
   const [tab, setTab] = useState<'masuk' | 'daftar'>('masuk');
   const [nama, setNama] = useState('');
