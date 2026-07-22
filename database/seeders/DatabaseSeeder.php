@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Jadwal;
 use App\Models\Mahasiswa;
 use App\Models\Testimoni;
-//use App\Models\User;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,9 +22,10 @@ class DatabaseSeeder extends Seeder
         Testimoni::factory(10)->create();
         Jadwal::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => 'admin111',
+        ]);
     }
 }

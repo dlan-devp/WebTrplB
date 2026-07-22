@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MahasiswaController::class, 'index'])->name('home');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/public-auth', [PublicAuthController::class, 'index'])->name('auth');
+    Route::get('/public-auth', [PublicAuthController::class, 'index'])->name('publicAuth');
 });
 
 Route::middleware('auth')->group(function () {

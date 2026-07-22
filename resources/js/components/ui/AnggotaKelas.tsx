@@ -21,7 +21,7 @@ export default function AnggotaKelas({mahasiswa}: MahasiswaProps) {
       <div className="anggota-grid">
         {mahasiswa.map((a: Mahasiswa, i: number) => (
           <motion.div
-            key={a.id}
+            key={a.kodeMahasiswa}
             className="anggota-card"
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
