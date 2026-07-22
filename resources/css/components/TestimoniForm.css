@@ -68,6 +68,7 @@
   background: var(--color-bg);
   color: var(--color-ink);
   resize: vertical;
+  transition: border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease, transform 180ms ease;
 }
 
 .testimoni-form__field input:focus,
@@ -75,6 +76,52 @@
 .testimoni-form__field textarea:focus {
   outline: none;
   border-color: var(--color-purple);
+  box-shadow: 0 0 0 3px rgba(126, 90, 255, 0.16);
+}
+
+.testimoni-form__field.is-disabled {
+  color: var(--color-muted);
+}
+
+.testimoni-form__field.is-disabled input {
+  cursor: not-allowed;
+  opacity: 0.7;
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--color-muted);
+  transform: scale(0.995);
+}
+
+.testimoni-form__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.testimoni-form__toggle:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-purple);
+  box-shadow: 0 8px 18px rgba(23, 20, 37, 0.08);
+}
+
+.testimoni-form__toggle input {
+  accent-color: var(--color-purple);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.testimoni-form__toggle.is-active {
+  background: rgba(126, 90, 255, 0.1);
+  border-color: var(--color-purple);
+  color: var(--color-purple);
 }
 
 .testimoni-form__submit {

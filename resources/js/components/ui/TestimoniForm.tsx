@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { usePage } from '@inertiajs/react';
 import { motion } from 'motion/react';
 import { X } from 'lucide-react';
 // import type { Testimoni } from '../../types/TestimoniKelas.props';
@@ -13,13 +14,31 @@ interface TestimoniFormProps {
         nama: string;
         type: Testimoni['type'];
         deskripsi: string;
+        is_anonymous: boolean;
     }) => void;
 }
 
 export default function TestimoniForm({ mode, initialData, onClose, onSubmit }: TestimoniFormProps) {
-  const [nama, setNama] = useState(initialData?.nama ?? '');
+  const page = usePage<{ auth: { user?: { name?: string | null } } }>();
+  const defaultName = useMemo(() => page.props.auth.user?.name?.trim() ?? '', [page.props.auth.user?.name]);
+  const [nama, setNama] = useState(initialData?.nama ?? defaultName);
   const [type, setType] = useState<Testimoni['type']>(initialData?.type ?? 'Pendapat');
   const [deskripsi, setDeskripsi] = useState(initialData?.deskripsi ?? '');
+  const [isAnonymous, setIsAnonymous] = useState(false);
+
+  useEffect(() => {
+    if (!initialData) {
+      setNama(defaultName);
+    }
+  }, [defaultName, initialData]);
+
+  const handleAnonymousToggle = (checked: boolean) => {
+    setIsAnonymous(checked);
+
+    if (!checked) {
+      setNama(defaultName || initialData?.nama || '');
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +49,7 @@ export default function TestimoniForm({ mode, initialData, onClose, onSubmit }: 
         nama: nama.trim(),
         type,
         deskripsi: deskripsi.trim(),
+        is_anonymous: isAnonymous,
     });
 };
 
@@ -57,10 +77,36 @@ export default function TestimoniForm({ mode, initialData, onClose, onSubmit }: 
         </div>
 
         <form onSubmit={handleSubmit} className="testimoni-form">
-          <label className="testimoni-form__field">
+          <motion.label
+            className={`testimoni-form__field ${!isAnonymous ? 'is-disabled' : ''}`}
+            initial={{ opacity: 0.96 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
             <span>Nama</span>
-            <input value={nama} onChange={(e) => setNama(e.target.value)} placeholder="Nama kamu" required />
-          </label>
+            <input
+              value={nama}
+              onChange={(e) => setNama(e.target.value)}
+              placeholder="Nama kamu"
+              required
+              disabled={!isAnonymous}
+              title={!isAnonymous ? 'Nama asli tidak bisa diubah' : ''}
+            />
+          </motion.label>
+
+          <motion.label
+            className={`testimoni-form__toggle ${isAnonymous ? 'is-active' : ''}`}
+            initial={{ opacity: 0.92, x: -4 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <input
+              type="checkbox"
+              checked={isAnonymous}
+              onChange={(e) => handleAnonymousToggle(e.target.checked)}
+            />
+            <span>Kirim sebagai anonim</span>
+          </motion.label>
 
           <label className="testimoni-form__field">
             <span>Jenis</span>

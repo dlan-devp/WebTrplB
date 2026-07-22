@@ -21,7 +21,14 @@ class TestimoniController extends Controller
             'nama' => ['required', 'string', 'max:255'],
             'type' => ['required', 'in:Pendapat,Saran,Kritik'],
             'deskripsi' => ['required', 'string'],
+            'is_anonymous' => ['nullable', 'boolean'],
         ]);
+
+        $validated['nama'] = ($validated['is_anonymous'] ?? false)
+            ? $validated['nama']
+            : ($request->user()?->name ?? $validated['nama']);
+
+        $validated['is_anonymous'] = (bool) ($validated['is_anonymous'] ?? false);
 
         Testimoni::create($validated);
 

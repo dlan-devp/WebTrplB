@@ -1,4 +1,4 @@
-import { Search, Plus, Pencil, Trash2, Quote, ArrowLeft } from 'lucide-react';
+import { Search, Plus, Pencil, Trash2, Quote } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 // import AuthModal from '../components/ui/AuthModal';

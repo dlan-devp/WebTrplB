@@ -13,8 +13,6 @@ export default function AuthModal() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // ku isi nanti
   };
 
   return (
