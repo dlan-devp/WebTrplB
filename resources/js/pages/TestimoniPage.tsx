@@ -2,6 +2,7 @@ import { Search, Plus, Pencil, Trash2, Quote, ArrowLeft } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 // import AuthModal from '../components/ui/AuthModal';
+import { router } from '@inertiajs/react';
 import Navbar from '../components/ui/Navbar';
 import TestimoniForm from '../components/ui/TestimoniForm';
 import '../../css/pages/TestimoniPage.css';
@@ -136,7 +137,11 @@ export default function TestimoniPage({testimoni}: PageProps) {
             mode="tambah"
             onClose={() => setShowAddForm(false)}
             onSubmit={(data) => {
-              // Handle form submission for adding new testimoni
+              router.post('/testimoniPage', data, {
+                onSuccess: () => {
+                  setShowAddForm(false);
+                },
+              });
             }}
           />
         )}

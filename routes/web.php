@@ -16,6 +16,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
     Route::post('/testimoni', [MahasiswaController::class, 'store'])
         ->name('testimoni.store');
+    Route::post('/testimoniPage', [TestimoniController::class, 'store'])
+        ->name('testimoni.store');
 });
 
 // Route::middleware(['auth', 'verified'])->group(function () {
