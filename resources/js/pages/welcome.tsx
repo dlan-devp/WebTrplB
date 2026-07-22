@@ -51,16 +51,6 @@ export default function Welcome({ mahasiswa, testimoni }: WelcomeProps) {
     <>
       <Head title="Website TRPL-B" />
 
-      <div className="flex">
-        {mahasiswa.map((mhs) => (
-          <div key={mhs.kodeMahasiswa}>
-            <h1>{mhs.nama}</h1>
-            <p>{mhs.umur}</p>
-            tess
-          </div>
-        ))}
-      </div>
-
       <main className="relative z-10">
         <Navbar />
         <Hero />
