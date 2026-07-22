@@ -45,11 +45,24 @@ test('users with two factor enabled are redirected to two factor challenge', fun
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $this->post(route('login.store'), [
+    $response = $this->from(route('login'))->post(route('login.store'), [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
 
+    $response->assertSessionHasErrors('password');
+    $this->assertSame('Password Salah', session('errors')->get('password')[0]);
+    $this->assertGuest();
+});
+
+test('unknown username returns a distinct login field error', function () {
+    $response = $this->from(route('login'))->post(route('login.store'), [
+        'email' => 'tidak-ada@example.com',
+        'password' => 'password',
+    ]);
+
+    $response->assertSessionHasErrors('email');
+    $this->assertSame('Username Salah', session('errors')->get('email')[0]);
     $this->assertGuest();
 });
 

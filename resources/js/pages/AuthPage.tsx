@@ -65,6 +65,7 @@ function getPasswordStrength(password: string): number {
 export default function AuthPage() {
   const [mode, setMode] = useState<Mode>('login');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const [values, setValues] = useState<Record<FieldId, string>>({
     name: '',
@@ -83,6 +84,7 @@ export default function AuthPage() {
     setErrors({});
     setTouched({});
     setShakeMap({});
+    setLoginError(null);
   }
 
   function handleChange(id: FieldId, val: string) {
@@ -144,6 +146,7 @@ export default function AuthPage() {
         password: values.password,
         password_confirmation: values.password_confirmation,
       }, {
+        onSuccess: () => setLoginError(null),
         onFinish: () => setIsSubmitting(false),
       });
     }
@@ -153,6 +156,28 @@ export default function AuthPage() {
         email: values.email,
         password: values.password,
       }, {
+        onSuccess: () => setLoginError(null),
+        onError: (errors: Record<string, string | string[]>) => {
+          const emailError = Array.isArray(errors.email) ? errors.email[0] : errors.email;
+          const passwordError = Array.isArray(errors.password) ? errors.password[0] : errors.password;
+
+          setErrors((current) => ({
+            ...current,
+            email: emailError ?? current.email,
+            password: passwordError ?? current.password,
+          }));
+          setTouched((current) => ({
+            ...current,
+            email: true,
+            password: true,
+          }));
+          setShakeMap((current) => ({
+            ...current,
+            email: (current.email ?? 0) + 1,
+            password: (current.password ?? 0) + 1,
+          }));
+          setLoginError(emailError ?? passwordError ?? 'Akun Tidak Ada!');
+        },
         onFinish: () => setIsSubmitting(false),
       });
     }
@@ -255,6 +280,24 @@ export default function AuthPage() {
                     ? 'Masuk pakai email yang kamu daftarkan ke admin kelas.'
                     : 'Cuma buat teman-teman kelas TRPL-B, isi data di bawah ini.'}
                 </p>
+
+                <AnimatePresence mode="wait">
+                  {mode === 'login' && loginError && (
+                    <motion.div
+                      key={loginError}
+                      className="auth__error-popup"
+                      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                    >
+                      <span className="auth__error-popup-icon" aria-hidden="true">
+                        !
+                      </span>
+                      <span>{loginError}</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 {mode === 'register' && (
                   <FloatingField
