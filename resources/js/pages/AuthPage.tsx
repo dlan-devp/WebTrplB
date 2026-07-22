@@ -178,7 +178,7 @@ export default function AuthPage() {
             <span className="auth__blob auth__blob--blue" />
           </div>
           <div className="auth__brand-content">
-            <a href="#top" className="auth__brand-logo">
+            <a href="/" className="auth__brand-logo">
               <span className="auth__brand-dot" />
               Kelas TRPL-B
             </a>

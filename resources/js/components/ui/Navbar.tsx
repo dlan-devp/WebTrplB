@@ -24,7 +24,7 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <div className="navbar__inner">
-        <a href="#top" className="navbar__brand">
+        <a href="/#top" className="navbar__brand">
           <span className="navbar__dot" />
           Kelas TRPL-B
         </a>
