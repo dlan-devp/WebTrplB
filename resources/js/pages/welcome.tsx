@@ -56,7 +56,7 @@ export default function Welcome({ mahasiswa, testimoni }: WelcomeProps) {
         <Hero />
         <JadwalKelas />
         <Pengumuman />
-        <AnggotaKelas />
+        <AnggotaKelas mahasiswa={mahasiswa} />
         <Galeri />
         <LinkGrup />
         <ForumDiskusi />
