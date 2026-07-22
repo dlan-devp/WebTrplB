@@ -4,11 +4,11 @@ import '../../../css/components/Navbar.css';
 import { logout } from '@/routes';
 
 const NAV_LINKS = [
-  { href: '#jadwal', label: 'Jadwal' },
-  { href: '#pengumuman', label: 'Pengumuman' },
-  { href: '#anggota', label: 'Anggota' },
-  { href: '#galeri', label: 'Galeri' },
-  { href: '#forum', label: 'Forum' },
+  { href: '/#jadwal', label: 'Jadwal' },
+  { href: '/#pengumuman', label: 'Pengumuman' },
+  { href: '/#anggota', label: 'Anggota' },
+  { href: '/#galeri', label: 'Galeri' },
+  { href: '/#forum', label: 'Forum' },
   { href: '/testimoni', label: 'Testimoni' },
 ];
 
