@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('nama');
             $table->integer('umur');
-            $table->string('fakultas');
-            $table->string('jurusan');
-            $table->string('prodi');
+            $table->string('fakultas')->default('FTK');
+            $table->string('jurusan')->default('Teknik Informatika');
+            $table->string('prodi')->default('TRPL');
             $table->string('hobi')->nullable();
             $table->timestamps();
         });
