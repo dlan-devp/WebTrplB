@@ -37,7 +37,11 @@ class TestimoniResource extends Resource
                 Select::make('type')
                     ->required()
                     ->placeholder('Pilih Type')
-                    ->options(['Saran', 'Kritik', 'Pendapat']),
+                    ->options([
+                        'Pendapat' => 'Pendapat',
+                        'Saran' => 'Saran',
+                        'Kritik' => 'Kritik',
+                    ]),
                 Textarea::make('deskripsi')
                     ->required()
                     ->columnSpanFull(),
