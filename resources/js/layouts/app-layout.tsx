@@ -1,5 +1,6 @@
 import Footer from '@/components/ui/Footer';
 import Navbar from '@/components/ui/Navbar';
+import useMomentumScroll from '@/animation/MomentumScroll';
 
 
 export default function AppLayout({
@@ -7,8 +8,9 @@ export default function AppLayout({
 }: {
     children: React.ReactNode;
 }) {
+    useMomentumScroll();
     return (
-        <main className="min-h-screen w-full lg:w-350 m-auto">
+        <main className="container min-h-screen w-full relative">
             <Navbar />
             {children}
             <Footer />

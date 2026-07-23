@@ -1,14 +1,8 @@
 .testimoni-page {
-  min-height: 100vh;
   background: var(--color-bg);
 }
 
 /* --- Content --- */
-.tpage-content {
-  width: 1300px;
-  margin: 0 auto;
-  padding: 56px 0 12px;
-}
 
 .tpage-intro {
   max-width: 640px;
