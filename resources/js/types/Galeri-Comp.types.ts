@@ -1,4 +1,4 @@
-export interface FoGaleri {
+export interface FotoGaleri {
   id: string;
   url: string;
   caption: string;
