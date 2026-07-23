@@ -10,10 +10,12 @@ export default function AppLayout({
 }) {
     useMomentumScroll();
     return (
-        <main className="container min-h-screen w-full relative">
+        <>
             <Navbar />
-            {children}
+            <main className="container min-h-full w-full relative">
+                {children}
+            </main>
             <Footer />
-        </main>
+        </>
     );
 }
