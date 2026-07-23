@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { MessageCircle, Hash, FolderOpen, ArrowUpRight } from 'lucide-react';
 import { linkGrup } from '../../../../database/dummyData';
 import type { LinkGrup } from '../../types/LinkGrup-Comp.props';
-import SectionHeading from './SectionHeading';
+import SectionHeading from './HomePage-SectionHeading';
 import '../../../css/components/LinkGrup.css';
 
 const ICON: Record<LinkGrup['tipe'], React.ComponentType<{ size?: number }>> = {

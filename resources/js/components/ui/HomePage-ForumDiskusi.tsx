@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { MessageSquare, ArrowRight } from 'lucide-react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { threadDiskusi } from '../../../../database/dummyData';
-import SectionHeading from './SectionHeading';
+import SectionHeading from './HomePage-SectionHeading';
 import '../../../css/components/ForumDiskusi.css';
 import AllPageAuthPromptModal from './AllPage-AuthPromptModal';
 

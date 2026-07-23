@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { Plus, Quote, ArrowRight } from 'lucide-react';
 // import { testimoniKelas as testimoniAwal } from '../../../../database/dummyData';
 // import type { Testimoni } from '../../types/TestimoniKelas.props';
-import SectionHeading from './SectionHeading';
+import SectionHeading from './HomePage-SectionHeading';
 import '../../../css/components/TestimoniKelas.css';
 import TestimoniForm from './InputComp-TestimoniForm';
 import AllPageAuthPromptModal from './AllPage-AuthPromptModal';

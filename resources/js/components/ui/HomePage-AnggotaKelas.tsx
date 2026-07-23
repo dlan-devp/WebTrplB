@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import SectionHeading from './SectionHeading';
+import SectionHeading from './HomePage-SectionHeading';
 import '../../../css/components/AnggotaKelas.css';
 import type { Mahasiswa } from '@/types/Mahasiswa-Comp.types';
 

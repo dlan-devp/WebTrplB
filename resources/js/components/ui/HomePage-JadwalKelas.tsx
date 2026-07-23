@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { jadwalKelas } from '../../../../database/dummyData';
 import type { Jadwal } from '../../types/JadwalKelas-Comp.types';
-import SectionHeading from './SectionHeading';
+import SectionHeading from './HomePage-SectionHeading';
 import '../../../css/components/JadwalKelas.css';
 
 const HARI_URUTAN: Jadwal['hari'][] = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];

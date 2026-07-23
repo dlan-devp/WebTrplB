@@ -48,7 +48,7 @@ export default function GeneralCompPagination({ currentPage, totalPages, onPageC
         type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition hover:border-violet-400 hover:text-violet-600 disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex h-9 w-9 items-center justify-center border border-slate-200 text-slate-600 transition hover:border-violet-400 hover:text-violet-600 disabled:cursor-not-allowed disabled:opacity-50"
         aria-label="Halaman sebelumnya"
       >
         <ChevronLeft size={16} />
@@ -70,7 +70,7 @@ export default function GeneralCompPagination({ currentPage, totalPages, onPageC
             key={page}
             type="button"
             onClick={() => onPageChange(page)}
-            className={`flex h-9 min-w-9 items-center justify-center rounded-full px-3 text-sm font-medium transition ${
+            className={`flex h-9 min-w-9 items-center justify-center px-3 text-sm font-medium transition ${
               isActive
                 ? 'bg-violet-600 text-white shadow-sm'
                 : 'border border-slate-200 text-slate-600 hover:border-violet-400 hover:text-violet-600'
@@ -86,7 +86,7 @@ export default function GeneralCompPagination({ currentPage, totalPages, onPageC
         type="button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition hover:border-violet-400 hover:text-violet-600 disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex h-9 w-9 items-center justify-center border border-slate-200 text-slate-600 transition hover:border-violet-400 hover:text-violet-600 disabled:cursor-not-allowed disabled:opacity-50"
         aria-label="Halaman berikutnya"
       >
         <ChevronRight size={16} />
