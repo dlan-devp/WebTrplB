@@ -198,6 +198,12 @@ h1, h2, h3, .display {
   }
 }
 
-html{
+html {
   scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
