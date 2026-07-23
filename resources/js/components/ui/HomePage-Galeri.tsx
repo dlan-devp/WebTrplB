@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { fotoGaleri } from '../../../../database/dummyData';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/Galeri.css';
-import type { FotoGaleri } from '../../types/Galeri.props';
+import type { FotoGaleri } from '../../types/Galeri-Comp.types';
 
 export default function Galeri() {
   return (

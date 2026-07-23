@@ -6,9 +6,9 @@ import { router, usePage } from '@inertiajs/react';
 import useMomentumScroll from '@/animation/MomentumScroll';
 import Navbar from '../components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
-import TestimoniForm from '../components/ui/TestimoniForm';
+import TestimoniForm from '../components/ui/InputComp-TestimoniForm';
 import '../../css/pages/TestimoniPage.css';
-import type { Testimoni } from '@/types/Testimoni.props';
+import type { Testimoni } from '@/types/Testimoni-Page.props';
 
 // import { testimoniKelas as testimoniAwal } from '../../../database/dummyData';
 

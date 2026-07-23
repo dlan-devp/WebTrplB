@@ -3,15 +3,15 @@ import { motion } from 'motion/react';
 import '../../../css/components/Navbar.css';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { logout } from '@/routes';
-import PreviousPage from './PreviousPage';
+import PreviousPageButton from './ButtonComp-PreviousPageButton';
 
 const NAV_LINKS = [
   { href: '/#jadwal', label: 'Jadwal' },
   { href: '/#pengumuman', label: 'Pengumuman' },
   { href: '/#anggota', label: 'Anggota' },
   { href: '/#galeri', label: 'Galeri' },
-  { href: '/#forum', label: 'Forum' },
-  { href: '/#testimoni', label: 'Testimoni' },
+  { href: '/forum', label: 'Forum' },
+  { href: '/testimoni', label: 'Testimoni' },
 ];
 
 export default function Navbar() {
@@ -29,7 +29,7 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <div className="navbar__inner">
-        {!isHomePage && <PreviousPage />}
+        {!isHomePage && <PreviousPageButton />}
         <a href="/#top" className="navbar__brand">
           <span className="navbar__dot" />
           Kelas TRPL-B
@@ -46,7 +46,7 @@ export default function Navbar() {
             Logout
           </Link>
         ) : (
-          <a href="/public-auth" className="navbar__cta">
+          <a href="/user-auth" className="navbar__cta">
             Login / Register
           </a>
         )}

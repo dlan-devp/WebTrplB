@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'motion/react';
 import { anggotaKelas } from '../../../../database/dummyData';
 import '../../../css/components/Hero.css';
-import { Mahasiswa } from '@/types/AnggotaKelas.props';
+import { Mahasiswa } from '@/types/Mahasiswa-Comp.types';
 
 interface HeroProps{
   mahasiswa: Mahasiswa[];

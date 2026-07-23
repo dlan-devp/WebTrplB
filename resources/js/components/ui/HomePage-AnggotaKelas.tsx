@@ -1,9 +1,7 @@
 import { motion } from 'motion/react';
-// import { anggotaKelas } from '../../../../database/dummyData';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/AnggotaKelas.css';
-// import type { Mahasiswa } from '../../types/AnggotaKelas.props';
-import type { Mahasiswa } from '@/types/AnggotaKelas.props';
+import type { Mahasiswa } from '@/types/Mahasiswa-Comp.types';
 
 interface MahasiswaProps{
   mahasiswa: Mahasiswa[];
@@ -21,7 +19,7 @@ export default function AnggotaKelas({mahasiswa}: MahasiswaProps) {
       <div className="anggota-grid">
         {mahasiswa.map((a: Mahasiswa, i: number) => (
           <motion.div
-            key={a.kodeMahasiswa}
+            key={a.nim}
             className="anggota-card"
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}

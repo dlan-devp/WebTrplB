@@ -3,6 +3,8 @@ import { MessageSquare } from 'lucide-react';
 import { threadDiskusi } from '../../../../database/dummyData';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/ForumDiskusi.css';
+import { ArrowRight } from 'lucide-react';
+import { Link } from '@inertiajs/react';
 
 export default function ForumDiskusi() {
   return (
@@ -38,7 +40,9 @@ export default function ForumDiskusi() {
         ))}
       </div>
 
-      <a href="#" className="forum-cta">Mulai Diskusi Baru →</a>
+      <Link href="/testimoni" className="forum-page-nav">
+        Buka diskusi baru <ArrowRight size={18} />
+      </Link>
     </section>
   );
 }

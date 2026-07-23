@@ -5,9 +5,9 @@
 
 /* --- Content --- */
 .tpage-content {
-  max-width: 1120px;
+  width: 1300px;
   margin: 0 auto;
-  padding: 56px 24px 12px;
+  padding: 56px 0 12px;
 }
 
 .tpage-intro {

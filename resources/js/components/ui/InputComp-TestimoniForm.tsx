@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import { X } from 'lucide-react';
 // import type { Testimoni } from '../../types/TestimoniKelas.props';
 import '../../../css/components/TestimoniForm.css';
-import type { Testimoni } from '@/types/Testimoni.props';
+import type { Testimoni } from '@/types/Testimoni-Page.props';
 
 interface TestimoniFormProps {
     mode: 'tambah' | 'edit';

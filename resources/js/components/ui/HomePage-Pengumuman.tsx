@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { pengumuman } from '../../../../database/dummyData';
-import type { Pengumuman } from '../../types/Pengumuman.props';
+import type { Pengumuman } from '../../types/Pengumuman-Comp.props';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/Pengumuman.css';
 

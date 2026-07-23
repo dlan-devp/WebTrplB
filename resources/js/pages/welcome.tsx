@@ -2,21 +2,21 @@ import '../../css/app.css';
 
 import { Head } from '@inertiajs/react';
 
-import AnggotaKelas from '@/components/ui/AnggotaKelas';
+import AnggotaKelas from '@/components/ui/HomePage-AnggotaKelas';
 import Footer from '@/components/ui/Footer';
-import ForumDiskusi from '@/components/ui/ForumDiskusi';
-import Galeri from '@/components/ui/Galeri';
-import Hero from '@/components/ui/Hero';
-import JadwalKelas from '@/components/ui/JadwalKelas';
-import LinkGrup from '@/components/ui/LinkGrup';
+import ForumDiskusi from '@/components/ui/HomePage-ForumDiskusi';
+import Galeri from '@/components/ui/HomePage-Galeri';
+import Hero from '@/components/ui/HomePage-Hero';
+import JadwalKelas from '@/components/ui/HomePage-JadwalKelas';
+import LinkGrup from '@/components/ui/HomePage-LinkGrup';
 import Navbar from '@/components/ui/Navbar';
-import Pengumuman from '@/components/ui/Pengumuman';
-import TestimoniKelas from '@/components/ui/TestimoniKelas';
+import Pengumuman from '@/components/ui/HomePage-Pengumuman';
+import TestimoniKelas from '@/components/ui/HomePage-TestimoniKelas';
 
 import useMomentumScroll from '@/animation/MomentumScroll';
 
-import type { Mahasiswa } from '@/types/AnggotaKelas.props';
-import type { Testimoni } from '@/types/Testimoni.props';
+import type { Mahasiswa } from '@/types/Mahasiswa-Comp.types';
+import type { Testimoni } from '@/types/Testimoni-Page.props';
 
 interface WelcomeProps {
   mahasiswa: Mahasiswa[];
@@ -30,16 +30,16 @@ export default function Welcome({ mahasiswa, testimoni }: WelcomeProps) {
     <>
       <Head title="Website TRPL-B" />
 
-      <main className="relative z-10">
+      <main className="relative w-350 m-auto">
         <Navbar />
         <Hero mahasiswa={mahasiswa} />
+        <AnggotaKelas mahasiswa={mahasiswa} />
         <JadwalKelas />
         <Pengumuman />
-        <AnggotaKelas mahasiswa={mahasiswa} />
-        <Galeri />
-        <LinkGrup />
         <ForumDiskusi />
+        <Galeri />
         <TestimoniKelas testimoni={testimoni} />
+        <LinkGrup />
         <Footer />
       </main>
     </>

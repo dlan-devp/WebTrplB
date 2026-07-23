@@ -1,14 +1,10 @@
-import type {
-  JadwalItem,
-  PengumumanItem,
-  AnggotaItem,
-  FotoGaleri,
-  LinkGrupItem,
-  ThreadDiskusi,
-  TestimoniItem,
-} from '../resources/js/types/home-types';
+import type { Pengumuman } from "@/types/Pengumuman-Comp.props";
+import type { Jadwal } from "@/types/JadwalKelas-Comp.types";
+import type { Mahasiswa } from "@/types/Mahasiswa-Comp.types";
+import type { LinkGrup } from "@/types/LinkGrup-Comp.props";
+import type { FotoGaleri } from "@/types/Galeri-Comp.types";
 
-export const jadwalKelas: JadwalItem[] = [
+export const jadwalKelas: Jadwal[] = [
   { id: 'j1', hari: 'Senin', waktu: '08:00 - 10:00', matkul: 'Struktur Data', dosen: 'Bu Rina', ruang: 'R.301', tipe: 'teori' },
   { id: 'j2', hari: 'Senin', waktu: '13:00 - 15:00', matkul: 'Praktikum Basis Data', dosen: 'Pak Yudi', ruang: 'Lab 2', tipe: 'praktikum' },
   { id: 'j3', hari: 'Selasa', waktu: '10:00 - 12:00', matkul: 'Aljabar Linear', dosen: 'Bu Sari', ruang: 'R.204', tipe: 'teori' },
@@ -17,24 +13,24 @@ export const jadwalKelas: JadwalItem[] = [
   { id: 'j6', hari: 'Jumat', waktu: '09:00 - 11:00', matkul: 'Manajemen Proyek TI', dosen: 'Bu Dewi', ruang: 'R.108', tipe: 'teori' },
 ];
 
-export const pengumuman: PengumumanItem[] = [
+export const pengumuman: Pengumuman[] = [
   { id: 'p1', judul: 'Deadline Laporan Praktikum Basis Data', isi: 'Kumpulkan laporan bab 3-4 lewat Drive kelas paling lambat malam ini.', tanggal: '20 Jul 2026', urgensi: 'deadline' },
   { id: 'p2', judul: 'Kelas Aljabar Linear diganti jadi Online', isi: 'Bu Sari ada acara di luar kota, kelas Selasa dipindah ke Zoom.', tanggal: '19 Jul 2026', urgensi: 'penting' },
   { id: 'p3', judul: 'Foto dokumentasi study tour sudah diupload', isi: 'Cek folder Galeri untuk foto-foto kegiatan minggu lalu.', tanggal: '17 Jul 2026', urgensi: 'info' },
 ];
 
-export const anggotaKelas: AnggotaItem[] = [
-  { id: 'a1', nama: 'Bagas Pratama', inisial: 'BP', online: true },
-  { id: 'a2', nama: 'Citra Ayu', inisial: 'CA', online: true },
-  { id: 'a3', nama: 'Dimas Aditya', inisial: 'DA' },
-  { id: 'a4', nama: 'Eka Putri', inisial: 'EP', online: true },
-  { id: 'a5', nama: 'Farhan Maulana', inisial: 'FM' },
-  { id: 'a6', nama: 'Gita Lestari', inisial: 'GL' },
-  { id: 'a7', nama: 'Hafiz Ramadhan', inisial: 'HR' },
-  { id: 'a8', nama: 'Indah Sari', inisial: 'IS', online: true },
+export const anggotaKelas: Mahasiswa[] = [
+  { nim: 'a1', nama: 'Bagas Pratama', inisial: 'BP', online: true },
+  { nim: 'a2', nama: 'Citra Ayu', inisial: 'CA', online: true },
+  { nim: 'a3', nama: 'Dimas Aditya', inisial: 'DA' },
+  { nim: 'a4', nama: 'Eka Putri', inisial: 'EP', online: true },
+  { nim: 'a5', nama: 'Farhan Maulana', inisial: 'FM' },
+  { nim: 'a6', nama: 'Gita Lestari', inisial: 'GL' },
+  { nim: 'a7', nama: 'Hafiz Ramadhan', inisial: 'HR' },
+  { nim: 'a8', nama: 'Indah Sari', inisial: 'IS', online: true },
 ];
 
-export const fotoGaleri: FotoGaleri[] = [
+export const fotoGaleri: FotoGaleri = [
   { id: 'g1', url: '/images/galeri-1.jpg', caption: 'Study tour ke kantor startup' },
   { id: 'g2', url: '/images/galeri-2.jpg', caption: 'Praktikum jaringan bareng' },
   { id: 'g3', url: '/images/galeri-3.jpg', caption: 'Buka bersama kelas' },
@@ -42,7 +38,7 @@ export const fotoGaleri: FotoGaleri[] = [
   { id: 'g5', url: '/images/galeri-5.jpg', caption: 'Futsal seru-seruan' },
 ];
 
-export const linkGrup: LinkGrupItem[] = [
+export const linkGrup: LinkGrup = [
   { id: 'l1', nama: 'Grup WhatsApp Kelas', deskripsi: 'Info harian & japri dosen', url: '#', tipe: 'whatsapp' },
   { id: 'l2', nama: 'Server Discord', deskripsi: 'Diskusi tugas & nongkrong', url: '#', tipe: 'discord' },
   { id: 'l3', nama: 'Google Drive Kelas', deskripsi: 'Materi, tugas, dan arsip', url: '#', tipe: 'drive' },

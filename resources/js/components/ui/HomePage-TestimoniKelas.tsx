@@ -6,8 +6,8 @@ import { Plus, X, Quote, LogIn, ArrowRight } from 'lucide-react';
 // import type { Testimoni } from '../../types/TestimoniKelas.props';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/TestimoniKelas.css';
-import TestimoniForm from './TestimoniForm';
-import type { Testimoni } from '@/types/Testimoni.props';
+import TestimoniForm from './InputComp-TestimoniForm';
+import type { Testimoni } from '@/types/Testimoni-Page.props';
 
 const TIPE_LABEL: Record<Testimoni['type'], string> = {
   Pendapat: 'Pendapat',
@@ -99,15 +99,6 @@ export default function TestimoniKelas({testimoni}: NavbarProps) {
     setAuthPromptMode(null);
   };
 
-  const handleAddButtonClick = () => {
-    if (auth.user) {
-      setShowForm(true);
-      return;
-    }
-
-    openAuthPrompt('tambah');
-  };
-
   const handleGoToTestimoniPage = (e: MouseEvent<Element>) => {
     if (auth.user) {
       return;
@@ -119,7 +110,7 @@ export default function TestimoniKelas({testimoni}: NavbarProps) {
 
   const handleContinueToAuth = () => {
     closeAuthPrompt();
-    router.visit('/public-auth');
+    router.visit('/user-auth');
   };
 
   const authPromptMessage = authPromptMode === 'nav'
@@ -134,14 +125,6 @@ export default function TestimoniKelas({testimoni}: NavbarProps) {
           title="Testimoni Kelas"
           subtitle="Lorem ipsum dolor sit amet — consectetur adipiscing elit."
         />
-        <div>
-          <button className="testimoni-add-btn" onClick={handleAddButtonClick} type="button">
-            <Plus size={16} /> Tambah Testimoni
-          </button>
-          <Link href="/testimoni" className="testimoni-page-nav" onClick={handleGoToTestimoniPage}>
-            Atau ke halamannya <ArrowRight size={18} />
-          </Link>
-        </div>
       </div>
 
       <div
@@ -225,6 +208,9 @@ export default function TestimoniKelas({testimoni}: NavbarProps) {
           </motion.div>
         )}
       </AnimatePresence>
+      <Link href="/testimoni" className="testimoni-page-nav" onClick={handleGoToTestimoniPage}>
+        Buat testimonimu <ArrowRight size={18} />
+      </Link>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { MessageCircle, Hash, FolderOpen, ArrowUpRight } from 'lucide-react';
 import { linkGrup } from '../../../../database/dummyData';
-import type { LinkGrup } from '../../types/LinkGrup.props';
+import type { LinkGrup } from '../../types/LinkGrup-Comp.props';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/LinkGrup.css';
 
@@ -12,6 +12,8 @@ const ICON: Record<LinkGrup['tipe'], React.ComponentType<{ size?: number }>> = {
 };
 
 export default function LinkGrup() {
+  const links: LinkGrup[] = Array.isArray(linkGrup) ? linkGrup : [linkGrup];
+
   return (
     <section id="grup" className="section">
       <SectionHeading
@@ -21,7 +23,7 @@ export default function LinkGrup() {
       />
 
       <div className="linkgrup-grid">
-        {linkGrup.map((link: LinkGrup, i: number) => {
+        {links.map((link: LinkGrup, i: number) => {
           const Icon = ICON[link.tipe];
           return (
             <motion.a

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 
-class PublicAuthController extends Controller
+class UserAuthController extends Controller
 {
     public function index()
     {
