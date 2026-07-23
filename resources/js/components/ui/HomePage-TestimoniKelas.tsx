@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Plus, X, Quote, LogIn, ArrowRight } from 'lucide-react';
+import { Plus, Quote, ArrowRight } from 'lucide-react';
 // import { testimoniKelas as testimoniAwal } from '../../../../database/dummyData';
 // import type { Testimoni } from '../../types/TestimoniKelas.props';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/TestimoniKelas.css';
 import TestimoniForm from './InputComp-TestimoniForm';
+import HomePageAuthPromptModal from './HomePage-AuthPromptModal';
 import type { Testimoni } from '@/types/Testimoni-Page.props';
 
 const TIPE_LABEL: Record<Testimoni['type'], string> = {
@@ -162,51 +163,12 @@ export default function TestimoniKelas({testimoni}: NavbarProps) {
           />
         )}
 
-        {showAuthPrompt && (
-          <motion.div
-            className="testimoni-modal-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeAuthPrompt}
-          >
-            <motion.div
-              className="testimoni-modal"
-              initial={{ opacity: 0, y: 24, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.96 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="testimoni-modal__head">
-                <h3 className="display">Login dulu</h3>
-                <button
-                  className="testimoni-modal__close"
-                  onClick={closeAuthPrompt}
-                  aria-label="Tutup"
-                  type="button"
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              <div className="testimoni-form">
-                <p className="testimoni-card__pesan" style={{ marginBottom: '1rem' }}>
-                  {authPromptMessage}
-                </p>
-                <button
-                  className="testimoni-form__submit"
-                  type="button"
-                  onClick={handleContinueToAuth}
-                  style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                  <LogIn size={16} style={{ marginRight: '0.5rem' }} />
-                  Masuk / Daftar
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
+        <HomePageAuthPromptModal
+          open={showAuthPrompt}
+          description={authPromptMessage}
+          onClose={closeAuthPrompt}
+          onContinue={handleContinueToAuth}
+        />
       </AnimatePresence>
       <Link href="/testimoni" className="testimoni-page-nav" onClick={handleGoToTestimoniPage}>
         Buat testimonimu <ArrowRight size={18} />

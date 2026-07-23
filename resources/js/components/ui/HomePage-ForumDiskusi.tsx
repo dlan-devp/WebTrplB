@@ -1,12 +1,38 @@
+import { useState } from 'react';
 import { motion } from 'motion/react';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, ArrowRight } from 'lucide-react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { threadDiskusi } from '../../../../database/dummyData';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/ForumDiskusi.css';
-import { ArrowRight } from 'lucide-react';
-import { Link } from '@inertiajs/react';
+import HomePageAuthPromptModal from './HomePage-AuthPromptModal';
 
 export default function ForumDiskusi() {
+  const { auth } = usePage<{ auth: { user?: { id?: string | null; name?: string | null } } }>().props;
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+
+  const openAuthPrompt = () => {
+    setShowAuthPrompt(true);
+  };
+
+  const closeAuthPrompt = () => {
+    setShowAuthPrompt(false);
+  };
+
+  const handleGoToForum = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (auth.user) {
+      return;
+    }
+
+    e.preventDefault();
+    openAuthPrompt();
+  };
+
+  const handleContinueToAuth = () => {
+    closeAuthPrompt();
+    router.visit('/user-auth');
+  };
+
   return (
     <section id="forum" className="section section--tint">
       <SectionHeading
@@ -40,9 +66,16 @@ export default function ForumDiskusi() {
         ))}
       </div>
 
-      <Link href="/testimoni" className="forum-page-nav">
-        Buka diskusi baru <ArrowRight size={18} />
+      <Link href="/forum" className="forum-page-nav" onClick={handleGoToForum}>
+        Buat diskusi baru <ArrowRight size={18} />
       </Link>
+
+      <HomePageAuthPromptModal
+        open={showAuthPrompt}
+        description="Kamu perlu masuk terlebih dahulu sebelum membuat atau membuka diskusi baru."
+        onClose={closeAuthPrompt}
+        onContinue={handleContinueToAuth}
+      />
     </section>
   );
 }
