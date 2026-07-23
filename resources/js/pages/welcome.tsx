@@ -30,7 +30,7 @@ export default function Welcome({ mahasiswa, testimoni }: WelcomeProps) {
     <>
       <Head title="Website TRPL-B" />
 
-      <main className="relative w-350 m-auto">
+      <main className="relative w-full lg:w-350 m-auto">
         <Navbar />
         <Hero mahasiswa={mahasiswa} />
         <AnggotaKelas mahasiswa={mahasiswa} />
