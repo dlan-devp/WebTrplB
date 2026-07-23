@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('kodeRole')->references('kodeRole')->on('tb_role')->onDelete('cascade');
+
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -51,4 +51,9 @@ class User extends Authenticatable implements PasskeyUser
     public function role(){
         return $this->belongsTo(Role::class, 'kodeRole', 'kodeRole');
     }
+
+    public function testimoni()
+    {
+        return $this->hasMany(Testimoni::class, 'user_id', 'id');
+    }
 }

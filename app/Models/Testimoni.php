@@ -13,10 +13,10 @@ class Testimoni extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['nama', 'type', 'deskripsi', 'is_anonymous', 'user_id'];
+    protected $fillable = ['nama','user_id', 'type', 'deskripsi', 'is_anonymous', 'user_id'];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('tb_testimoni', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->boolean('is_anonymous')->default(false);
             $table->string('nama');
             $table->string('type');
             $table->text('deskripsi');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
