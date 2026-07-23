@@ -63,8 +63,6 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
 
   return (
     <div className="testimoni-page">
-      <Navbar />
-
       <div className="tpage-content">
         <div className="tpage-intro">
           <span className="section-heading__eyebrow mono">Suara Anak Kelas</span>
@@ -180,8 +178,6 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
           />
         )}
       </AnimatePresence>
-
-      <Footer />
     </div>
   );
 }

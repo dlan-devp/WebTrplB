@@ -8,8 +8,6 @@ import { buatId } from '@/components/utils/ForumPage.utils';
 import ThreadCard from '@/components/ui/ForumPage-ThreadCard';
 import ThreadDetail from '@/components/ui/ForumPage-ThreadDetail';
 import CreateThreadModal from '@/components/ui/ForumPage-CreateThreadModal';
-import Navbar from '@/components/ui/Navbar';
-import Footer from '@/components/ui/Footer';
 import useMomentumScroll from '@/animation/MomentumScroll';
 
 const FILTER_TABS: { value: FilterKategori; label: string }[] = [
@@ -95,8 +93,7 @@ export default function ForumPage() {
   useMomentumScroll()
 
   return (
-    <div className="w-full lg:w-325 m-auto bg-slate-50">
-      <Navbar />
+    <div className="min-h-screen w-full lg:w-325 m-auto bg-slate-50">
       <AnimatePresence mode="wait">
         {activePost ? (
           <ThreadDetail
@@ -205,8 +202,6 @@ export default function ForumPage() {
       </AnimatePresence>
 
       <CreateThreadModal open={modalOpen} onClose={() => setModalOpen(false)} onSubmit={buatPost} />
-      
-      <Footer />
     </div>
   );
 }

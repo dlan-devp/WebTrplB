@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { router } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'motion/react';
 import '../../css/components/AuthPage.css';
-import Navbar from '@/components/ui/Navbar';
 
 type Mode = 'login' | 'register';
 type FieldId = 'name' | 'email' | 'password' | 'password_confirmation';
@@ -185,13 +184,9 @@ export default function AuthPage() {
 
   return (
     <>
-
       <Head title="Masuk / Daftar" />
 
-      <Navbar />
-  
       <div className="auth">
-
         <motion.div
           className="auth__brand"
           initial={{ opacity: 0, x: -16 }}
