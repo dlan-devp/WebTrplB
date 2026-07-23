@@ -8,6 +8,7 @@ interface VoteControlProps {
   onVote: (next: VoteValue) => void;
   size?: 'sm' | 'md';
   orientation?: 'vertical' | 'horizontal';
+  readOnly?: boolean;
 }
 
 export default function VoteControl({
@@ -16,6 +17,7 @@ export default function VoteControl({
   onVote,
   size = 'md',
   orientation = 'vertical',
+  readOnly = false,
 }: VoteControlProps) {
   const iconSize = size === 'sm' ? 14 : 18;
 
@@ -32,19 +34,21 @@ export default function VoteControl({
           : 'flex items-center gap-1.5'
       }
     >
-      <motion.button
-        type="button"
-        whileTap={{ scale: 0.8 }}
-        onClick={() => handleClick(1)}
-        aria-label="Upvote"
-        className={`p-1 transition-colors ${
-          userVote === 1
-            ? 'text-violet-600 bg-violet-50'
-            : 'text-slate-400 hover:text-violet-600 hover:bg-violet-50'
-        }`}
-      >
-        <ChevronUp size={iconSize} strokeWidth={2.5} />
-      </motion.button>
+      {!readOnly && (
+        <motion.button
+          type="button"
+          whileTap={{ scale: 0.8 }}
+          onClick={() => handleClick(1)}
+          aria-label="Upvote"
+          className={`p-1 transition-colors ${
+            userVote === 1
+              ? 'text-violet-600 bg-violet-50'
+              : 'text-slate-400 hover:text-violet-600 hover:bg-violet-50'
+          }`}
+        >
+          <ChevronUp size={iconSize} strokeWidth={2.5} />
+        </motion.button>
+      )}
 
       <motion.span
         key={votes}
@@ -64,19 +68,21 @@ export default function VoteControl({
         {votes}
       </motion.span>
 
-      <motion.button
-        type="button"
-        whileTap={{ scale: 0.8 }}
-        onClick={() => handleClick(-1)}
-        aria-label="Downvote"
-        className={`p-1 transition-colors ${
-          userVote === -1
-            ? 'text-blue-600 bg-blue-50'
-            : 'text-slate-400 hover:text-blue-600 hover:bg-blue-50'
-        }`}
-      >
-        <ChevronDown size={iconSize} strokeWidth={2.5} />
-      </motion.button>
+      {!readOnly && (
+        <motion.button
+          type="button"
+          whileTap={{ scale: 0.8 }}
+          onClick={() => handleClick(-1)}
+          aria-label="Downvote"
+          className={`p-1 transition-colors ${
+            userVote === -1
+              ? 'text-blue-600 bg-blue-50'
+              : 'text-slate-400 hover:text-blue-600 hover:bg-blue-50'
+          }`}
+        >
+          <ChevronDown size={iconSize} strokeWidth={2.5} />
+        </motion.button>
+      )}
     </div>
   );
 }

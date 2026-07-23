@@ -2,10 +2,10 @@
 
 use App\Models\User;
 
-it('redirects guests to the login page when they visit the forum', function () {
+it('allows guests to browse the forum page in read-only mode', function () {
     $response = $this->get(route('forum'));
 
-    $response->assertRedirect(route('login'));
+    $response->assertOk();
 });
 
 it('allows authenticated users to visit the forum page', function () {

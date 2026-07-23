@@ -7,7 +7,7 @@ import { Plus, Quote, ArrowRight } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/TestimoniKelas.css';
 import TestimoniForm from './InputComp-TestimoniForm';
-import HomePageAuthPromptModal from './HomePage-AuthPromptModal';
+import AllPageAuthPromptModal from './AllPage-AuthPromptModal';
 import type { Testimoni } from '@/types/Testimoni-Page.props';
 
 const TIPE_LABEL: Record<Testimoni['type'], string> = {
@@ -114,9 +114,14 @@ export default function TestimoniKelas({testimoni}: NavbarProps) {
     router.visit('/user-auth');
   };
 
+  const handleContinueBrowsing = () => {
+    closeAuthPrompt();
+    router.visit('/testimoni');
+  };
+
   const authPromptMessage = authPromptMode === 'nav'
-    ? 'Kamu perlu masuk terlebih dahulu sebelum melihat halaman testimoni.'
-    : 'Kamu perlu masuk terlebih dahulu sebelum menambahkan testimoni.';
+    ? 'Kamu masih bisa melihat-lihat testimoni, tetapi untuk menambah atau mengedit data perlu masuk.'
+    : 'Kamu masih bisa melihat-lihat testimoni, tetapi untuk menambah atau mengedit data perlu masuk.';
 
   return (
     <section id="testimoni" className="section">
@@ -163,11 +168,12 @@ export default function TestimoniKelas({testimoni}: NavbarProps) {
           />
         )}
 
-        <HomePageAuthPromptModal
+        <AllPageAuthPromptModal
           open={showAuthPrompt}
           description={authPromptMessage}
           onClose={closeAuthPrompt}
-          onContinue={handleContinueToAuth}
+          onLogin={handleContinueToAuth}
+          onContinue={handleContinueBrowsing}
         />
       </AnimatePresence>
       <Link href="/testimoni" className="testimoni-page-nav" onClick={handleGoToTestimoniPage}>

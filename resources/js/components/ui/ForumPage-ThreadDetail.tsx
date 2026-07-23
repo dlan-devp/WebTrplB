@@ -12,6 +12,7 @@ interface ThreadDetailProps {
   onBack: () => void;
   onUpdatePost: (updater: (post: DiskusiPost) => DiskusiPost) => void;
   onDeletePost: () => void;
+  canInteract?: boolean;
 }
 
 const KATEGORI_STYLE: Record<DiskusiPost['kategori'], string> = {
@@ -19,7 +20,7 @@ const KATEGORI_STYLE: Record<DiskusiPost['kategori'], string> = {
   proyek: 'bg-blue-50 text-blue-600',
 };
 
-export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost }: ThreadDetailProps) {
+export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost, canInteract = false }: ThreadDetailProps) {
   const isOwner = post.authorId === currentUser.id;
   const [editingPost, setEditingPost] = useState(false);
   const [judulEdit, setJudulEdit] = useState(post.judul);
@@ -156,7 +157,7 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost 
 
       <div className="border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex gap-4">
-          <VoteControl votes={post.votes} userVote={post.userVote} onVote={votePost} />
+          <VoteControl votes={post.votes} userVote={post.userVote} onVote={votePost} readOnly={!canInteract} />
 
           <div className="min-w-0 flex-1">
             <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -208,8 +209,8 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost 
               <span className="flex items-center gap-1"><Eye size={13} /> {post.views}</span>
               <span className="flex items-center gap-1"><MessageSquare size={13} /> {post.jawaban.length}</span>
 
-              {/* Edit & hapus thread hanya untuk pembuatnya */}
-              {isOwner && !editingPost && (
+              {/* Edit & hapus thread hanya untuk pembuatnya dan pengguna terautentikasi */}
+              {canInteract && isOwner && !editingPost && (
                 <span className="ml-auto flex items-center gap-3">
                   <button onClick={() => setEditingPost(true)} className="flex items-center gap-1 hover:text-violet-600">
                     <Pencil size={13} /> Edit
@@ -243,28 +244,31 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost 
               onTambahBalasan={(isi) => tambahBalasan(j.id, isi)}
               onEditBalasan={(balasanId, isiBaru) => editBalasan(j.id, balasanId, isiBaru)}
               onDeleteBalasan={(balasanId) => hapusBalasan(j.id, balasanId)}
+              canInteract={canInteract}
             />
           ))}
         </div>
 
-        <div className="mt-5 border border-slate-200 bg-white p-4">
-          <label className="mb-2 block text-sm font-medium text-slate-700">Tulis Jawaban</label>
-          <textarea
-            value={jawabanBaru}
-            onChange={(e) => setJawabanBaru(e.target.value)}
-            rows={3}
-            placeholder="Bagikan solusi atau pendapatmu..."
-            className="w-full resize-none border border-slate-200 px-3.5 py-2.5 text-sm placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"
-          />
-          <div className="mt-2.5 flex justify-end">
-            <button
-              onClick={kirimJawaban}
-              className="bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90"
-            >
-              Kirim Jawaban
-            </button>
+        {canInteract && (
+          <div className="mt-5 border border-slate-200 bg-white p-4">
+            <label className="mb-2 block text-sm font-medium text-slate-700">Tulis Jawaban</label>
+            <textarea
+              value={jawabanBaru}
+              onChange={(e) => setJawabanBaru(e.target.value)}
+              rows={3}
+              placeholder="Bagikan solusi atau pendapatmu..."
+              className="w-full resize-none border border-slate-200 px-3.5 py-2.5 text-sm placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"
+            />
+            <div className="mt-2.5 flex justify-end">
+              <button
+                onClick={kirimJawaban}
+                className="bg-linear-to-r from-violet-600 to-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+              >
+                Kirim Jawaban
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </motion.div>
   );

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Search } from 'lucide-react';
+import { usePage } from '@inertiajs/react';
 import type { DiskusiPost, FilterKategori, SortMode, VoteValue } from '@/types/Forum-Page.types';
 import { seedPosts, currentUser } from '../../../database/seedData';
 import { buatId } from '@/components/utils/ForumPage.utils';
@@ -24,6 +25,8 @@ const SORT_OPTIONS: { value: SortMode; label: string }[] = [
 ];
 
 export default function ForumPage() {
+  const { auth } = usePage<{ auth?: { user?: { id?: number | null; name?: string | null } | null } }>().props;
+  const canInteract = Boolean(auth?.user);
   const [posts, setPosts] = useState<DiskusiPost[]>(seedPosts);
   const [activePostId, setActivePostId] = useState<string | null>(null);
   const [filter, setFilter] = useState<FilterKategori>('semua');
@@ -102,6 +105,7 @@ export default function ForumPage() {
             onBack={() => setActivePostId(null)}
             onUpdatePost={(updater) => updatePost(activePost.id, updater)}
             onDeletePost={() => hapusPost(activePost.id)}
+            canInteract={canInteract}
           />
         ) : (
           <motion.div
@@ -165,13 +169,15 @@ export default function ForumPage() {
                     </option>
                   ))}
                 </select>
-                <motion.button
-                  whileTap={{ scale: 0.96 }}
-                  onClick={() => setModalOpen(true)}
-                  className="w-max flex shrink-0 items-center gap-1.5 bg-linear-to-r from-violet-600 to-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-90"
-                >
-                  <Plus size={16} /> Buat Diskusi
-                </motion.button>
+                {canInteract && (
+                  <motion.button
+                    whileTap={{ scale: 0.96 }}
+                    onClick={() => setModalOpen(true)}
+                    className="w-max flex shrink-0 items-center gap-1.5 bg-linear-to-r from-violet-600 to-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+                  >
+                    <Plus size={16} /> Buat Diskusi
+                  </motion.button>
+                )}
               </div>
             </div>
 
@@ -183,6 +189,7 @@ export default function ForumPage() {
                     post={post}
                     onOpen={() => setActivePostId(post.id)}
                     onVote={(next) => votePost(post.id, next)}
+                    canInteract={canInteract}
                   />
                 ))}
               </AnimatePresence>

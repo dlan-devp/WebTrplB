@@ -17,6 +17,7 @@ interface JawabanItemProps {
   onTambahBalasan: (isi: string) => void;
   onEditBalasan: (balasanId: string, isiBaru: string) => void;
   onDeleteBalasan: (balasanId: string) => void;
+  canInteract?: boolean;
 }
 
 export default function JawabanItem({
@@ -30,6 +31,7 @@ export default function JawabanItem({
   onTambahBalasan,
   onEditBalasan,
   onDeleteBalasan,
+  canInteract = false,
 }: JawabanItemProps) {
   const isOwner = jawaban.authorId === currentUser.id;
   const [editing, setEditing] = useState(false);
@@ -57,7 +59,7 @@ export default function JawabanItem({
       }`}
     >
       <div className="flex gap-3">
-        <VoteControl votes={jawaban.votes} userVote={jawaban.userVote} onVote={onVote} size="sm" />
+        <VoteControl votes={jawaban.votes} userVote={jawaban.userVote} onVote={onVote} size="sm" readOnly={!canInteract} />
 
         <div className="min-w-0 flex-1">
           <div className="mb-1.5 flex flex-wrap items-center gap-2">
@@ -94,7 +96,7 @@ export default function JawabanItem({
             <p className="text-sm leading-relaxed text-slate-600">{jawaban.isi}</p>
           )}
 
-          {!editing && (
+          {!editing && canInteract && (
             <div className="mt-2 flex items-center gap-3 text-xs font-medium">
               <button onClick={() => setShowReplyForm((s) => !s)} className="text-slate-400 hover:text-violet-600">
                 Balas
@@ -119,7 +121,7 @@ export default function JawabanItem({
           )}
 
           <AnimatePresence>
-            {showReplyForm && (
+            {canInteract && showReplyForm && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
@@ -153,6 +155,7 @@ export default function JawabanItem({
                   createdAt={b.createdAt}
                   onEdit={(isiBaru) => onEditBalasan(b.id, isiBaru)}
                   onDelete={() => onDeleteBalasan(b.id)}
+                  canInteract={canInteract}
                 />
               ))}
             </div>
@@ -170,6 +173,7 @@ function BalasanRow({
   createdAt,
   onEdit,
   onDelete,
+  canInteract = false,
 }: {
   isi: string;
   authorNama: string;
@@ -177,6 +181,7 @@ function BalasanRow({
   createdAt: string;
   onEdit: (isiBaru: string) => void;
   onDelete: () => void;
+  canInteract?: boolean;
 }) {
   const isOwner = authorId === currentUser.id;
   const [editing, setEditing] = useState(false);
@@ -207,7 +212,7 @@ function BalasanRow({
         ) : (
           <p className="text-slate-500">{isi}</p>
         )}
-        {isOwner && !editing && (
+        {canInteract && isOwner && !editing && (
           <div className="mt-0.5 flex gap-2.5 text-xs text-slate-400">
             <button onClick={() => setEditing(true)} className="hover:text-violet-600">Edit</button>
             <button onClick={onDelete} className="hover:text-red-500">Hapus</button>

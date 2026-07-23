@@ -1,20 +1,24 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { LogIn, X } from 'lucide-react';
+import { ArrowRight, LogIn, X } from 'lucide-react';
 
 interface HomePageAuthPromptModalProps {
   open: boolean;
   title?: string;
   description?: string;
   onClose: () => void;
+  onLogin: () => void;
   onContinue: () => void;
+  continueLabel?: string;
 }
 
-export default function HomePageAuthPromptModal({
+export default function AllPageAuthPromptModal({
   open,
   title = 'Login dulu',
   description = 'Kamu perlu masuk terlebih dahulu sebelum melanjutkan.',
   onClose,
+  onLogin,
   onContinue,
+  continueLabel = 'Tetap lanjut',
 }: HomePageAuthPromptModalProps) {
   return (
     <AnimatePresence>
@@ -50,20 +54,41 @@ export default function HomePageAuthPromptModal({
               <p className="testimoni-card__pesan" style={{ marginBottom: '1rem' }}>
                 {description}
               </p>
-              <button
-                className="testimoni-form__submit"
-                type="button"
-                onClick={onContinue}
-                style={{
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <LogIn size={16} style={{ marginRight: '0.5rem' }} />
-                Masuk / Daftar
-              </button>
+
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <button
+                  className="testimoni-form__submit"
+                  type="button"
+                  onClick={onLogin}
+                  style={{
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <LogIn size={16} style={{ marginRight: '0.5rem' }} />
+                  Masuk / Daftar
+                </button>
+
+                <button
+                  className="testimoni-form__submit"
+                  type="button"
+                  onClick={onContinue}
+                  style={{
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'transparent',
+                    color: '#4f46e5',
+                    border: '1px solid #c7d2fe',
+                  }}
+                >
+                  <ArrowRight size={16} style={{ marginRight: '0.5rem' }} />
+                  {continueLabel}
+                </button>
+              </div>
             </div>
           </motion.div>
         </motion.div>

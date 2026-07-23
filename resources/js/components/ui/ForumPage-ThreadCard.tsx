@@ -8,6 +8,7 @@ interface ThreadCardProps {
   post: DiskusiPost;
   onOpen: () => void;
   onVote: (next: VoteValue) => void;
+  canInteract?: boolean;
 }
 
 const KATEGORI_STYLE: Record<DiskusiPost['kategori'], string> = {
@@ -15,7 +16,7 @@ const KATEGORI_STYLE: Record<DiskusiPost['kategori'], string> = {
   proyek: 'bg-blue-50 text-blue-600',
 };
 
-export default function ThreadCard({ post, onOpen, onVote }: ThreadCardProps) {
+export default function ThreadCard({ post, onOpen, onVote, canInteract = false }: ThreadCardProps) {
   const terjawab = Boolean(post.jawabanTerbaikId);
 
   return (
@@ -28,7 +29,7 @@ export default function ThreadCard({ post, onOpen, onVote }: ThreadCardProps) {
       className="flex gap-4 border border-slate-200 bg-white p-4 shadow-sm hover:border-violet-200 hover:shadow-md transition-[box-shadow,border-color]"
     >
       <div onClick={(e) => e.stopPropagation()} className="pt-1">
-        <VoteControl votes={post.votes} userVote={post.userVote} onVote={onVote} />
+        <VoteControl votes={post.votes} userVote={post.userVote} onVote={onVote} readOnly={!canInteract} />
       </div>
 
       <button onClick={onOpen} className="min-w-0 flex-1 text-left">

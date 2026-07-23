@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { motion } from 'motion/react';
 import { MessageSquare, ArrowRight } from 'lucide-react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { threadDiskusi } from '../../../../database/dummyData';
 import SectionHeading from './SectionHeading';
 import '../../../css/components/ForumDiskusi.css';
-import HomePageAuthPromptModal from './HomePage-AuthPromptModal';
+import AllPageAuthPromptModal from './AllPage-AuthPromptModal';
 
 export default function ForumDiskusi() {
   const { auth } = usePage<{ auth: { user?: { id?: string | null; name?: string | null } } }>().props;
@@ -19,7 +19,7 @@ export default function ForumDiskusi() {
     setShowAuthPrompt(false);
   };
 
-  const handleGoToForum = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleGoToForum = (e: MouseEvent<Element>) => {
     if (auth.user) {
       return;
     }
@@ -31,6 +31,11 @@ export default function ForumDiskusi() {
   const handleContinueToAuth = () => {
     closeAuthPrompt();
     router.visit('/user-auth');
+  };
+
+  const handleContinueBrowsing = () => {
+    closeAuthPrompt();
+    router.visit('/forum');
   };
 
   return (
@@ -70,11 +75,12 @@ export default function ForumDiskusi() {
         Buat diskusi baru <ArrowRight size={18} />
       </Link>
 
-      <HomePageAuthPromptModal
+      <AllPageAuthPromptModal
         open={showAuthPrompt}
-        description="Kamu perlu masuk terlebih dahulu sebelum membuat atau membuka diskusi baru."
+        description="Kamu masih bisa melihat-lihat diskusi, tetapi untuk menulis atau mengedit diskusi perlu masuk."
         onClose={closeAuthPrompt}
-        onContinue={handleContinueToAuth}
+        onLogin={handleContinueToAuth}
+        onContinue={handleContinueBrowsing}
       />
     </section>
   );

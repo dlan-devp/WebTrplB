@@ -96,9 +96,11 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
             ))}
           </div>
 
-          <button className="testimoni-add-btn" onClick={() => setShowAddForm(true)}>
-            <Plus size={16} /> Tambah Testimoni
-          </button>
+          {currentUserId && (
+            <button className="testimoni-add-btn" onClick={() => setShowAddForm(true)}>
+              <Plus size={16} /> Tambah Testimoni
+            </button>
+          )}
         </div>
 
         {filteredItems.length === 0 ? (
