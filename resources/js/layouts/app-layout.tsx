@@ -12,7 +12,7 @@ export default function AppLayout({
     return (
         <>
             <Navbar />
-            <main className="container min-h-full w-full relative">
+            <main className="container pt-16 min-h-full w-full relative">
                 {children}
             </main>
             <Footer />

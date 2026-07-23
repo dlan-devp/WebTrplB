@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight, LogIn, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect } from 'react';
 
 interface HomePageAuthPromptModalProps {
@@ -33,10 +33,12 @@ export default function AllPageAuthPromptModal({
     const previousBodyLeft = document.body.style.left;
     const previousBodyRight = document.body.style.right;
     const previousBodyWidth = document.body.style.width;
+    const previousHtmlScrollBehavior = document.documentElement.style.scrollBehavior;
     const previousScrollY = window.scrollY;
 
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
+    document.documentElement.style.scrollBehavior = 'smooth';
     document.body.style.position = 'fixed';
     document.body.style.top = `-${previousScrollY}px`;
     document.body.style.left = '0';
@@ -57,12 +59,13 @@ export default function AllPageAuthPromptModal({
 
       document.body.style.overflow = previousBodyOverflow;
       document.documentElement.style.overflow = previousHtmlOverflow;
+      document.documentElement.style.scrollBehavior = previousHtmlScrollBehavior;
       document.body.style.position = previousBodyPosition;
       document.body.style.top = previousBodyTop;
       document.body.style.left = previousBodyLeft;
       document.body.style.right = previousBodyRight;
       document.body.style.width = previousBodyWidth;
-      window.scrollTo({ top: previousScrollY });
+      window.scrollTo({ top: previousScrollY, behavior: 'auto' });
     };
   }, [open]);
 

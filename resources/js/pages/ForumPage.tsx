@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Search } from 'lucide-react';
 import { usePage } from '@inertiajs/react';
@@ -8,7 +8,10 @@ import { buatId } from '@/components/utils/ForumPage.utils';
 import ThreadCard from '@/components/ui/ForumPage-ThreadCard';
 import ThreadDetail from '@/components/ui/ForumPage-ThreadDetail';
 import CreateThreadModal from '@/components/ui/ForumPage-CreateThreadModal';
+import GeneralCompPagination from '@/components/ui/GeneralComp-Pagination';
 import useMomentumScroll from '@/animation/MomentumScroll';
+
+const ITEMS_PER_PAGE = 6;
 
 const FILTER_TABS: { value: FilterKategori; label: string }[] = [
   { value: 'semua', label: 'Semua' },
@@ -30,6 +33,7 @@ export default function ForumPage() {
   const [filter, setFilter] = useState<FilterKategori>('semua');
   const [sort, setSort] = useState<SortMode>('terbaru');
   const [search, setSearch] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
 
   const postsTertampil = useMemo(() => {
@@ -56,6 +60,12 @@ export default function ForumPage() {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
   }, [posts, filter, sort, search]);
+
+  const totalPages = Math.max(1, Math.ceil(postsTertampil.length / ITEMS_PER_PAGE));
+  const paginatedPosts = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return postsTertampil.slice(start, start + ITEMS_PER_PAGE);
+  }, [postsTertampil, currentPage]);
 
   const activePost = posts.find((p) => p.id === activePostId) ?? null;
 
@@ -89,6 +99,14 @@ export default function ForumPage() {
     };
     setPosts((prev) => [baru, ...prev]);
   };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter, sort, search]);
+
+  useEffect(() => {
+    setCurrentPage((prev) => Math.min(prev, totalPages));
+  }, [totalPages]);
 
   useMomentumScroll()
 
@@ -180,7 +198,7 @@ export default function ForumPage() {
 
             <div className="space-y-3">
               <AnimatePresence initial={false}>
-                {postsTertampil.map((post) => (
+                {paginatedPosts.map((post) => (
                   <ThreadCard
                     key={post.id}
                     post={post}
@@ -197,6 +215,13 @@ export default function ForumPage() {
                 </div>
               )}
             </div>
+
+            <GeneralCompPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              className="mt-6"
+            />
           </motion.div>
         )}
       </AnimatePresence>

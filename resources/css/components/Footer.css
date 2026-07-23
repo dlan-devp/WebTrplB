@@ -1,4 +1,6 @@
-
+.footer {
+  border-top: 1px solid var(--color-border);
+}
 
 .footer__inner {
   max-width: 1120px;

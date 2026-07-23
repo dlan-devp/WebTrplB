@@ -1,18 +1,19 @@
 import { Search, Plus, Pencil, Trash2, Quote } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 // import AuthModal from '../components/ui/AuthModal';
 import { router, usePage } from '@inertiajs/react';
 import useMomentumScroll from '@/animation/MomentumScroll';
-import Navbar from '../components/ui/Navbar';
-import Footer from '@/components/ui/Footer';
+
 import TestimoniForm from '../components/ui/InputComp-TestimoniForm';
+import GeneralCompPagination from '@/components/ui/GeneralComp-Pagination';
 import '../../css/pages/TestimoniPage.css';
 import type { Testimoni } from '@/types/Testimoni-Page.props';
 
 // import { testimoniKelas as testimoniAwal } from '../../../database/dummyData';
 
 const TIPE_LABEL = { Pendapat: 'Pendapat', Saran: 'Saran', Kritik: 'Kritik' } as const;
+const ITEMS_PER_PAGE = 6;
 const FILTERS: Array<{ value: 'semua' | Testimoni['type']; label: string }> = [
   { value: 'semua', label: 'Semua' },
   { value: 'Pendapat', label: 'Pendapat' },
@@ -37,6 +38,7 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
   const [search, setSearch] = useState('');
     const [filter, setFilter] =
         useState<'semua' | Testimoni['type']>('semua');
+    const [currentPage, setCurrentPage] = useState(1);
 
     const [showAddForm, setShowAddForm] = useState(false);
     const [editingItem, setEditingItem] =
@@ -57,6 +59,20 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
             return matchFilter && matchSearch;
         });
     }, [testimoni, search, filter]);
+
+    const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
+    const paginatedItems = useMemo(() => {
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        return filteredItems.slice(start, start + ITEMS_PER_PAGE);
+    }, [filteredItems, currentPage]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, filter]);
+
+    useEffect(() => {
+        setCurrentPage((prev) => Math.min(prev, totalPages));
+    }, [totalPages]);
 
     useMomentumScroll();
     
@@ -104,8 +120,9 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
         {filteredItems.length === 0 ? (
           <p className="tpage-empty">Tidak ada testimoni yang cocok dengan pencarian/filter kamu.</p>
         ) : (
-          <div className="tpage-grid">
-            {filteredItems.map((t: Testimoni) => {
+          <>
+            <div className="tpage-grid">
+            {paginatedItems.map((t: Testimoni) => {
               return (
                 <motion.article
                   key={t.id}
@@ -144,7 +161,14 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
                 </motion.article>
               );
             })}
-          </div>
+            </div>
+            <GeneralCompPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              className="mt-6"
+            />
+          </>
         )}
       </div>
 

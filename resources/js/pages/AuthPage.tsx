@@ -2,7 +2,7 @@ import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { router } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'motion/react';
-import '../../css/components/AuthPage.css';
+import '../../css/pages/AuthPage.css';
 
 type Mode = 'login' | 'register';
 type FieldId = 'name' | 'email' | 'password' | 'password_confirmation';
