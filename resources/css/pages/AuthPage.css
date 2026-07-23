@@ -1,15 +1,14 @@
 .auth {
   display: grid;
+  width: 100dvw;
   min-height: 100vh;
   grid-template-columns: 0.95fr 1.05fr;
-  background: var(--color-bg);
 }
 
 /* --- Left: brand panel --- */
 .auth__brand {
   position: relative;
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
@@ -18,7 +17,6 @@
   color: #fff;
   overflow: hidden;
   padding: 64px;
-
   outline: 1px solid var(--color-border);
 }
 

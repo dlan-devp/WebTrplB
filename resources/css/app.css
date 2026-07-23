@@ -191,9 +191,9 @@ h1, h2, h3, .display {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    animation-duration: 0.03ms !important;
+    animation-duration: 0.75ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.03ms !important;
+    transition-duration: 0.75ms !important;
     scroll-behavior: smooth !important;
   }
 }
