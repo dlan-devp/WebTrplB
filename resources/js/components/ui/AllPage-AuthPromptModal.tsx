@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight, LogIn, X } from 'lucide-react';
+import { useEffect } from 'react';
 
 interface HomePageAuthPromptModalProps {
   open: boolean;
@@ -20,6 +21,51 @@ export default function AllPageAuthPromptModal({
   onContinue,
   continueLabel = 'Tetap lanjut',
 }: HomePageAuthPromptModalProps) {
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousBodyPosition = document.body.style.position;
+    const previousBodyTop = document.body.style.top;
+    const previousBodyLeft = document.body.style.left;
+    const previousBodyRight = document.body.style.right;
+    const previousBodyWidth = document.body.style.width;
+    const previousScrollY = window.scrollY;
+
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${previousScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+
+    const preventDefault = (event: Event) => {
+      event.preventDefault();
+    };
+
+    const options = { passive: false } as AddEventListenerOptions;
+    window.addEventListener('wheel', preventDefault, options);
+    window.addEventListener('touchmove', preventDefault, options);
+
+    return () => {
+      window.removeEventListener('wheel', preventDefault, options);
+      window.removeEventListener('touchmove', preventDefault, options);
+
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.position = previousBodyPosition;
+      document.body.style.top = previousBodyTop;
+      document.body.style.left = previousBodyLeft;
+      document.body.style.right = previousBodyRight;
+      document.body.style.width = previousBodyWidth;
+      window.scrollTo({ top: previousScrollY });
+    };
+  }, [open]);
+
   return (
     <AnimatePresence>
       {open && (
