@@ -5,12 +5,13 @@ interface SectionHeadingProps {
   eyebrow: string;
   title: string;
   subtitle?: string;
+  className?: string;
 }
 
-export default function SectionHeading({ eyebrow, title, subtitle }: SectionHeadingProps) {
+export default function SectionHeading({ eyebrow, title, subtitle, className }: SectionHeadingProps) {
   return (
     <motion.div
-      className="section-heading"
+      className={`section-heading relative z-20 ${className || ''}`}
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}

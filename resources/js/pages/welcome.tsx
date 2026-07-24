@@ -3,13 +3,11 @@ import '../../css/app.css';
 import { Head } from '@inertiajs/react';
 
 import AnggotaKelas from '@/components/ui/HomePage-AnggotaKelas';
-import Footer from '@/components/ui/Footer';
 import ForumDiskusi from '@/components/ui/HomePage-ForumDiskusi';
 import Galeri from '@/components/ui/HomePage-Galeri';
 import Hero from '@/components/ui/HomePage-Hero';
 import JadwalKelas from '@/components/ui/HomePage-JadwalKelas';
 import LinkGrup from '@/components/ui/HomePage-LinkGrup';
-import Navbar from '@/components/ui/Navbar';
 import Pengumuman from '@/components/ui/HomePage-Pengumuman';
 import TestimoniKelas from '@/components/ui/HomePage-TestimoniKelas';
 
