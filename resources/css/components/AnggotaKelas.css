@@ -11,6 +11,11 @@
   padding: 20px;
   text-align: center;
   box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+
+.anggota-card:hover {
+  border-color: rgba(79, 140, 255, 0.4);
 }
 
 .anggota-card__avatar {
@@ -49,6 +54,115 @@
   margin-top: 2px;
 }
 
+.anggota-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(2, 8, 23, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.anggota-modal {
+  position: relative;
+  width: min(100%, 560px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.anggota-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 1;
+  border: 0;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.08);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.anggota-modal__content {
+  display: grid;
+  grid-template-columns: minmax(140px, 180px) 1fr;
+  gap: 20px;
+  padding: 24px;
+}
+
+.anggota-modal__photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: var(--color-muted);
+}
+
+.anggota-modal__details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.anggota-modal__eyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4f8cff;
+}
+
+.anggota-modal__name {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.anggota-modal__list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.anggota-modal__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.anggota-modal__item dt {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
+}
+
+.anggota-modal__item dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-ink);
+}
+
 @media (max-width: 900px) {
   .anggota-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .anggota-modal__content {
+    grid-template-columns: 1fr;
+  }
+
+  .anggota-modal__photo {
+    max-width: 220px;
+  }
 }

@@ -20,14 +20,14 @@ export const pengumuman: Pengumuman[] = [
 ];
 
 export const anggotaKelas: Mahasiswa[] = [
-  { nim: 'a1', nama: 'Bagas Pratama', inisial: 'BP', online: true },
-  { nim: 'a2', nama: 'Citra Ayu', inisial: 'CA', online: true },
-  { nim: 'a3', nama: 'Dimas Aditya', inisial: 'DA' },
-  { nim: 'a4', nama: 'Eka Putri', inisial: 'EP', online: true },
-  { nim: 'a5', nama: 'Farhan Maulana', inisial: 'FM' },
-  { nim: 'a6', nama: 'Gita Lestari', inisial: 'GL' },
-  { nim: 'a7', nama: 'Hafiz Ramadhan', inisial: 'HR' },
-  { nim: 'a8', nama: 'Indah Sari', inisial: 'IS', online: true },
+  { nim: 'a1', nama: 'Bagas Pratama', inisial: 'BP', online: true, umur: 20, fakultas: 'Teknik', jurusan: 'Teknologi Informasi', prodi: 'Sistem Informasi', hobi: 'Fotografi' },
+  { nim: 'a2', nama: 'Citra Ayu', inisial: 'CA', online: true, umur: 19, fakultas: 'Ekonomi', jurusan: 'Manajemen', prodi: 'Manajemen', hobi: 'Membaca' },
+  { nim: 'a3', nama: 'Dimas Aditya', inisial: 'DA', umur: 21, fakultas: 'Teknik', jurusan: 'Teknologi Informasi', prodi: 'Teknik Informatika', hobi: 'Game' },
+  { nim: 'a4', nama: 'Eka Putri', inisial: 'EP', online: true, umur: 20, fakultas: 'Sains', jurusan: 'Matematika', prodi: 'Statistika', hobi: 'Melukis' },
+  { nim: 'a5', nama: 'Farhan Maulana', inisial: 'FM', umur: 22, fakultas: 'Teknik', jurusan: 'Teknologi Informasi', prodi: 'Teknik Informatika', hobi: 'Travelling' },
+  { nim: 'a6', nama: 'Gita Lestari', inisial: 'GL', umur: 19, fakultas: 'Hukum', jurusan: 'Hukum', prodi: 'Ilmu Hukum', hobi: 'Menulis' },
+  { nim: 'a7', nama: 'Hafiz Ramadhan', inisial: 'HR', umur: 20, fakultas: 'Teknik', jurusan: 'Teknologi Informasi', prodi: 'Sistem Informasi', hobi: 'Basket' },
+  { nim: 'a8', nama: 'Indah Sari', inisial: 'IS', online: true, umur: 21, fakultas: 'Teknik', jurusan: 'Teknologi Informasi', prodi: 'Teknik Informatika', hobi: 'Musik' },
 ];
 
 export const fotoGaleri: FotoGaleri = [

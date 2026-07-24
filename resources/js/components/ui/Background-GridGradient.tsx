@@ -10,8 +10,8 @@ interface GridGradientBackgroundProps {
 export const GridGradientBackground: React.FC<GridGradientBackgroundProps> = ({
   children,
   gridSize = 40,
-  gridColor = "var(--color-blue)",
-  gradientColor = "var(--color-blue-dim)",
+  gridColor = "var(--color-purple)",
+  gradientColor = "var(--color-purple-dim)",
 }) => {
   return (
     <div className="absolute top-0 left-0 h-full w-full overflow-hidden flex flex-col justify-center items-center">
@@ -32,7 +32,7 @@ export const GridGradientBackground: React.FC<GridGradientBackgroundProps> = ({
       <div 
         className="absolute inset-0 z-0 pointer-events-none select-none"
         style={{
-          background: "radial-gradient(circle, transparent 25%, var(--color-bg) 75%)",
+          background: "radial-gradient(circle, transparent 30%, var(--color-bg) 70%)",
         }}
       />
 
