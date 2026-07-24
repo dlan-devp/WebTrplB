@@ -18,7 +18,7 @@ export default function AppLayout({
     return (
         <>
             <Navbar />
-            <main className="container pt-16 min-h-full w-full relative">
+            <main className="container pt-0 min-h-full w-full relative">
                 {children}
             </main>
             {!isAuthPage && <Footer />}

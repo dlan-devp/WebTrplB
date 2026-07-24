@@ -1,7 +1,6 @@
 .auth {
   display: grid;
   width: 100dvw;
-  padding-top: 10px;
   min-height: 100vh;
   grid-template-columns: 0.95fr 1.05fr;
 }
