@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Galeri;
 use App\Models\Jadwal;
 use App\Models\Mahasiswa;
+use App\Models\Pengumuman;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,6 +19,7 @@ class MahasiswaController extends Controller
             'testimoni' => Testimoni::latest()->get(),
             'galeri' => Galeri::all(),
             'jadwal' => Jadwal::all(),
+            'pengumuman' => Pengumuman::latest()->get(),
             'test' => 'mantap'
         ]);
     }

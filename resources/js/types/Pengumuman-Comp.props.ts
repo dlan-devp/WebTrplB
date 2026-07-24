@@ -1,4 +1,4 @@
-export interface Pengumuman {
+export interface Pengumumans {
   id: string;
   judul: string;
   isi: string;
