@@ -1,7 +1,7 @@
 .hero {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 88px 24px 64px;
+  padding: 130px 24px 160px;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 56px;
@@ -19,7 +19,7 @@
 }
 
 .hero__title {
-  font-size: 44px;
+  font-size: 60px;
   line-height: 1.12;
   font-weight: 700;
   margin: 0 0 18px;

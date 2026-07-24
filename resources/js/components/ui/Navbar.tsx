@@ -48,15 +48,14 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        className="navbar"
+        className="navbar border m-4 mx-20 border-white/30 shadow-2xl rounded-full backdrop-blur-sm"
         initial={{ y: -24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
-        <div className="navbar__inner">
+        <div className="navbar__inner px-20">
           {!isHomePage && <PreviousPageButton />}
           <a href="/#top" className="navbar__brand">
-            <span className="navbar__dot" />
             Kelas TRPL-B
           </a>
           <nav className="navbar__links">

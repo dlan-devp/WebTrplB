@@ -16,7 +16,7 @@ export default function JadwalKelas({jadwal}: JadwalProps) {
       <SectionHeading
         eyebrow="Senin — Jumat"
         title="Jadwal Kelas Minggu Ini"
-        subtitle="Warna ungu untuk kelas teori, biru untuk praktikum. Klik hari untuk lihat detail ruangan."
+        subtitle="Warna kuning untuk kelas teori, biru untuk praktikum. Klik hari untuk lihat detail ruangan."
       />
 
       <div className="jadwal-grid">
@@ -34,7 +34,7 @@ export default function JadwalKelas({jadwal}: JadwalProps) {
               <div className="jadwal-col__day">{hari}</div>
               {items.length === 0 && <div className="jadwal-col__empty">Tidak ada kelas</div>}
               {items.map((item) => (
-                <div key={item.id} className={`jadwal-card jadwal-card--${item.type}`}>
+                <div key={item.id} className={`jadwal-card jadwal-card--${item.type?.toLowerCase()}`}>
                   <span className="mono jadwal-card__time">{item.waktu}</span>
                   <div className="jadwal-card__matkul">{item.matkul}</div>
                   <div className="jadwal-card__meta">{item.dosen} </div>

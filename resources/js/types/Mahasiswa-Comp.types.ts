@@ -1,5 +1,5 @@
 export interface Mahasiswa {
-  nim: string;
+  kodeMahasiswa: string;
   inisial: string;
   online?: boolean;
   foto?: string;

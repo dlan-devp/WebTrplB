@@ -66,6 +66,7 @@
 }
 
 .anggota-modal {
+  border-radius: 20px;
   position: relative;
   width: min(100%, 800px);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -76,6 +77,7 @@
 
 .anggota-modal__close {
   position: absolute;
+  border-radius: 100%;
   top: 14px;
   right: 14px;
   z-index: 1;

@@ -1,19 +1,17 @@
 .navbar {
   position: fixed;
-  width: 100%;
   top: 0;
+  right: 0;
+  left: 0;
   z-index: 50;
-  backdrop-filter: blur(12px);
-  background: rgba(248, 250, 252, 0.75);
-  border-bottom: 1px solid var(--color-border);
 }
 
 .navbar__inner {
   margin: 0 auto;
-  padding-block: 14px;
+  padding-block: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .navbar__brand {
@@ -41,14 +39,15 @@
 .navbar__link {
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-muted);
+  color: black;
   text-decoration: none;
-  transition: color 0.15s ease;
 }
 
 .navbar__link:hover,
 .navbar__link:focus-visible {
-  color: var(--color-ink);
+  font: bold;
+  transition: ease-in-out;
+  scale: 1.05;
 }
 
 .navbar__cta {
