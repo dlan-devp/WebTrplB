@@ -146,7 +146,7 @@
 :root {
   /* --- Color tokens (ungu / biru / abu-abu) --- */
   --color-bg: #F8FAFC;          /* slate-50, base page background */
-  --color-surface: #f4f3fae6;      /* card surfaces */
+  --color-surface: #fff;      /* card surfaces */
   --color-border: #E2E8F0;       /* slate-200, hairline dividers */
 
   --color-ink: #171425;          /* near-black with a violet undertone, main text */

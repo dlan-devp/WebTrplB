@@ -103,7 +103,7 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
       <div className="anggota-grid z-20">
         {mahasiswa.map((student: Mahasiswa, index: number) => (
           <motion.button
-            key={student.nim}
+            key={student.id}
             type="button"
             className="anggota-card z-20"
             initial={{ opacity: 0, y: 14 }}
@@ -149,7 +149,7 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
                 onClick={() => setSelectedStudent(null)}
                 aria-label="Tutup detail siswa"
               >
-                ×
+                x
               </button>
 
               <div className="anggota-modal__content">
