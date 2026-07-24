@@ -94,9 +94,17 @@
   grid-template-columns: 220px 1fr;
   gap: 32px;
   padding: 32px;
-  align-items: start;
+  align-items: center;
 }
 
+.anggota-modal__visual {
+  width: 220px;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--color-muted);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
 
 .anggota-modal__photo {
   width: 100%;

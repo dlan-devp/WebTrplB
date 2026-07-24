@@ -153,7 +153,7 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
               </button>
 
               <div className="anggota-modal__content">
-                <div>
+                <div className='anggota-modal__visual'>
                   <img
                   src={selectedStudent.foto ?? buildAvatarImage(selectedStudent.nama)}
                   alt={selectedStudent.nama}
@@ -162,9 +162,10 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
                 </div>
 
                 <div className="anggota-modal__details">
-                    <h3 id="anggota-modal-title" className="anggota-modal__name">
-                      {selectedStudent.nama}
-                    </h3>
+                  <h1>Detail Mahasiswa</h1>
+                  <h2 id="anggota-modal-title" className="anggota-modal__name">
+                    {selectedStudent.nama}
+                  </h2>
                   <dl className="anggota-modal__list">
                     <div className="anggota-modal__item">
                       <dt>Umur</dt>
