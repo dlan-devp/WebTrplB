@@ -67,7 +67,7 @@
 
 .anggota-modal {
   position: relative;
-  width: min(100%, 560px);
+  width: min(100%, 800px);
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: var(--color-surface);
   box-shadow: var(--shadow-card);
@@ -91,16 +91,18 @@
 
 .anggota-modal__content {
   display: grid;
-  grid-template-columns: minmax(140px, 180px) 1fr;
-  gap: 20px;
-  padding: 24px;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  padding: 32px;
+  align-items: start;
 }
+
 
 .anggota-modal__photo {
   width: 100%;
-  aspect-ratio: 9 / 16;
+  height: 100%;
+  display: block;
   object-fit: cover;
-  background: var(--color-muted);
 }
 
 .anggota-modal__details {
@@ -128,6 +130,7 @@
 
 .anggota-modal__list {
   display: grid;
+  margin-top: 10px;
   gap: 10px;
   margin: 0;
 }

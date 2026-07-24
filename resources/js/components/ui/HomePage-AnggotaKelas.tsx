@@ -153,18 +153,18 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
               </button>
 
               <div className="anggota-modal__content">
-                <p className="anggota-modal__eyebrow">Detail mahasiswa</p>
-                <h3 id="anggota-modal-title" className="anggota-modal__name">
-                  {selectedStudent.nama}
-                </h3>
-                <img
+                <div>
+                  <img
                   src={selectedStudent.foto ?? buildAvatarImage(selectedStudent.nama)}
                   alt={selectedStudent.nama}
                   className="anggota-modal__photo"
-                />
+                  />
+                </div>
 
                 <div className="anggota-modal__details">
-
+                    <h3 id="anggota-modal-title" className="anggota-modal__name">
+                      {selectedStudent.nama}
+                    </h3>
                   <dl className="anggota-modal__list">
                     <div className="anggota-modal__item">
                       <dt>Umur</dt>
