@@ -111,7 +111,7 @@ export default function ForumPage() {
   useMomentumScroll()
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-20">
       <AnimatePresence mode="wait">
         {activePost ? (
           <ThreadDetail

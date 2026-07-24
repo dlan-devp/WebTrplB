@@ -78,7 +78,7 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
     
 
   return (
-    <div className="testimoni-page min-h-screen mx-auto max-w-dvw lg:px-14 px-4 py-10">
+    <div className="testimoni-page min-h-screen mx-auto max-w-dvw lg:px-14 px-4 py-10 pt-30">
       <div className="tpage-content">
         <div className="tpage-intro">
           <span className="section-heading__eyebrow mono">Suara Anak Kelas</span>

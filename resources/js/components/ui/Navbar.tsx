@@ -54,10 +54,12 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
         <div className="navbar__inner px-20">
+          <div className="flex">
           {!isHomePage && <PreviousPageButton />}
           <a href="/#top" className="navbar__brand">
             Kelas TRPL-B
           </a>
+          </div>
           <nav className="navbar__links">
             {NAV_LINKS.map((link) => (
               <a
