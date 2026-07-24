@@ -18,11 +18,11 @@ function buildAvatarImage(name: string): string {
 
   // GAMBAR DUMMY
   const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
-      <rect width="240" height="240" fill="#11243b" />
-      <circle cx="120" cy="96" r="52" fill="#8b5cf6" />
-      <rect x="48" y="156" width="144" height="56" fill="#8b5cf6" />
-      <text x="50%" y="200" text-anchor="middle" font-size="40" font-family="Arial, sans-serif" font-weight="700" fill="#ffffff">${initials}</text>
+    <svg xmlns="http://www.w3.org/2000/svg" width="360" height="640" viewBox="0 0 360 640">
+      <rect width="360" height="640" fill="#11243b" />
+      <circle cx="180" cy="240" r="92" fill="#8b5cf6" />
+      <rect x="84" y="372" width="192" height="84" fill="#8b5cf6" />
+      <text x="50%" y="520" text-anchor="middle" font-size="64" font-family="Arial, sans-serif" font-weight="700" fill="#ffffff">${initials}</text>
     </svg>
   `;
 
@@ -153,6 +153,10 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
               </button>
 
               <div className="anggota-modal__content">
+                <p className="anggota-modal__eyebrow">Detail mahasiswa</p>
+                <h3 id="anggota-modal-title" className="anggota-modal__name">
+                  {selectedStudent.nama}
+                </h3>
                 <img
                   src={selectedStudent.foto ?? buildAvatarImage(selectedStudent.nama)}
                   alt={selectedStudent.nama}
@@ -160,10 +164,6 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
                 />
 
                 <div className="anggota-modal__details">
-                  <p className="anggota-modal__eyebrow">Detail siswa</p>
-                  <h3 id="anggota-modal-title" className="anggota-modal__name">
-                    {selectedStudent.nama}
-                  </h3>
 
                   <dl className="anggota-modal__list">
                     <div className="anggota-modal__item">
