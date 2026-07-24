@@ -17,6 +17,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class TestimoniResource extends Resource
 {
@@ -24,9 +25,8 @@ class TestimoniResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleBottomCenterText;
     protected static ?string $recordTitleAttribute = 'Testimoni';
     protected static ?string $navigationLabel = 'Testimoni';
-    protected static ?int $navigationSort = 3;
-
-
+    protected static ?int $navigationSort = 4;
+    protected static UnitEnum|string|null $navigationGroup = 'Manajemen Masukan';
 
     public static function form(Schema $schema): Schema
     {

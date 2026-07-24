@@ -16,6 +16,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class JadwalResource extends Resource
 {
@@ -24,6 +25,7 @@ class JadwalResource extends Resource
     protected static ?string $recordTitleAttribute = 'Jadwal';
     protected static ?string $navigationLabel = 'Jadwal';
     protected static ?int $navigationSort = 2;
+    protected static UnitEnum|string|null $navigationGroup = 'Manajemen Kelas';
 
     public static function form(Schema $schema): Schema
     {

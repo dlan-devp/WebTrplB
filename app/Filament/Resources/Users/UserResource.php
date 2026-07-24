@@ -15,6 +15,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class UserResource extends Resource
 {
@@ -22,7 +23,8 @@ class UserResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
     protected static ?string $recordTitleAttribute = 'User';
     protected static ?string $navigationLabel = 'User';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
+    protected static UnitEnum|string|null $navigationGroup = 'Manajemen Users';
     public static function form(Schema $schema): Schema
     {
         return $schema
