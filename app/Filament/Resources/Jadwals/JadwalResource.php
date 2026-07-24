@@ -45,7 +45,7 @@ class JadwalResource extends Resource
                     ]),
                 TextInput::make('waktu')
                     ->required()
-                    ->placeholder('ABC, DEF, GHI,...'),
+                    ->placeholder('ABC, DEF / 7:30 - 9:30...'),
                 TextInput::make('dosen')
                     ->required(),
                 TextInput::make('ruang')

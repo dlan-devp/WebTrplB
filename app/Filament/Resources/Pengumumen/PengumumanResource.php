@@ -23,7 +23,7 @@ use UnitEnum;
 class PengumumanResource extends Resource
 {
     protected static ?string $model = Pengumuman::class;
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBell;
     protected static ?string $recordTitleAttribute = 'Pengumuman';
     protected static ?string $navigationLabel = 'Pengumuman';
     protected static ?string $modelLabel = 'Pengumumans';
