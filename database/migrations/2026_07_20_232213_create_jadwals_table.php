@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('matkul');
             $table->string('hari');
-            $table->string('jadwal');
+            $table->string('waktu');
             $table->string('dosen');
             $table->string('ruang');
             $table->string('type');

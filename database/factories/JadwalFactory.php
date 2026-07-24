@@ -19,8 +19,8 @@ class JadwalFactory extends Factory
     {
         return [
             'matkul' => fake()->name(),
-            'hari' => fake()->dayOfWeek(),
-            'jadwal' => 'ABC',
+            'hari' => fake()->randomElement(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat']),
+            'waktu' => 'ABC',
             'dosen' => fake()->name(),
             'ruang' => fake()->lexify('room-?-#'),
             'type' => fake()->randomElement(['Teori', 'Praktikum']),

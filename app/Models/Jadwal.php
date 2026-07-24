@@ -10,5 +10,5 @@ class Jadwal extends Model
     use HasFactory;
     protected $table = "tb_jadwal";
     protected $primaryKey = 'id';
-    protected $fillable = ['matkul', 'hari', 'jadwal', 'dosen', 'ruang', 'type'];
+    protected $fillable = ['matkul', 'hari', 'waktu', 'dosen', 'ruang', 'type'];
 }

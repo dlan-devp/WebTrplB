@@ -9,6 +9,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -28,8 +29,32 @@ class JadwalResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('Jadwal')
+                TextInput::make('matkul')
+                    ->required(),
+                Select::make('hari')
                     ->required()
+                    ->options([
+                        'Senin' => 'Senin',
+                        'Selasa' => 'Selasa',
+                        'Rabu' => 'Rabu',
+                        'kamis' => 'kamis',
+                        'Jumat' => 'Jumat',
+
+                    ]),
+                TextInput::make('waktu')
+                    ->required()
+                    ->placeholder('ABC, DEF, GHI,...'),
+                TextInput::make('dosen')
+                    ->required(),
+                TextInput::make('ruang')
+                    ->required()
+                    ->placeholder('Ruang-#'),
+                Select::make('type')
+                    ->required()
+                    ->options([
+                        'Teori' => 'Teori',
+                        'Praktikum' => 'Praktikum'
+                    ]),
             ]);
     }
 
@@ -41,7 +66,7 @@ class JadwalResource extends Resource
                     ->searchable(),
                 TextColumn::make('hari')
                     ->searchable(),
-                TextColumn::make('jadwal')
+                TextColumn::make('waktu')
                     ->searchable(),
                 TextColumn::make('dosen')
                     ->searchable(),

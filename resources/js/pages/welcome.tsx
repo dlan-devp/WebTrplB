@@ -17,13 +17,15 @@ import useMomentumScroll from '@/animation/MomentumScroll';
 
 import type { Mahasiswa } from '@/types/Mahasiswa-Comp.types';
 import type { Testimoni } from '@/types/Testimoni-Page.props';
+import type { Jadwal } from '@/types/JadwalKelas-Comp.types';
 
 interface WelcomeProps {
+  jadwal: Jadwal[];
   mahasiswa: Mahasiswa[];
   testimoni: Testimoni[];
 }
 
-export default function Welcome({ mahasiswa, testimoni }: WelcomeProps) {
+export default function Welcome({ mahasiswa, testimoni, jadwal }: WelcomeProps) {
   useMomentumScroll();
 
   return (
@@ -33,7 +35,7 @@ export default function Welcome({ mahasiswa, testimoni }: WelcomeProps) {
       <main className="relative w-full lg:w-350 m-auto">
         <Hero mahasiswa={mahasiswa} />
         <AnggotaKelas mahasiswa={mahasiswa} />
-        <JadwalKelas />
+        <JadwalKelas jadwal={jadwal} />
         <Pengumuman />
         <ForumDiskusi />
         <Galeri />

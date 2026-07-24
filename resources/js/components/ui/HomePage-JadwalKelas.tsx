@@ -1,12 +1,16 @@
 import { motion } from 'motion/react';
-import { jadwalKelas } from '../../../../database/dummyData';
-import type { Jadwal } from '../../types/JadwalKelas-Comp.types';
+// import { jadwalKelas } from '../../../../database/dummyData';
+import type { Jadwal } from '@/types/JadwalKelas-Comp.types';
 import SectionHeading from './HomePage-SectionHeading';
 import '../../../css/components/JadwalKelas.css';
 
+interface JadwalProps{
+  jadwal: Jadwal[];
+}
+
 const HARI_URUTAN: Jadwal['hari'][] = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
 
-export default function JadwalKelas() {
+export default function JadwalKelas({jadwal}: JadwalProps) {
   return (
     <section id="jadwal" className="section">
       <SectionHeading
@@ -17,7 +21,7 @@ export default function JadwalKelas() {
 
       <div className="jadwal-grid">
         {HARI_URUTAN.map((hari, i) => {
-          const items = jadwalKelas.filter((j) => j.hari === hari);
+          const items = jadwal.filter((j) => j.hari === hari);
           return (
             <motion.div
               key={hari}
@@ -30,10 +34,11 @@ export default function JadwalKelas() {
               <div className="jadwal-col__day">{hari}</div>
               {items.length === 0 && <div className="jadwal-col__empty">Tidak ada kelas</div>}
               {items.map((item) => (
-                <div key={item.id} className={`jadwal-card jadwal-card--${item.tipe}`}>
+                <div key={item.id} className={`jadwal-card jadwal-card--${item.type}`}>
                   <span className="mono jadwal-card__time">{item.waktu}</span>
                   <div className="jadwal-card__matkul">{item.matkul}</div>
-                  <div className="jadwal-card__meta">{item.dosen} &middot; {item.ruang}</div>
+                  <div className="jadwal-card__meta">{item.dosen} </div>
+                  <div className="jadwal-card__meta">{item.ruang}</div>
                 </div>
               ))}
             </motion.div>
