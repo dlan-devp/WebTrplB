@@ -68,4 +68,33 @@ class ForumController extends Controller
 
         return back();
     }
+
+    public function update(Request $request, Diskusi $diskusi)
+    {
+        $validated = $request->validate([
+            'judul' => ['required', 'string', 'max:255'],
+            'isi' => ['required', 'string'],
+        ]);
+
+        $diskusi->update($validated);
+
+        return redirect()->back();
+    }
+
+    
+    public function storeBalasan(Request $request, jawabanDiskusi $jawaban)
+    {
+        $validated = $request->validate([
+            'isi' => ['required', 'string'],
+        ]);
+
+        balasanJawaban::create([
+            'postId' => $jawaban->postId,
+            'jawabanId' => $jawaban->id,
+            'authorId' => auth()->id(),
+            'isi' => $validated['isi'],
+        ]);
+
+        return redirect()->back();
+    }
 }

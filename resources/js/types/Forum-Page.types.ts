@@ -16,6 +16,10 @@ export interface Balasan {
   authorNama: string;
   isi: string;
   created_at: string;
+  user: {
+    id: number;
+    name: string;
+  };
 }
 
 /** Jawaban = answer/comment on a discussion thread (seperti answer di StackOverflow) */
@@ -28,7 +32,7 @@ export interface Jawaban {
   created_at: string;
   votes: number;
   userVote: VoteValue;
-   user: {
+  user: {
     id: number;
     name: string;
   };
@@ -48,7 +52,7 @@ export interface DiskusiPost {
   votes: number;
   userVote: VoteValue;
   views: number;
-  jawabanTerbaikId?: string | null;
+  jawabanTerbaikId?: number | null;
   jawaban: Jawaban[];
 
   user: {

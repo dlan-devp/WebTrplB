@@ -108,29 +108,12 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
   };
 
   const tambahBalasan = (jawabanId: number, isi: string) => {
-    onUpdatePost((p) => ({
-      ...p,
-      jawaban: p.jawaban.map((j) =>
-        j.id === jawabanId
-          ? {
-              ...j,
-              balasan: [
-                ...j.balasan,
-                {
-                  id: buatId('bls'),
-                  postId: p.id,
-                  jawabanId,
-                  authorId: currentUser.id,
-                  authorNama: currentUser.nama,
-                  isi,
-                  createdAt: new Date().toISOString(),
-                },
-              ],
-            }
-          : j
-      ),
-    }));
-  };
+  router.post(`/forumJawaban/${jawabanId}/balasan`, {
+    isi,
+  }, {
+    preserveScroll: true,
+  });
+};
 
   const editBalasan = (jawabanId: number, balasanId: number, isiBaru: string) => {
     onUpdatePost((p) => ({

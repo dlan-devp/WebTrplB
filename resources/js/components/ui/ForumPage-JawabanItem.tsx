@@ -159,8 +159,8 @@ export default function JawabanItem({
                 <BalasanRow
                   key={b.id}
                   isi={b.isi}
-                  authorNama={b.authorNama}
-                  authorId={b.authorId}
+                  authorNama={b.user.name}
+                  authorId={b.user.id}
                   created_at={b.created_at}
                   onEdit={(isiBaru) => onEditBalasan(b.id, isiBaru)}
                   onDelete={() => onDeleteBalasan(b.id)}
