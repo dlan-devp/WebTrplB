@@ -19,7 +19,7 @@ Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
 Route::post('/forum', [ForumController::class, 'store'])
     ->name('forum.store');
-Route::post('/forum', [ForumController::class, 'storeJawaban']);
+Route::post('/forumJawaban', [ForumController::class, 'storeJawaban']);
 
 Route::middleware('auth')->group(function () {
     Route::post('/testimoni', [MahasiswaController::class, 'store'])

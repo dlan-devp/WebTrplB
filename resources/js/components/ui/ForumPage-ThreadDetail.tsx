@@ -68,7 +68,7 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
   const kirimJawaban = () => {
     if (!jawabanBaru.trim()) return;
 
-    router.post('/forum', {
+    router.post('/forumJawaban', {
       postId: post.id,
       isi: jawabanBaru.trim(),
     }, {

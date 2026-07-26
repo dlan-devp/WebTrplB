@@ -12,7 +12,7 @@ import useMomentumScroll from '@/animation/MomentumScroll';
 
 interface DiskusiProps{
   diskusi: DiskusiPost[];
-
+  jawaban: Jawaban[];
 }
 
 const ITEMS_PER_PAGE = 6;
