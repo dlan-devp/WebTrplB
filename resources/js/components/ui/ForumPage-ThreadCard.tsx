@@ -12,8 +12,8 @@ interface ThreadCardProps {
 }
 
 const KATEGORI_STYLE: Record<DiskusiPost['kategori'], string> = {
-  tugas: 'bg-violet-50 text-violet-600',
-  proyek: 'bg-blue-50 text-blue-600',
+  Tugas: 'bg-violet-50 text-violet-600',
+  Proyek: 'bg-blue-50 text-blue-600',
 };
 
 export default function ThreadCard({ post, onOpen, onVote, canInteract = false }: ThreadCardProps) {
@@ -53,9 +53,9 @@ export default function ThreadCard({ post, onOpen, onVote, canInteract = false }
         <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-slate-500">{post.isi}</p>
 
         <div className="flex items-center gap-4 text-xs text-slate-400">
-          <span className="font-medium text-slate-500">{post.authorNama}</span>
+          <span className="font-medium text-slate-500">{post.user.name}</span>
           <span>&middot;</span>
-          <span>{waktuRelatif(post.createdAt)}</span>
+          <span>{waktuRelatif(post.created_at)}</span>
           <span className="ml-auto flex items-center gap-3">
             <span className="flex items-center gap-1">
               <MessageSquare size={13} /> {post.jawaban.length}

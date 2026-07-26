@@ -56,4 +56,8 @@ class User extends Authenticatable implements PasskeyUser
     {
         return $this->hasMany(Testimoni::class, 'user_id', 'id');
     }
+
+    public function diskusi(){
+        return $this->hasMany(Diskusi::class, 'authorId', 'id');
+    }
 }

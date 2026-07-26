@@ -9,6 +9,9 @@ class Diskusi extends Model
     protected $table = 'tb_diskusi';
 
     protected $primaryKey = 'id';
+    protected $casts = [
+        'tags' => 'array',
+    ];
 
     protected $fillable = [
         'authorId',
@@ -19,6 +22,7 @@ class Diskusi extends Model
         'votes',
         'userVote',
         'views',
+        'jawabanTerbaikId',
     ];
 
     public function user(){

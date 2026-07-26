@@ -17,6 +17,8 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
+Route::post('/forum', [ForumController::class, 'store'])
+    ->name('forum.store');
 
 Route::middleware('auth')->group(function () {
     Route::post('/testimoni', [MahasiswaController::class, 'store'])

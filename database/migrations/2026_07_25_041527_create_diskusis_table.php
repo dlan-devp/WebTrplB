@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('judul');
             $table->text('isi');
             $table->string('kategori');
-            $table->string('tags')->nullable();
-            $table->integer('votes')->nullable();
-            $table->integer('userVote')->nullable();
-            $table->integer('views')->nullable();
+            $table->json('tags')->nullable();
+            $table->integer('votes')->default(0);
+            $table->integer('userVote')->default(0);
+            $table->integer('views')->default(0);
             $table->unsignedBigInteger('jawabanTerbaikId')->nullable();
             $table->timestamps();
 

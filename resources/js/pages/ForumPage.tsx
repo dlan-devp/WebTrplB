@@ -1,37 +1,42 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Search } from 'lucide-react';
-import { usePage } from '@inertiajs/react';
-import type { DiskusiPost, FilterKategori, SortMode, VoteValue } from '@/types/Forum-Page.types';
-import { seedPosts, currentUser } from '../../../database/seedData';
-import { buatId } from '@/components/utils/ForumPage.utils';
+import { router, usePage } from '@inertiajs/react';
+import type { DiskusiPost, FilterKategori, SortMode, VoteValue, Balasan, Jawaban  } from '@/types/Forum-Page.types';
+// import { buatId } from '@/components/utils/ForumPage.utils';
 import ThreadCard from '@/components/ui/ForumPage-ThreadCard';
 import ThreadDetail from '@/components/ui/ForumPage-ThreadDetail';
 import CreateThreadModal from '@/components/ui/ForumPage-CreateThreadModal';
 import GeneralCompPagination from '@/components/ui/GeneralComp-Pagination';
 import useMomentumScroll from '@/animation/MomentumScroll';
 
+interface DiskusiProps{
+  diskusi: DiskusiPost[];
+  balasan: Balasan[];
+  jawaban: Jawaban[];
+}
+
 const ITEMS_PER_PAGE = 6;
 
 const FILTER_TABS: { value: FilterKategori; label: string }[] = [
   { value: 'semua', label: 'Semua' },
-  { value: 'tugas', label: 'Tugas' },
-  { value: 'proyek', label: 'Proyek' },
+  { value: 'Tugas', label: 'Tugas' },
+  { value: 'Proyek', label: 'Proyek' },
 ];
 
 const SORT_OPTIONS: { value: SortMode; label: string }[] = [
-  { value: 'terbaru', label: 'Terbaru' },
-  { value: 'terpopuler', label: 'Terpopuler' },
-  { value: 'belum-terjawab', label: 'Belum Terjawab' },
+  { value: 'Terbaru', label: 'Terbaru' },
+  { value: 'Terpopuler', label: 'Terpopuler' },
+  { value: 'Belum-Terjawab', label: 'Belum Terjawab' },
 ];
 
-export default function ForumPage() {
+export default function ForumPage({diskusi, balasan, jawaban}: DiskusiProps) {
   const { auth } = usePage<{ auth?: { user?: { id?: number | null; name?: string | null } | null } }>().props;
   const canInteract = Boolean(auth?.user);
-  const [posts, setPosts] = useState<DiskusiPost[]>(seedPosts);
-  const [activePostId, setActivePostId] = useState<string | null>(null);
+  const [posts, setPosts] = useState<DiskusiPost[]>(diskusi);
+  const [activePostId, setActivePostId] = useState<number | null>(null);
   const [filter, setFilter] = useState<FilterKategori>('semua');
-  const [sort, setSort] = useState<SortMode>('terbaru');
+  const [sort, setSort] = useState<SortMode>('Terbaru');
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
@@ -47,8 +52,9 @@ export default function ForumPage() {
       hasil = hasil.filter(
         (p) =>
           p.judul.toLowerCase().includes(q) ||
-          p.tags.some((t: any) => t.includes(q)) ||
-          p.isi.toLowerCase().includes(q)
+          p.isi.toLowerCase().includes(q) ||
+          p.tags.some((tag) => tag.toLowerCase().includes(q)) ||
+          p.user.name.toLowerCase().includes(q)
       );
     }
     if (sort === 'belum-terjawab') {
@@ -56,8 +62,8 @@ export default function ForumPage() {
     }
 
     return [...hasil].sort((a, b) => {
-      if (sort === 'terpopuler') return b.votes - a.votes;
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      if (sort === 'Terpopuler') return b.votes - a.votes;
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     });
   }, [posts, filter, sort, search]);
 
@@ -69,35 +75,31 @@ export default function ForumPage() {
 
   const activePost = posts.find((p) => p.id === activePostId) ?? null;
 
-  const updatePost = (id: string, updater: (post: DiskusiPost) => DiskusiPost) => {
+  const updatePost = (id: number, updater: (post: DiskusiPost) => DiskusiPost) => {
     setPosts((prev) => prev.map((p) => (p.id === id ? updater(p) : p)));
   };
 
-  const votePost = (id: string, next: VoteValue) => {
+  const votePost = (id: number, next: VoteValue) => {
     updatePost(id, (p) => ({ ...p, votes: p.votes + (next - p.userVote), userVote: next }));
   };
 
-  const hapusPost = (id: string) => {
+  const hapusPost = (id: number) => {
     setPosts((prev) => prev.filter((p) => p.id !== id));
     setActivePostId(null);
   };
 
-  const buatPost = (data: { judul: string; isi: string; kategori: DiskusiPost['kategori']; tags: string[] }) => {
-    const baru: DiskusiPost = {
-      id: buatId('post'),
-      authorId: currentUser.id,
-      authorNama: currentUser.nama,
-      judul: data.judul,
-      isi: data.isi,
-      kategori: data.kategori,
-      tags: data.tags,
-      createdAt: new Date().toISOString(),
-      votes: 0,
-      userVote: 0,
-      views: 0,
-      jawaban: [],
-    };
-    setPosts((prev) => [baru, ...prev]);
+  const buatPost = (data: {
+    judul: string;
+    isi: string;
+    kategori: DiskusiPost['kategori'];
+    tags: string[];
+  }) => {
+    router.post('/forum', data, {
+    onSuccess: (page) => {
+    setPosts(page.props.diskusi as DiskusiPost[]);
+    setModalOpen(false);
+  },
+});
   };
 
   useEffect(() => {

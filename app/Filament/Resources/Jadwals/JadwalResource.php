@@ -39,7 +39,7 @@ class JadwalResource extends Resource
                         'Senin' => 'Senin',
                         'Selasa' => 'Selasa',
                         'Rabu' => 'Rabu',
-                        'kamis' => 'kamis',
+                        'Kamis' => 'Kamis',
                         'Jumat' => 'Jumat',
 
                     ]),

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\balasanJawaban;
+use App\Models\Diskusi;
+use App\Models\jawabanDiskusi;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -12,6 +16,10 @@ class ForumController extends Controller
         $user = Auth::user();
 
         return Inertia::render('ForumPage', [
+            
+            'diskusi' => Diskusi::with(['user', 'jawaban'])->get(),
+            'jawaban' => jawabanDiskusi::all(),
+            'balasan' => balasanJawaban::all(),
             'auth' => [
                 'user' => $user ? [
                     'id' => $user->id,
@@ -20,5 +28,26 @@ class ForumController extends Controller
                 ] : null,
             ],
         ]);
+
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'judul' => 'required|string',
+            'isi' => 'required|string',
+            'kategori' => 'required|in:Tugas,Proyek',
+            'tags' => 'nullable|array',
+        ]);
+
+        Diskusi::create([
+            'authorId' => Auth::id(),
+            'judul' => $request->judul,
+            'isi' => $request->isi,
+            'kategori' => $request->kategori,
+            'tags' => $request->tags,
+        ]);
+
+        return redirect()->back();
     }
 }

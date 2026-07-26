@@ -1,4 +1,4 @@
-export type Kategori = 'tugas' | 'proyek';
+export type Kategori = 'Tugas' | 'Proyek';
 export type VoteValue = 1 | 0 | -1;
 
 export interface CurrentUser {
@@ -9,23 +9,23 @@ export interface CurrentUser {
 
 /** Balasan = reply on an answer, satu level saja (seperti reply Reddit yang disederhanakan) */
 export interface Balasan {
-  id: string;
-  postId: string;
-  jawabanId: string;
-  authorId: string;
+  id: number;
+  postId: number;
+  jawabanId: number;
+  authorId: number;
   authorNama: string;
   isi: string;
-  createdAt: string;
+  created_at: string;
 }
 
 /** Jawaban = answer/comment on a discussion thread (seperti answer di StackOverflow) */
 export interface Jawaban {
-  id: string;
-  postId: string;
-  authorId: string;
+  id: number;
+  postId: number;
+  authorId: number;
   authorNama: string;
   isi: string;
-  createdAt: string;
+  created_at: string;
   votes: number;
   userVote: VoteValue;
   balasan: Balasan[];
@@ -33,20 +33,25 @@ export interface Jawaban {
 
 /** DiskusiPost = thread utama (seperti post di Reddit / pertanyaan di Quora) */
 export interface DiskusiPost {
-  id: string;
-  authorId: string;
+  id: number;
+  authorId: number;
   authorNama: string;
   judul: string;
   isi: string;
   kategori: Kategori;
-  tags: string[];
-  createdAt: string;
+  tags: string | null;
+  created_at: string;
   votes: number;
   userVote: VoteValue;
   views: number;
-  jawabanTerbaikId?: string;
+  jawabanTerbaikId?: string | null;
   jawaban: Jawaban[];
+
+  user: {
+    id: number;
+    name: string;
+  };
 }
 
-export type SortMode = 'terbaru' | 'terpopuler' | 'belum-terjawab';
+export type SortMode = 'Terbaru' | 'Terpopuler' | 'Belum-Terjawab';
 export type FilterKategori = 'semua' | Kategori;

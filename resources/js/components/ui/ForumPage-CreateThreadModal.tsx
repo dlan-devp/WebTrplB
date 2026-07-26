@@ -12,13 +12,13 @@ interface CreateThreadModalProps {
 export default function CreateThreadModal({ open, onClose, onSubmit }: CreateThreadModalProps) {
   const [judul, setJudul] = useState('');
   const [isi, setIsi] = useState('');
-  const [kategori, setKategori] = useState<Kategori>('tugas');
+  const [kategori, setKategori] = useState<Kategori>('Tugas');
   const [tagsInput, setTagsInput] = useState('');
 
   const resetAndClose = () => {
     setJudul('');
     setIsi('');
-    setKategori('tugas');
+    setKategori('Tugas');
     setTagsInput('');
     onClose();
   };
@@ -65,7 +65,7 @@ export default function CreateThreadModal({ open, onClose, onSubmit }: CreateThr
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex gap-2">
-                {(['tugas', 'proyek'] as Kategori[]).map((k) => (
+                {(['Tugas', 'Proyek'] as Kategori[]).map((k) => (
                   <button
                     type="button"
                     key={k}
