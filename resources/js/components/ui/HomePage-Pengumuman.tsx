@@ -17,6 +17,7 @@ const URGENSI_LABEL: Record<Pengumuman['urgensi'], string> = {
 };
 
 export default function Pengumuman({pengumuman}: PengumumansProps) {
+  const items = pengumuman.slice(0, 3);
   return (
     <section id="pengumuman" className="section section--tint">
       <SectionHeading
@@ -26,7 +27,7 @@ export default function Pengumuman({pengumuman}: PengumumansProps) {
       />
 
       <div className="timeline">
-        {pengumuman.map((item, i) => (
+        {items.map((item, i) => (
           <motion.div
             key={item.id}
             className="timeline-item"
@@ -37,7 +38,7 @@ export default function Pengumuman({pengumuman}: PengumumansProps) {
           >
             <div className="timeline-item__marker">
               <span className={`timeline-item__dot timeline-item__dot--${item.urgensi.toLowerCase()}`} />
-              {i < pengumuman.length - 1 && <span className="timeline-item__line" />}
+              {i < items.length - 1 && <span className="timeline-item__line" />}
             </div>
             <div className="timeline-item__body">
               <div className="timeline-item__head">
