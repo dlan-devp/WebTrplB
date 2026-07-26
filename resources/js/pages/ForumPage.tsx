@@ -111,7 +111,7 @@ export default function ForumPage() {
   useMomentumScroll()
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen mx-auto lg:w-350 md:w-dvw px-5 pt-25 pb-10">
       <AnimatePresence mode="wait">
         {activePost ? (
           <ThreadDetail
@@ -129,7 +129,6 @@ export default function ForumPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="mx-auto max-w-dvw lg:px-14 px-4 py-10"
           >
             <div className="mb-8 flex items-start justify-between gap-4">
               <div>

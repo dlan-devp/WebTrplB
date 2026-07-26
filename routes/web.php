@@ -4,9 +4,12 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\GaleriController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MahasiswaController::class, 'index'])->name('home');
+
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 
 Route::middleware('guest')->group(function () {
     Route::get('/user-auth', [UserAuthController::class, 'index'])->name('userAuth');

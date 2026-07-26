@@ -8,11 +8,11 @@ import PreviousPageButton from './ButtonComp-PreviousPageButton';
 import AllPageAuthPromptModal from './AllPage-AuthPromptModal';
 
 const NAV_LINKS = [
+  { href: '/#anggota', label: 'Anggota' },
   { href: '/#jadwal', label: 'Jadwal' },
   { href: '/#pengumuman', label: 'Pengumuman' },
-  { href: '/#anggota', label: 'Anggota' },
-  { href: '/#galeri', label: 'Galeri' },
   { href: '/forum', label: 'Forum' },
+  { href: '/galeri', label: 'Galeri' },
   { href: '/testimoni', label: 'Testimoni' },
 ];
 
