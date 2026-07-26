@@ -28,6 +28,10 @@ export interface Jawaban {
   created_at: string;
   votes: number;
   userVote: VoteValue;
+   user: {
+    id: number;
+    name: string;
+  };
   balasan: Balasan[];
 }
 

@@ -12,8 +12,7 @@ import useMomentumScroll from '@/animation/MomentumScroll';
 
 interface DiskusiProps{
   diskusi: DiskusiPost[];
-  balasan: Balasan[];
-  jawaban: Jawaban[];
+
 }
 
 const ITEMS_PER_PAGE = 6;
@@ -30,10 +29,13 @@ const SORT_OPTIONS: { value: SortMode; label: string }[] = [
   { value: 'Belum-Terjawab', label: 'Belum Terjawab' },
 ];
 
-export default function ForumPage({diskusi, balasan, jawaban}: DiskusiProps) {
+export default function ForumPage({diskusi}: DiskusiProps) {
   const { auth } = usePage<{ auth?: { user?: { id?: number | null; name?: string | null } | null } }>().props;
   const canInteract = Boolean(auth?.user);
   const [posts, setPosts] = useState<DiskusiPost[]>(diskusi);
+  useEffect(() => {
+  setPosts(diskusi);
+    }, [diskusi]);
   const [activePostId, setActivePostId] = useState<number | null>(null);
   const [filter, setFilter] = useState<FilterKategori>('semua');
   const [sort, setSort] = useState<SortMode>('Terbaru');

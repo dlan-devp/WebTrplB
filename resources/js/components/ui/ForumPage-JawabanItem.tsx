@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePage } from '@inertiajs/react';
 import { CheckCircle2, Pencil, Trash2, CornerDownRight } from 'lucide-react';
 import type { Jawaban, VoteValue } from '@/types/Forum-Page.types';
-import { currentUser } from '../../../../database/seedData';
 import { waktuRelatif } from '@/components/utils/ForumPage.utils';
 import VoteControl from './ForumPage-VoteControl';
 
@@ -15,8 +15,8 @@ interface JawabanItemProps {
   onDelete: () => void;
   onTandaiTerbaik: () => void;
   onTambahBalasan: (isi: string) => void;
-  onEditBalasan: (balasanId: string, isiBaru: string) => void;
-  onDeleteBalasan: (balasanId: string) => void;
+  onEditBalasan: (balasanId: number, isiBaru: string) => void;
+  onDeleteBalasan: (balasanId: number) => void;
   canInteract?: boolean;
 }
 
@@ -33,7 +33,16 @@ export default function JawabanItem({
   onDeleteBalasan,
   canInteract = false,
 }: JawabanItemProps) {
-  const isOwner = jawaban.authorId === currentUser.id;
+    const { auth } = usePage<{
+    auth?: {
+      user?: {
+        id?: number;
+        name?: string;
+      } | null;
+    };
+  }>().props;
+  
+  const isOwner = jawaban.user.id === auth?.user?.id;
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(jawaban.isi);
   const [showReplyForm, setShowReplyForm] = useState(false);
@@ -63,8 +72,8 @@ export default function JawabanItem({
 
         <div className="min-w-0 flex-1">
           <div className="mb-1.5 flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium text-slate-700">{jawaban.authorNama}</span>
-            <span className="text-xs text-slate-400">&middot; {waktuRelatif(jawaban.createdAt)}</span>
+            <span className="text-sm font-medium text-slate-700">{jawaban.user.name}</span>
+            <span className="text-xs text-slate-400">&middot; {waktuRelatif(jawaban.created_at)}</span>
             {isBestAnswer && (
               <span className="flex items-center gap-1 bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">
                 <CheckCircle2 size={12} /> Jawaban Terbaik
@@ -152,7 +161,7 @@ export default function JawabanItem({
                   isi={b.isi}
                   authorNama={b.authorNama}
                   authorId={b.authorId}
-                  createdAt={b.createdAt}
+                  created_at={b.created_at}
                   onEdit={(isiBaru) => onEditBalasan(b.id, isiBaru)}
                   onDelete={() => onDeleteBalasan(b.id)}
                   canInteract={canInteract}
@@ -170,20 +179,29 @@ function BalasanRow({
   isi,
   authorNama,
   authorId,
-  createdAt,
+  created_at,
   onEdit,
   onDelete,
   canInteract = false,
 }: {
   isi: string;
   authorNama: string;
-  authorId: string;
-  createdAt: string;
+  authorId: number;
+  created_at: string;
   onEdit: (isiBaru: string) => void;
   onDelete: () => void;
   canInteract?: boolean;
 }) {
-  const isOwner = authorId === currentUser.id;
+  const { auth } = usePage<{
+    auth?: {
+      user?: {
+        id?: number;
+        name?: string;
+      } | null;
+    };
+  }>().props;
+
+  const isOwner = authorId === auth?.user?.id;
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(isi);
 
@@ -193,7 +211,7 @@ function BalasanRow({
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="font-medium text-slate-700">{authorNama}</span>
-          <span className="text-xs text-slate-400">&middot; {waktuRelatif(createdAt)}</span>
+          <span className="text-xs text-slate-400">&middot; {waktuRelatif(created_at)}</span>
         </div>
         {editing ? (
           <div className="mt-1 flex gap-2">

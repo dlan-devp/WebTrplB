@@ -17,7 +17,7 @@ class ForumController extends Controller
 
         return Inertia::render('ForumPage', [
             
-            'diskusi' => Diskusi::with(['user', 'jawaban'])->get(),
+            'diskusi' => Diskusi::with(['user', 'jawaban.user', 'jawaban.balasan.user'])->get(),
             'jawaban' => jawabanDiskusi::all(),
             'balasan' => balasanJawaban::all(),
             'auth' => [
@@ -49,5 +49,23 @@ class ForumController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function storeJawaban(Request $request)
+    {
+        $validated = $request->validate([
+            'postId' => ['required', 'exists:tb_diskusi,id'],
+            'isi' => ['required', 'string'],
+        ]);
+
+        jawabanDiskusi::create([
+            'postId' => $validated['postId'],
+            'authorId' => auth()->id(),
+            'isi' => $validated['isi'],
+            'votes' => 0,
+            'userVote' => 0,
+        ]);
+
+        return back();
     }
 }

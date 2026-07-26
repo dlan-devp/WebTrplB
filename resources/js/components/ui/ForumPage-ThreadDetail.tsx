@@ -2,8 +2,8 @@ import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Pencil, Trash2, MessageSquare, Eye } from 'lucide-react';
 import type { DiskusiPost, VoteValue } from '@/types/Forum-Page.types';
-import { currentUser } from '../../../../database/seedData';
-import { waktuRelatif, buatId } from '@/components/utils/ForumPage.utils';
+import { router, usePage } from '@inertiajs/react';
+import { waktuRelatif} from '@/components/utils/ForumPage.utils';
 import VoteControl from './ForumPage-VoteControl';
 import JawabanItem from './ForumPage-JawabanItem';
 
@@ -16,12 +16,21 @@ interface ThreadDetailProps {
 }
 
 const KATEGORI_STYLE: Record<DiskusiPost['kategori'], string> = {
-  tugas: 'bg-violet-50 text-violet-600',
-  proyek: 'bg-blue-50 text-blue-600',
+  Tugas: 'bg-violet-50 text-violet-600',
+  Proyek: 'bg-blue-50 text-blue-600',
 };
 
 export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost, canInteract = false }: ThreadDetailProps) {
-  const isOwner = post.authorId === currentUser.id;
+  const { auth } = usePage<{
+  auth?: {
+    user?: {
+      id?: number;
+      name?: string;
+    } | null;
+  };
+}>().props;
+
+  const isOwner = post.user.id === auth?.user?.id;
   const [editingPost, setEditingPost] = useState(false);
   const [judulEdit, setJudulEdit] = useState(post.judul);
   const [isiEdit, setIsiEdit] = useState(post.isi);
@@ -44,33 +53,33 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
 
   const simpanEditPost = () => {
     if (!judulEdit.trim() || !isiEdit.trim()) return;
-    onUpdatePost((p) => ({ ...p, judul: judulEdit.trim(), isi: isiEdit.trim() }));
-    setEditingPost(false);
-  };
+
+    router.put(`/forum/${post.id}`, {
+        judul: judulEdit.trim(),
+        isi: isiEdit.trim(),
+    }, {
+        preserveScroll: true,
+        onSuccess: () => {
+            setEditingPost(false);
+        },
+    });
+};
 
   const kirimJawaban = () => {
     if (!jawabanBaru.trim()) return;
-    onUpdatePost((p) => ({
-      ...p,
-      jawaban: [
-        ...p.jawaban,
-        {
-          id: buatId('jwb'),
-          postId: p.id,
-          authorId: currentUser.id,
-          authorNama: currentUser.nama,
-          isi: jawabanBaru.trim(),
-          createdAt: new Date().toISOString(),
-          votes: 0,
-          userVote: 0,
-          balasan: [],
-        },
-      ],
-    }));
-    setJawabanBaru('');
+
+    router.post('/forum', {
+      postId: post.id,
+      isi: jawabanBaru.trim(),
+    }, {
+      preserveScroll: true,
+      onSuccess: () => {
+        setJawabanBaru('');
+      },
+    });
   };
 
-  const voteJawaban = (jawabanId: string, next: VoteValue) => {
+  const voteJawaban = (jawabanId: number, next: VoteValue) => {
     onUpdatePost((p) => ({
       ...p,
       jawaban: p.jawaban.map((j) =>
@@ -79,14 +88,14 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
     }));
   };
 
-  const editJawaban = (jawabanId: string, isiBaru: string) => {
+  const editJawaban = (jawabanId: number, isiBaru: string) => {
     onUpdatePost((p) => ({
       ...p,
       jawaban: p.jawaban.map((j) => (j.id === jawabanId ? { ...j, isi: isiBaru } : j)),
     }));
   };
 
-  const hapusJawaban = (jawabanId: string) => {
+  const hapusJawaban = (jawabanId: number) => {
     onUpdatePost((p) => ({
       ...p,
       jawaban: p.jawaban.filter((j) => j.id !== jawabanId),
@@ -94,11 +103,11 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
     }));
   };
 
-  const tandaiTerbaik = (jawabanId: string) => {
+  const tandaiTerbaik = (jawabanId: number) => {
     onUpdatePost((p) => ({ ...p, jawabanTerbaikId: jawabanId }));
   };
 
-  const tambahBalasan = (jawabanId: string, isi: string) => {
+  const tambahBalasan = (jawabanId: number, isi: string) => {
     onUpdatePost((p) => ({
       ...p,
       jawaban: p.jawaban.map((j) =>
@@ -123,7 +132,7 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
     }));
   };
 
-  const editBalasan = (jawabanId: string, balasanId: string, isiBaru: string) => {
+  const editBalasan = (jawabanId: number, balasanId: number, isiBaru: string) => {
     onUpdatePost((p) => ({
       ...p,
       jawaban: p.jawaban.map((j) =>
@@ -134,7 +143,7 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
     }));
   };
 
-  const hapusBalasan = (jawabanId: string, balasanId: string) => {
+  const hapusBalasan = (jawabanId: number, balasanId: number) => {
     onUpdatePost((p) => ({
       ...p,
       jawaban: p.jawaban.map((j) =>
@@ -204,8 +213,8 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
             )}
 
             <div className="flex items-center gap-4 text-xs text-slate-400">
-              <span className="font-medium text-slate-500">{post.authorNama}</span>
-              <span>&middot; {waktuRelatif(post.createdAt)}</span>
+              <span className="font-medium text-slate-500">{post.user.name}</span>
+              <span>&middot; {waktuRelatif(post.created_at)}</span>
               <span className="flex items-center gap-1"><Eye size={13} /> {post.views}</span>
               <span className="flex items-center gap-1"><MessageSquare size={13} /> {post.jawaban.length}</span>
 
