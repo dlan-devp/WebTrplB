@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Head } from '@inertiajs/react';
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
 import { Heart, X, ChevronLeft, ChevronRight, SmilePlus } from 'lucide-react';
 
@@ -334,6 +335,7 @@ function GaleriCard({
       transition={{ duration: 0.35, delay: Math.min(index, 6) * 0.05, ease: 'easeOut' }}
       className="group relative mb-5 break-inside-avoid overflow-hidden rounded-2xl bg-(--color-bg)"
     >
+      
       <button onClick={onBuka} className="block w-full text-left">
         <img
           src={item.gambar[0]}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Diskusi;
 use App\Models\Galeri;
 use App\Models\Jadwal;
 use App\Models\Mahasiswa;
@@ -15,6 +16,7 @@ class MahasiswaController extends Controller
     public function index(){
 
         return Inertia::render('welcome', [
+            'threadDiskusi' => Diskusi::with('user')->withCount('jawaban')->latest()->take(3)->get(),
             'mahasiswa' => Mahasiswa::all(),
             'testimoni' => Testimoni::latest()->get(),
             'galeri' => Galeri::all(),

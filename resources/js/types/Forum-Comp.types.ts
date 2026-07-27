@@ -1,7 +1,10 @@
 export interface ThreadDiskusi {
   id: string;
   judul: string;
-  penulis: string;
-  jumlahBalasan: number;
-  waktu: string;
+  user: {
+      id: number;
+      name: string;
+  };
+  jawaban_count: number;
+  created_at: number;
 }

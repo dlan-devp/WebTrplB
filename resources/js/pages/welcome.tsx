@@ -13,6 +13,7 @@ import TestimoniKelas from '@/components/ui/HomePage-TestimoniKelas';
 
 import useMomentumScroll from '@/animation/MomentumScroll';
 
+import type { ThreadDiskusi } from '@/types/Forum-Comp.types';
 import type { Jadwal } from '@/types/JadwalKelas-Comp.types';
 import type { Mahasiswa } from '@/types/Mahasiswa-Comp.types';
 import type { Pengumumans } from '@/types/Pengumuman-Comp.props';
@@ -23,21 +24,20 @@ interface WelcomeProps {
   mahasiswa: Mahasiswa[];
   testimoni: Testimoni[];
   pengumuman: Pengumumans[];
+  threadDiskusi: ThreadDiskusi[];
 }
 
-export default function Welcome({ mahasiswa, testimoni, jadwal, pengumuman }: WelcomeProps) {
+export default function Welcome({ mahasiswa, testimoni, jadwal, pengumuman, threadDiskusi }: WelcomeProps) {
   useMomentumScroll();
 
   return (
     <>
-      <Head title="Website TRPL-B" />
-
       <main className="relative w-full lg:w-350 m-auto">
         <Hero mahasiswa={mahasiswa} />
         <AnggotaKelas mahasiswa={mahasiswa} />
         <JadwalKelas jadwal={jadwal} />
         <Pengumuman  pengumuman={pengumuman} />
-        <ForumDiskusi />
+        <ForumDiskusi threadDiskusi={threadDiskusi} />
         <Galeri />
         <TestimoniKelas testimoni={testimoni} />
         <LinkGrup />

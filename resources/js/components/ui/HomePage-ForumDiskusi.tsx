@@ -2,12 +2,16 @@ import { useState, type MouseEvent } from 'react';
 import { motion } from 'motion/react';
 import { MessageSquare, ArrowRight } from 'lucide-react';
 import { Link, router, usePage } from '@inertiajs/react';
-import { threadDiskusi } from '../../../../database/dummyData';
 import SectionHeading from './HomePage-SectionHeading';
 import '../../../css/components/ForumDiskusi.css';
 import AllPageAuthPromptModal from './AllPage-AuthPromptModal';
+import { ThreadDiskusi } from '@/types/Forum-Comp.types';
 
-export default function ForumDiskusi() {
+interface DiskusiProps{
+  threadDiskusi: ThreadDiskusi[];
+}
+
+export default function ForumDiskusi({threadDiskusi}: DiskusiProps) {
   const { auth } = usePage<{ auth: { user?: { id?: string | null; name?: string | null } } }>().props;
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
 
@@ -50,7 +54,7 @@ export default function ForumDiskusi() {
         {threadDiskusi.map((thread, i) => (
           <motion.a
             key={thread.id}
-            href="#"
+            href="forum"
             className="forum-item"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -63,10 +67,10 @@ export default function ForumDiskusi() {
             <span className="forum-item__body">
               <span className="forum-item__title">{thread.judul}</span>
               <span className="forum-item__meta">
-                oleh {thread.penulis} &middot; {thread.waktu}
+                oleh {thread.user.name} &middot; {new Date(thread.created_at).toLocaleString('id-ID')}
               </span>
             </span>
-            <span className="forum-item__count">{thread.jumlahBalasan} balasan</span>
+            <span className="forum-item__count">{thread.jawaban_count} balasan</span>
           </motion.a>
         ))}
       </div>
