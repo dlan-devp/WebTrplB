@@ -61,5 +61,5 @@ export interface DiskusiPost {
   };
 }
 
-export type SortMode = 'Terbaru' | 'Terpopuler' | 'Belum-Terjawab';
+export type SortMode = 'Terbaru' | 'Terpopuler' | 'belum-terjawab';
 export type FilterKategori = 'semua' | Kategori;

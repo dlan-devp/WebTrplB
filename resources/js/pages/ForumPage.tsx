@@ -26,7 +26,7 @@ const FILTER_TABS: { value: FilterKategori; label: string }[] = [
 const SORT_OPTIONS: { value: SortMode; label: string }[] = [
   { value: 'Terbaru', label: 'Terbaru' },
   { value: 'Terpopuler', label: 'Terpopuler' },
-  { value: 'Belum-Terjawab', label: 'Belum Terjawab' },
+  { value: 'belum-terjawab', label: 'Belum Terjawab' },
 ];
 
 export default function ForumPage({diskusi}: DiskusiProps) {

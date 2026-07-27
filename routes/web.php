@@ -16,12 +16,18 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
+
+// forum diskusi
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
 Route::post('/forum', [ForumController::class, 'store'])
     ->name('forum.store');
 Route::post('/forumJawaban', [ForumController::class, 'storeJawaban']);
 Route::post('/forumJawaban/{jawaban}/balasan', [ForumController::class, 'storeBalasan'])->name('forumJawaban.balasan.store');
 Route::put('/forum/{diskusi}', [ForumController::class, 'update']);
+Route::put('/forum/{diskusi}/jawabanTerbaik/{jawaban}', 
+    [ForumController::class, 'tandaiJawabanTerbaik']
+)->name('forum.jawaban-terbaik');
+
 
 Route::middleware('auth')->group(function () {
     Route::post('/testimoni', [MahasiswaController::class, 'store'])

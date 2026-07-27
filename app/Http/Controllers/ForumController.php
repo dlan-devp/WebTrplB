@@ -97,4 +97,26 @@ class ForumController extends Controller
 
         return redirect()->back();
     }
+
+    public function tandaiJawabanTerbaik(Diskusi $diskusi, jawabanDiskusi $jawaban) {
+
+        // Pastikan jawaban memang milik diskusi tersebut
+        if ($jawaban->postId !== $diskusi->id) {
+            abort(404);
+        }
+
+        // Pastikan hanya pemilik diskusi yang boleh menandai
+        if ($diskusi->authorId !== auth()->id()) {
+            abort(403);
+        }
+
+        $diskusi->update([
+        'jawabanTerbaikId' =>
+            $diskusi->jawabanTerbaikId === $jawaban->id
+                ? null
+                : $jawaban->id,
+        ]);
+
+        return back();
+    }
 }

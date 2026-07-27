@@ -110,9 +110,18 @@ export default function JawabanItem({
               <button onClick={() => setShowReplyForm((s) => !s)} className="text-slate-400 hover:text-violet-600">
                 Balas
               </button>
-              {isPostAuthor && !isBestAnswer && (
-                <button onClick={onTandaiTerbaik} className="text-slate-400 hover:text-emerald-600">
-                  Tandai jawaban terbaik
+              {isPostAuthor && (
+                <button
+                  onClick={onTandaiTerbaik}
+                  className={
+                    isBestAnswer
+                      ? 'text-emerald-600 hover:text-red-500'
+                      : 'text-slate-400 hover:text-emerald-600'
+                  }
+                >
+                  {isBestAnswer
+                    ? 'Batalkan jawaban terbaik'
+                    : 'Tandai jawaban terbaik'}
                 </button>
               )}
               {/* Edit & hapus hanya tampil untuk pemilik jawaban */}

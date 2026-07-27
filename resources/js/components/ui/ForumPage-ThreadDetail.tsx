@@ -104,8 +104,14 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
   };
 
   const tandaiTerbaik = (jawabanId: number) => {
-    onUpdatePost((p) => ({ ...p, jawabanTerbaikId: jawabanId }));
-  };
+  router.put(
+    `/forum/${post.id}/jawabanTerbaik/${jawabanId}`,
+    {},
+    {
+      preserveScroll: true,
+    }
+  );
+};
 
   const tambahBalasan = (jawabanId: number, isi: string) => {
   router.post(`/forumJawaban/${jawabanId}/balasan`, {
