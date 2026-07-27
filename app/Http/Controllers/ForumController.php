@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\balasanJawaban;
 use App\Models\Diskusi;
 use App\Models\jawabanDiskusi;
+use App\Models\VoteDiskusi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -116,6 +117,52 @@ class ForumController extends Controller
                 ? null
                 : $jawaban->id,
         ]);
+
+        return back();
+    }
+
+    public function vote(Request $request, $id)
+    {
+        $request->validate([
+            'value' => ['required', 'integer', 'in:-1,0,1'],
+        ]);
+
+        $diskusi = Diskusi::findOrFail($id);
+
+        $voteLama = VoteDiskusi::where('authorId', auth()->id())
+            ->where('postId', $diskusi->id)
+            ->first();
+
+        $nilaiBaru = $request->value;
+
+        if (!$voteLama) {
+            // User belum pernah vote
+            if ($nilaiBaru !== 0) {
+                VoteDiskusi::create([
+                    'authorId' => auth()->id(),
+                    'postId' => $diskusi->id,
+                    'value' => $nilaiBaru,
+                ]);
+
+                $diskusi->increment('votes', $nilaiBaru);
+            }
+        } else {
+            $nilaiLama = $voteLama->value;
+
+            if ($nilaiBaru === 0) {
+                // Membatalkan vote
+                $voteLama->delete();
+
+                $diskusi->decrement('votes', $nilaiLama);
+            } else {
+                // Mengubah vote
+                $voteLama->update([
+                    'value' => $nilaiBaru,
+                ]);
+
+                $diskusi->increment('votes', $nilaiBaru - $nilaiLama);
+            }
+        }
 
         return back();
     }

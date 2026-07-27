@@ -47,7 +47,18 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
   const votePost = (next: VoteValue) => {
     onUpdatePost((p) => {
       const delta = next - p.userVote;
-      return { ...p, votes: p.votes + delta, userVote: next };
+
+      return {
+        ...p,
+        votes: p.votes + delta,
+        userVote: next,
+      };
+    });
+
+    router.put(`/forum/${post.id}/vote`, {
+      value: next,
+    }, {
+      preserveScroll: true,
     });
   };
 

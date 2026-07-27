@@ -82,8 +82,18 @@ export default function ForumPage({diskusi}: DiskusiProps) {
   };
 
   const votePost = (id: number, next: VoteValue) => {
-    updatePost(id, (p) => ({ ...p, votes: p.votes + (next - p.userVote), userVote: next }));
-  };
+  updatePost(id, (p) => ({
+    ...p,
+    votes: p.votes + (next - p.userVote),
+    userVote: next,
+  }));
+
+  router.put(`/forum/${id}/vote`, {
+    value: next,
+  }, {
+    preserveScroll: true,
+  });
+};
 
   const hapusPost = (id: number) => {
     setPosts((prev) => prev.filter((p) => p.id !== id));

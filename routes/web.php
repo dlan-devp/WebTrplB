@@ -27,6 +27,8 @@ Route::put('/forum/{diskusi}', [ForumController::class, 'update']);
 Route::put('/forum/{diskusi}/jawabanTerbaik/{jawaban}', 
     [ForumController::class, 'tandaiJawabanTerbaik']
 )->name('forum.jawaban-terbaik');
+Route::put('/forum/{diskusi}/vote', [ForumController::class, 'vote'])
+    ->name('forum.vote');
 
 
 Route::middleware('auth')->group(function () {

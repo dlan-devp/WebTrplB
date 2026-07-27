@@ -32,4 +32,9 @@ class Diskusi extends Model
     public function jawaban(){
         return $this->hasMany(jawabanDiskusi::class, 'postId', 'id');
     }
+
+    public function vote()
+    {
+        return $this->hasMany(VoteDiskusi::class, 'postId');
+    }
 }
