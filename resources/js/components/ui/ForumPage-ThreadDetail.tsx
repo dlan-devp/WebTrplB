@@ -132,24 +132,22 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
   });
 };
 
-  const editBalasan = (jawabanId: number, balasanId: number, isiBaru: string) => {
-    onUpdatePost((p) => ({
-      ...p,
-      jawaban: p.jawaban.map((j) =>
-        j.id === jawabanId
-          ? { ...j, balasan: j.balasan.map((b) => (b.id === balasanId ? { ...b, isi: isiBaru } : b)) }
-          : j
-      ),
-    }));
+  const editBalasan = (
+    jawabanId: number,
+    balasanId: number,
+    isiBaru: string
+  ) => {
+    router.put(`/forum/${balasanId}`, {
+      isi: isiBaru,
+    }, {
+      preserveScroll: true,
+    });
   };
 
   const hapusBalasan = (jawabanId: number, balasanId: number) => {
-    onUpdatePost((p) => ({
-      ...p,
-      jawaban: p.jawaban.map((j) =>
-        j.id === jawabanId ? { ...j, balasan: j.balasan.filter((b) => b.id !== balasanId) } : j
-      ),
-    }));
+    router.delete(`/forum/${balasanId}`, {
+      preserveScroll: true,
+    });
   };
 
   return (

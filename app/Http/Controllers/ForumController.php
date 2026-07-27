@@ -121,6 +121,30 @@ class ForumController extends Controller
         return back();
     }
 
+    public function updateBalasan(Request $request, balasanJawaban $balasan)
+    {
+        abort_unless($balasan->authorId === auth()->id(), 403);
+
+        $validated = $request->validate([
+            'isi' => ['required', 'string'],
+        ]);
+
+        $balasan->update([
+            'isi' => $validated['isi'],
+        ]);
+
+        return back();
+    }
+
+    public function destroyBalasan(balasanJawaban $balasan)
+    {
+        abort_unless($balasan->authorId === auth()->id(), 403);
+
+        $balasan->delete();
+
+        return back();
+    }
+
     public function vote(Request $request, $id)
     {
         $request->validate([

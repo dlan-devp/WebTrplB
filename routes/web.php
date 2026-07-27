@@ -23,6 +23,10 @@ Route::post('/forum', [ForumController::class, 'store'])
     ->name('forum.store');
 Route::post('/forumJawaban', [ForumController::class, 'storeJawaban']);
 Route::post('/forumJawaban/{jawaban}/balasan', [ForumController::class, 'storeBalasan'])->name('forumJawaban.balasan.store');
+Route::put('/forum/{balasan}', [ForumController::class, 'updateBalasan'])
+    ->middleware('auth');
+Route::delete('/forum/{balasan}', [ForumController::class, 'destroyBalasan'])
+    ->middleware('auth');
 Route::put('/forum/{diskusi}', [ForumController::class, 'update']);
 Route::put('/forum/{diskusi}/jawabanTerbaik/{jawaban}', 
     [ForumController::class, 'tandaiJawabanTerbaik']
