@@ -1,5 +1,5 @@
 export interface FotoGaleri {
   id: string;
-  url: string;
-  caption: string;
+  gambar: string;
+  deskripsi: string;
 }

@@ -1,38 +1,43 @@
 <?php
 
-namespace App\Filament\Resources\Roles;
+namespace App\Filament\Resources\Galeris;
 
-use App\Filament\Resources\Roles\Pages\ManageRoles;
-use App\Models\Role;
+use App\Filament\Resources\Galeris\Pages\ManageGaleris;
+use App\Models\Galeri;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
 
-class RoleResource extends Resource
+class GaleriResource extends Resource
 {
-    protected static ?string $model = Role::class;
+    protected static ?string $model = Galeri::class;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-    protected static ?string $recordTitleAttribute = 'Role';
-    protected static ?string $navigationLabel = 'Role';
-    protected static ?int $navigationSort = 6;
-    protected static UnitEnum|string|null $navigationGroup = 'Manajemen Users';
+    protected static ?string $recordTitleAttribute = 'Galeri';
+    protected static ?string $navigationLabel = 'Galeri';
+    protected static ?int $navigationSort = 4;
+    protected static UnitEnum|string|null $navigationGroup = 'Manajemen Galeri';
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('namaRole')
-                    ->required(),
-                Textarea::make('deskripsi')
+                FileUpload::make('gambar')
+                    ->required()
+                    ->image()
+                    ->disk('public')
+                    ->directory('galeri')
+                    ->columnSpanFull(),
+                TextInput::make('deskripsi')
                     ->required()
                     ->columnSpanFull(),
             ]);
@@ -42,8 +47,8 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('namaRole')
-                    ->searchable(),
+                ImageColumn::make('gambar')
+                    ->disk('public'),
                 TextColumn::make('deskripsi')
                     ->searchable(),
             ])
@@ -64,7 +69,7 @@ class RoleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageRoles::route('/'),
+            'index' => ManageGaleris::route('/'),
         ];
     }
 }

@@ -1,10 +1,13 @@
 import { motion } from 'motion/react';
-import { fotoGaleri } from '../../../../database/dummyData';
 import SectionHeading from './HomePage-SectionHeading';
 import '../../../css/components/Galeri.css';
-import type { FotoGaleri } from '../../types/Galeri-Comp.types';
+import type { FotoGaleri } from '@/types/Galeri-Comp.types';
 
-export default function Galeri() {
+interface galeriProps {
+  galeri: FotoGaleri[];
+}
+
+export default function Galeri({galeri}: galeriProps) {
   return (
     <section id="galeri" className="section section--tint">
       <SectionHeading
@@ -14,7 +17,7 @@ export default function Galeri() {
       />
 
       <div className="galeri-grid">
-        {fotoGaleri.map((foto: FotoGaleri, i: number) => (
+        {galeri.map((foto, i) => (
           <motion.figure
             key={foto.id}
             className="galeri-item"
@@ -23,7 +26,11 @@ export default function Galeri() {
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.35, delay: i * 0.05 }}
           >
-            <figcaption>{foto.caption}</figcaption>
+            <img
+              src={`/storage/${foto.gambar}`}
+              alt={foto.deskripsi}
+            />
+            <figcaption>{foto.deskripsi}</figcaption>
           </motion.figure>
         ))}
       </div>
