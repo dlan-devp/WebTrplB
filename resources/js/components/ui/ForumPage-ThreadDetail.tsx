@@ -100,18 +100,17 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
   };
 
   const editJawaban = (jawabanId: number, isiBaru: string) => {
-    onUpdatePost((p) => ({
-      ...p,
-      jawaban: p.jawaban.map((j) => (j.id === jawabanId ? { ...j, isi: isiBaru } : j)),
-    }));
+    router.put(`/forumJawaban/${jawabanId}`, {
+      isi: isiBaru,
+    }, {
+      preserveScroll: true,
+    });
   };
 
   const hapusJawaban = (jawabanId: number) => {
-    onUpdatePost((p) => ({
-      ...p,
-      jawaban: p.jawaban.filter((j) => j.id !== jawabanId),
-      jawabanTerbaikId: p.jawabanTerbaikId === jawabanId ? undefined : p.jawabanTerbaikId,
-    }));
+    router.delete(`/forumJawaban/${jawabanId}`, {
+      preserveScroll: true,
+    });
   };
 
   const tandaiTerbaik = (jawabanId: number) => {

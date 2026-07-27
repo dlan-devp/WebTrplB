@@ -70,6 +70,30 @@ class ForumController extends Controller
         return back();
     }
 
+    public function updateJawaban(Request $request, jawabanDiskusi $jawaban)
+    {
+        abort_unless($jawaban->authorId === auth()->id(), 403);
+
+        $validated = $request->validate([
+            'isi' => ['required', 'string'],
+        ]);
+
+        $jawaban->update([
+            'isi' => $validated['isi'],
+        ]);
+
+        return back();
+    }
+
+    public function destroyJawaban(jawabanDiskusi $jawaban)
+    {
+        abort_unless($jawaban->authorId === auth()->id(), 403);
+
+        $jawaban->delete();
+
+        return back();
+    }
+
     public function update(Request $request, Diskusi $diskusi)
     {
         $validated = $request->validate([

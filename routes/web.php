@@ -17,20 +17,30 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
 
-// forum diskusi
+// forumpage
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
 Route::post('/forum', [ForumController::class, 'store'])
     ->name('forum.store');
+
+// diskusi
+Route::put('/forum/{diskusi}', [ForumController::class, 'update']);
+Route::put('/forum/{diskusi}/jawabanTerbaik/{jawaban}', [ForumController::class, 'tandaiJawabanTerbaik'])->name('forum.jawaban-terbaik');
+
+// jawaban dikusi
 Route::post('/forumJawaban', [ForumController::class, 'storeJawaban']);
 Route::post('/forumJawaban/{jawaban}/balasan', [ForumController::class, 'storeBalasan'])->name('forumJawaban.balasan.store');
+Route::put('/forumJawaban/{jawaban}', [ForumController::class, 'updateJawaban'])
+    ->middleware('auth');
+Route::delete('/forumJawaban/{jawaban}', [ForumController::class, 'destroyJawaban'])
+    ->middleware('auth');
+
+// balasanjawaban
 Route::put('/forum/{balasan}', [ForumController::class, 'updateBalasan'])
     ->middleware('auth');
 Route::delete('/forum/{balasan}', [ForumController::class, 'destroyBalasan'])
     ->middleware('auth');
-Route::put('/forum/{diskusi}', [ForumController::class, 'update']);
-Route::put('/forum/{diskusi}/jawabanTerbaik/{jawaban}', 
-    [ForumController::class, 'tandaiJawabanTerbaik']
-)->name('forum.jawaban-terbaik');
+
+
 Route::put('/forum/{diskusi}/vote', [ForumController::class, 'vote'])
     ->name('forum.vote');
 
