@@ -16,7 +16,7 @@ export default function JadwalKelas({jadwal}: JadwalProps) {
       <SectionHeading
         eyebrow="Senin — Jumat"
         title="Jadwal Kelas Minggu Ini"
-        subtitle="Warna kuning untuk kelas teori, biru untuk praktikum. Klik hari untuk lihat detail ruangan."
+        subtitle="Warna kuning untuk kelas teori, biru untuk praktikum."
       />
 
       <div className="jadwal-grid">

@@ -47,7 +47,7 @@ export default function Hero({mahasiswa}: HeroProps) {
           Web TRPL B Nih Boszzz
         </h1>
         <p className="hero__subtitle">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
+          Setiap baris kode adalah bagian dari proses kami untuk terus belajar, berkembang, dan menciptakan sesuatu yang berarti.
         </p>
         <div className="hero__actions">
           <a href="#jadwal" className="hero__btn hero__btn--primary">Lihat Jadwal</a>

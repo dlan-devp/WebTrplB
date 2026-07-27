@@ -129,7 +129,7 @@ export default function TestimoniKelas({testimoni}: NavbarProps) {
         <SectionHeading
           eyebrow="Suara Anak Kelas"
           title="Testimoni Kelas"
-          subtitle="Lorem ipsum dolor sit amet — consectetur adipiscing elit."
+          subtitle="Ruang untuk berbagi pendapat, menyampaikan kritik, dan memberikan saran demi perkembangan bersama."
         />
       </div>
 
