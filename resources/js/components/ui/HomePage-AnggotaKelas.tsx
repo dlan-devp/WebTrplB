@@ -103,7 +103,7 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
       <div className="anggota-grid z-20">
         {mahasiswa.map((student: Mahasiswa, index: number) => (
           <motion.button
-            key={student.id}
+            key={student.kodeMahasiswa}
             type="button"
             className="anggota-card z-20"
             initial={{ opacity: 0, y: 14 }}
