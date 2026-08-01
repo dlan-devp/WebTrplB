@@ -1,6 +1,7 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import { motion } from 'motion/react';
 import { useState, type MouseEvent } from 'react';
+import { Menu, X } from 'lucide-react';
 import '../../../css/components/Navbar.css';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { logout } from '@/routes';
@@ -20,6 +21,7 @@ export default function Navbar() {
   const page = usePage<{ auth: { user?: { name?: string | null } } }>();
   const { auth } = page.props;
   const { currentUrl } = useCurrentUrl();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const isAuthenticated = Boolean(auth.user);
@@ -72,6 +74,12 @@ export default function Navbar() {
               </a>
             ))}
           </nav>
+          <button
+            className="navbar__toggle"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
           {isAuthenticated ? (
             <Link href={logout()} as="button" method="post" className="navbar__cta">
               Logout
@@ -83,6 +91,38 @@ export default function Navbar() {
           )}
         </div>
       </motion.header>
+      {isMenuOpen && (
+        <div className="navbar__mobile-menu">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="navbar__mobile-link"
+              onClick={(event) => {
+                handleNavClick(event, link.href, link.label);
+                setIsMenuOpen(false);
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+
+          {isAuthenticated ? (
+            <Link
+              href={logout()}
+              as="button"
+              method="post"
+              className="navbar__mobile-cta"
+            >
+              Logout
+            </Link>
+          ) : (
+            <a href="/user-auth" className="navbar__mobile-cta">
+              Login / Register
+            </a>
+          )}
+        </div>
+      )}
 
       <AllPageAuthPromptModal
         open={showAuthPrompt}
