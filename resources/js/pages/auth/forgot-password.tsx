@@ -49,7 +49,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                 <div className="w-full lg:w-1/2 flex items-center justify-center px-6 sm:px-10 py-16">
                     <div className="w-full max-w-md">
                         <TextLink
-                            href="/user-auth"
+                            href="/login"
                             className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 mb-8"
                         >
                             <ArrowLeft className="w-4 h-4" />
