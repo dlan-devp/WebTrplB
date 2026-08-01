@@ -85,7 +85,7 @@ export default function Navbar() {
               Logout
             </Link>
           ) : (
-            <a href="/user-auth" className="navbar__cta">
+            <a href="/login" className="navbar__cta">
               Login / Register
             </a>
           )}
@@ -117,7 +117,7 @@ export default function Navbar() {
               Logout
             </Link>
           ) : (
-            <a href="/user-auth" className="navbar__mobile-cta">
+            <a href="/login" className="navbar__mobile-cta">
               Login / Register
             </a>
           )}
@@ -131,7 +131,7 @@ export default function Navbar() {
         onClose={closeAuthPrompt}
         onLogin={() => {
           closeAuthPrompt();
-          router.visit('/user-auth');
+          router.visit('/login');
         }}
         onContinue={handleContinueBrowsing}
       />

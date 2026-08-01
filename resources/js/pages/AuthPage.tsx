@@ -359,7 +359,7 @@ export default function AuthPage() {
                 )}
 
                 {mode === 'login' && (
-                  <a href="#lupa-sandi" className="auth__forgot">Lupa kata sandi?</a>
+                  <a href="/forgot-password" className="auth__forgot">Lupa kata sandi?</a>
                 )}
 
                 <motion.button
