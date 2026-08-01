@@ -9,11 +9,13 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
@@ -31,13 +33,17 @@ class MahasiswaResource extends Resource
     {
         return $schema
             ->components([
+                FileUpload::make('foto')
+                    ->image()
+                    ->disk('public')
+                    ->directory('mahasiswa')
+                    ->columnSpanFull(),
                 TextInput::make('nama')
                     ->required(),
                 TextInput::make('umur')
                     ->required()
                     ->numeric(),
                 Textarea::make('hobi')
-                    ->required()
                     ->columnSpanFull(),
             ]);
     }
@@ -46,6 +52,8 @@ class MahasiswaResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('foto')
+                    ->disk('public'),
                 TextColumn::make('nama')
                     ->searchable(),
                 TextColumn::make('umur')

@@ -155,9 +155,13 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
               <div className="anggota-modal__content">
                 <div className='anggota-modal__visual'>
                   <img
-                  src={selectedStudent.foto ?? buildAvatarImage(selectedStudent.nama)}
-                  alt={selectedStudent.nama}
-                  className="anggota-modal__photo"
+                    src={
+                      selectedStudent.foto
+                        ? `/storage/${selectedStudent.foto}`
+                        : buildAvatarImage(selectedStudent.nama)
+                    }
+                    alt={selectedStudent.nama}
+                    className="anggota-modal__photo"
                   />
                 </div>
 
