@@ -46,11 +46,8 @@ Route::put('/forum/{diskusi}/vote', [ForumController::class, 'vote'])
 
 
 Route::middleware('auth')->group(function () {
-    Route::post('/testimoni', [MahasiswaController::class, 'store'])
-        ->name('testimoni.store');
-
-    Route::post('/testimoniPage', [TestimoniController::class, 'store'])
-        ->name('testimoni.store');
+    Route::post('/testimoni', [TestimoniController::class, 'store'])
+        ->name('testimoniPage.store');
 
     Route::put('/testimoni/{testimoni}', [TestimoniController::class, 'update'])->name('testimoni.update');
 

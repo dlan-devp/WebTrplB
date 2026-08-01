@@ -178,7 +178,7 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
             mode="tambah"
             onClose={() => setShowAddForm(false)}
             onSubmit={(data) => {
-              router.post('/testimoniPage', data, {
+              router.post('/testimoni', data, {
                 onSuccess: () => {
                   setShowAddForm(false);
                 },

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TestimoniController extends Controller
@@ -37,7 +37,7 @@ class TestimoniController extends Controller
 
         Testimoni::create($validated);
 
-        return redirect('/testimoni');
+        return redirect()->back();
     }
 
     public function update(Request $request, Testimoni $testimoni)
@@ -61,7 +61,7 @@ class TestimoniController extends Controller
 
         $testimoni->update($validated);
 
-        return redirect('/testimoni');
+        return redirect()->back();
     }
 
     public function destroy(Request $request, Testimoni $testimoni)
@@ -72,6 +72,6 @@ class TestimoniController extends Controller
 
         $testimoni->delete();
 
-        return redirect('/testimoni');
+        return redirect()->back();
     }
 }
