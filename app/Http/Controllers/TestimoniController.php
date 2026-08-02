@@ -14,7 +14,7 @@ class TestimoniController extends Controller
         return Inertia::render('TestimoniPage', [
             'testimoni' => Testimoni::with('user')->latest()->get(),
             'auth' => [
-                'user' => auth()->user()?->only(['id', 'name', 'email']),
+                'user' => auth()->user()?->only(['id', 'name', 'email', 'email_verified_at',]),
             ],
         ]);
     }

@@ -20,14 +20,14 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     <div className="absolute -top-24 -left-24 w-96 h-96 bg-indigo-600/40 rounded-full blur-3xl" />
                     <div className="absolute top-1/3 -right-24 w-80 h-80 bg-blue-600/30 rounded-full blur-3xl" />
 
-                    <div className="relative z-10 flex flex-col justify-between w-full px-14 py-12 text-white">
-                        <div className="flex items-center gap-2">
+                    <div className="z-10 flex flex-col justify-between w-full px-14 py-12 text-white">
+                        <div className="flex items-center gap-2 pt-20">
                             <span className="w-2.5 h-2.5 rounded-sm bg-indigo-500" />
                             <span className="text-sm font-semibold text-slate-100">Kelas TRPL-B</span>
                         </div>
 
-                        <div>
-                            <h1 className="text-4xl font-bold leading-tight mb-4">
+                        <div className="pb-20">
+                            <h1 className="text-4xl font-bold leading-tight mb-3">
                                 Satu langkah lagi,
                                 <br />
                                 verifikasi emailmu.
@@ -83,7 +83,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                                         href={logout()}
                                         className="mx-auto block text-sm text-slate-500 hover:text-slate-800"
                                     >
-                                        Keluar
+                                        Logout
                                     </TextLink>
                                 </>
                             )}

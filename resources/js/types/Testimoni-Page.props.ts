@@ -8,5 +8,6 @@ export interface Testimoni {
   user?: {
     id?: number | null;
     name?: string | null;
+    email_verified_at?: string | null;
   } | null;
 }

@@ -42,12 +42,14 @@ Route::put('/forum/{diskusi}/vote', [ForumController::class, 'vote'])
 
 
 Route::middleware('auth')->group(function () {
+    Route::middleware('verified')->group(function () {
     Route::post('/testimoni', [TestimoniController::class, 'store'])
         ->name('testimoniPage.store');
 
     Route::put('/testimoni/{testimoni}', [TestimoniController::class, 'update'])->name('testimoni.update');
 
     Route::delete('/testimoni/{testimoni}', [TestimoniController::class, 'destroy'])->name('testimoni.destroy');
+    });
 });
 
 // Route::middleware(['auth', 'verified'])->group(function () {

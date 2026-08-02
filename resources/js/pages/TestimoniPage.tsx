@@ -27,13 +27,17 @@ interface PageProps {
         user?: {
             id?: number | null;
             name?: string | null;
+            email_verified_at?: string | null;
         } | null;
     };
 }
 
 export default function TestimoniPage({testimoni, auth}: PageProps) {
-  const page = usePage<{ auth?: { user?: { id?: number | null } | null } }>();
-  const currentUserId = page.props.auth?.user?.id;
+  const page = usePage<PageProps>();
+
+  const user = page.props.auth?.user;
+  const currentUserId = user?.id;
+  const isVerified = !!user?.email_verified_at;
 
   const [search, setSearch] = useState('');
     const [filter, setFilter] =
@@ -111,9 +115,27 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
           </div>
 
           {currentUserId && (
-            <button className="testimoni-add-btn" onClick={() => setShowAddForm(true)}>
+            <button
+              className="testimoni-add-btn"
+              onClick={() => { 
+                  // Belum login
+                  if (!currentUserId) {
+                      router.visit('/login');
+                      return;
+                  }
+
+                  // Belum verifikasi email
+                  if (!isVerified) {
+                      router.visit('/email/verify');
+                      return;
+                  }
+
+                  // Sudah login & sudah verifikasi
+                  setShowAddForm(true);
+              }}
+          >
               <Plus size={16} /> Tambah Testimoni
-            </button>
+          </button>
           )}
         </div>
 
