@@ -15,6 +15,7 @@ Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni
 
 // forumpage
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
+Route::middleware(['auth', 'verified'])->group(function () {
 Route::post('/forum', [ForumController::class, 'store'])
     ->name('forum.store');
 
@@ -39,7 +40,7 @@ Route::delete('/forum/{balasan}', [ForumController::class, 'destroyBalasan'])
 
 Route::put('/forum/{diskusi}/vote', [ForumController::class, 'vote'])
     ->name('forum.vote');
-
+});
 
 Route::middleware('auth')->group(function () {
     Route::middleware('verified')->group(function () {

@@ -30,7 +30,17 @@ const SORT_OPTIONS: { value: SortMode; label: string }[] = [
 ];
 
 export default function ForumPage({diskusi}: DiskusiProps) {
-  const { auth } = usePage<{ auth?: { user?: { id?: number | null; name?: string | null } | null } }>().props;
+  const { auth } = usePage<{
+    auth?: {
+        user?: {
+            id?: number | null;
+            name?: string | null;
+            email?: string | null;
+            email_verified_at?: string | null;
+        } | null;
+    };
+}>().props;
+  const isVerified = Boolean(auth?.user?.email_verified_at);
   const canInteract = Boolean(auth?.user);
   const [posts, setPosts] = useState<DiskusiPost[]>(diskusi);
   useEffect(() => {
@@ -200,11 +210,23 @@ export default function ForumPage({diskusi}: DiskusiProps) {
                 {canInteract && (
                   <motion.button
                     whileTap={{ scale: 0.96 }}
-                    onClick={() => setModalOpen(true)}
+                    onClick={() => {
+                        if (!auth?.user) {
+                            router.visit('/login');
+                            return;
+                        }
+
+                        if (!isVerified) {
+                            router.visit('/email/verify');
+                            return;
+                        }
+
+                        setModalOpen(true);
+                    }}
                     className="w-max flex shrink-0 items-center gap-1.5 bg-linear-to-r from-violet-600 to-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-90"
-                  >
+                >
                     <Plus size={16} /> Buat Diskusi
-                  </motion.button>
+                </motion.button>
                 )}
               </div>
             </div>
