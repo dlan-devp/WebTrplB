@@ -8,6 +8,7 @@ import PasskeyVerify from '@/components/passkey-verify';
 import PasswordInput from '@/components/password-input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import Navbar from '@/components/ui/Navbar';
 import { Spinner } from '@/components/ui/spinner';
 import { store } from '@/routes/password/confirm';
 
@@ -15,6 +16,7 @@ export default function ConfirmPassword() {
     return (
         <>
             <Head title="Confirm password" />
+            <Navbar />
 
             <PasskeyVerify
                 routes={{
