@@ -15,7 +15,7 @@ interface DiskusiProps{
   jawaban: Jawaban[];
 }
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 4;
 
 const FILTER_TABS: { value: FilterKategori; label: string }[] = [
   { value: 'semua', label: 'Semua' },

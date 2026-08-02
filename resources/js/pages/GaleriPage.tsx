@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head } from '@inertiajs/react';
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
-import { Heart, X, ChevronLeft, ChevronRight, SmilePlus } from 'lucide-react';
+import { Heart, X, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, SmilePlus } from 'lucide-react';
+import GeneralCompPagination from '@/components/ui/GeneralComp-Pagination';
 
 
 interface GaleriItem {
@@ -185,6 +186,7 @@ function EmojiPicker({
 }) {
   const [cari, setCari] = useState('');
   const [tab, setTab] = useState(0);
+  const [page, setPage] = useState(0);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -197,9 +199,20 @@ function EmojiPicker({
     return () => document.removeEventListener('mousedown', handleClickLuar);
   }, [onTutup]);
 
+  useEffect(() => {
+    setPage(0);
+  }, [cari, tab]);
+
   const hasilCari = cari.trim()
     ? EMOJI_KATEGORI.flatMap((k) => k.emoji).filter((_, idx, arr) => arr.indexOf(_) === idx)
     : null;
+
+  const emojiList = hasilCari ?? EMOJI_KATEGORI[tab].emoji;
+  const pageSize = 24;
+  const pageCount = Math.max(1, Math.ceil(emojiList.length / pageSize));
+  const pageEmojis = emojiList.slice(page * pageSize, (page + 1) * pageSize);
+  const bisaPrev = page > 0;
+  const bisaNext = page < pageCount - 1;
 
   return (
     <motion.div
@@ -208,7 +221,7 @@ function EmojiPicker({
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 8, scale: 0.96 }}
       transition={{ duration: 0.15, ease: 'easeOut' }}
-      className="fixed inset-x-4 bottom-4 z-50 flex max-h-80 w-auto flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl sm:absolute sm:inset-auto sm:bottom-full sm:left-0 sm:mb-2 sm:w-72"
+      className="fixed left-4 right-4 bottom-4 z-50 flex max-h-80 w-auto flex-col overflow-auto rounded-2xl border border-slate-200 bg-white shadow-xl sm:right-auto sm:w-72"
     >
       <div className="border-b border-slate-100 p-2">
         <input
@@ -220,23 +233,56 @@ function EmojiPicker({
       </div>
 
       {!cari.trim() && (
-        <div className="flex gap-1 overflow-x-auto border-b border-slate-100 px-2 py-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {EMOJI_KATEGORI.map((k, i) => (
-            <button
-              key={k.nama}
-              onClick={() => setTab(i)}
-              className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-                tab === i ? 'bg-violet-100 text-violet-700' : 'text-slate-500 hover:bg-slate-100'
-              }`}
+        <div className="border-b border-slate-100 px-2 py-2">
+          <label className="sr-only" htmlFor="emoji-kategori">
+            Pilih kategori emoji
+          </label>
+          <div className="relative inline-flex w-full max-w-xs">
+            <select
+              id="emoji-kategori"
+              value={tab}
+              onChange={(event) => setTab(Number(event.target.value))}
+              className="appearance-none w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 pr-10 text-sm text-slate-700 outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-200"
             >
-              {k.nama}
-            </button>
-          ))}
+              {EMOJI_KATEGORI.map((k, i) => (
+                <option key={k.nama} value={i}>
+                  {k.nama}
+                </option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-500">
+              <ChevronDown size={16} />
+            </div>
+          </div>
         </div>
       )}
 
-      <div className="grid grid-cols-8 gap-1 overflow-y-auto p-2">
-        {(hasilCari ?? EMOJI_KATEGORI[tab].emoji).map((e, i) => (
+      <div className="flex items-center justify-between gap-2 px-2 pt-2">
+        <button
+          type="button"
+          onClick={() => setPage((prev) => Math.max(0, prev - 1))}
+          disabled={!bisaPrev}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <ChevronUp size={18} />
+        </button>
+
+        <span className="text-xs text-slate-500">
+          {pageCount > 1 ? `Halaman ${page + 1}/${pageCount}` : 'Pilih emoji'}
+        </span>
+
+        <button
+          type="button"
+          onClick={() => setPage((prev) => Math.min(pageCount - 1, prev + 1))}
+          disabled={!bisaNext}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <ChevronDown size={18} />
+        </button>
+      </div>
+
+      <div className="grid grid-cols-8 gap-1 p-2">
+        {pageEmojis.map((e, i) => (
           <button
             key={`${e}-${i}`}
             onClick={() => onPilih(e)}
@@ -278,8 +324,8 @@ function ReaksiBar({
             onClick={() => onReaksi(emoji)}
             className={`flex items-center gap-1 rounded-full border px-2.5 py-1 text-sm transition-colors ${
               aktif
-                ? 'border-violet-300 bg-violet-50 text-violet-700'
-                : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                ? 'border-violet-300 bg-violet-500/30 text-gray-100'
+                : 'border-slate-200 bg-white/30 text-gray-400 hover:border-slate-300'
             }`}
           >
             <span>{emoji}</span>
@@ -318,11 +364,13 @@ function GaleriCard({
   item,
   onBuka,
   onToggleFavorit,
+  onReaksi,
   index,
 }: {
   item: GaleriItem;
   onBuka: () => void;
   onToggleFavorit: () => void;
+  onReaksi: (emoji: string) => void;
   index: number;
 }) {
   const totalReaksi = Object.values(item.reaksi).reduce((a, b) => a + b, 0);
@@ -360,6 +408,10 @@ function GaleriCard({
           )}
         </div>
       </button>
+
+      <div className="absolute top-3 left-3">
+        <ReaksiBar item={item} onReaksi={onReaksi} />
+      </div>
 
       <motion.button
         whileTap={{ scale: 0.85 }}
@@ -578,13 +630,32 @@ function ReaksiBarGelap({ item, onReaksi }: { item: GaleriItem; onReaksi: (emoji
 
 // ================================ HALAMAN =================================
 
+const ITEMS_PER_PAGE = 6;
+
 export default function GaleriPage() {
   const [items, setItems] = useState<GaleriItem[]>(DATA_AWAL);
   const [dipilihId, setDipilihId] = useState<string | null>(null);
   const [filter, setFilter] = useState<'semua' | 'favorit'>('semua');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const itemDipilih = items.find((i) => i.id === dipilihId) ?? null;
-  const ditampilkan = filter === 'favorit' ? items.filter((i) => i.isFavorit) : items;
+  const ditampilkan = useMemo(() => {
+    return filter === 'favorit' ? items.filter((i) => i.isFavorit) : items;
+  }, [filter, items]);
+
+  const totalPages = Math.max(1, Math.ceil(ditampilkan.length / ITEMS_PER_PAGE));
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return ditampilkan.slice(start, start + ITEMS_PER_PAGE);
+  }, [ditampilkan, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
+
+  useEffect(() => {
+    setCurrentPage((prev) => Math.min(prev, totalPages));
+  }, [totalPages]);
 
   function toggleFavorit(id: string) {
     setItems((prev) =>
@@ -658,17 +729,27 @@ export default function GaleriPage() {
             Belum ada foto favorit. Tandai foto dengan ikon hati untuk menyimpannya di sini.
           </div>
         ) : (
-          <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
-            {ditampilkan.map((item, i) => (
-              <GaleriCard
-                key={item.id}
-                item={item}
-                index={i}
-                onBuka={() => setDipilihId(item.id)}
-                onToggleFavorit={() => toggleFavorit(item.id)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
+              {paginatedItems.map((item, i) => (
+                <GaleriCard
+                  key={item.id}
+                  item={item}
+                  index={i}
+                  onBuka={() => setDipilihId(item.id)}
+                  onToggleFavorit={() => toggleFavorit(item.id)}
+                  onReaksi={(emoji) => kirimReaksi(item.id, emoji)}
+                />
+              ))}
+            </div>
+
+            <GeneralCompPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              className="mt-6"
+            />
+          </>
         )}
       </div>
 
