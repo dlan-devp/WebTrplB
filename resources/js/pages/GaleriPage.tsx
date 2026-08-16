@@ -611,8 +611,23 @@ export default function GaleriPage({ galeri }: GaleriPageProps) {
   const ditampilkan = useMemo(() => {
     return filter === 'favorit' ? items.filter((i) => i.isFavorit) : items;
   }, [filter, items]);
- const groupedItems = useMemo(() => {
-    return ditampilkan.reduce((groups, item) => {
+  
+ const totalPages = Math.max(
+    1,
+    Math.ceil(ditampilkan.length / ITEMS_PER_PAGE)
+);
+
+const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+
+    return ditampilkan.slice(
+        start,
+        start + ITEMS_PER_PAGE
+    );
+}, [ditampilkan, currentPage]);
+
+const groupedItems = useMemo(() => {
+    return paginatedItems.reduce((groups, item) => {
         const namaKategori = item.kategori?.nama ?? 'Lainnya';
 
         if (!groups[namaKategori]) {
@@ -623,14 +638,7 @@ export default function GaleriPage({ galeri }: GaleriPageProps) {
 
         return groups;
     }, {} as Record<string, GaleriItem[]>);
-}, [ditampilkan]);
-
-  const totalPages = Math.max(1, Math.ceil(ditampilkan.length / ITEMS_PER_PAGE));
-  const paginatedItems = useMemo(() => {
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    return ditampilkan.slice(start, start + ITEMS_PER_PAGE);
-  }, [ditampilkan, currentPage]);
-
+}, [paginatedItems]);
   useEffect(() => {
     setCurrentPage(1);
   }, [filter]);

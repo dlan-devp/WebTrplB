@@ -56,6 +56,8 @@ class GaleriResource extends Resource
                     ->searchable(),
                 ImageColumn::make('gambar')
                     ->disk('public'),
+                TextColumn::make('kategori.nama')
+                    ->searchable(),
                 TextColumn::make('deskripsi')
                     ->searchable(),
             ])
