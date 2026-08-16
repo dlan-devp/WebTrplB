@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Galeri;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 
 class GaleriController extends Controller
 {
     public function index()
     {
-        return Inertia::render('GaleriPage');
+        $galeri = Galeri::with('kategori')->latest()->get();
+
+        return Inertia::render('GaleriPage', [
+            'galeri' => $galeri,
+        ]);
     }
 }

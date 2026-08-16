@@ -10,6 +10,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -31,15 +32,19 @@ class GaleriResource extends Resource
     {
         return $schema
             ->components([
+                TextInput::make('judul'),
+                Select::make('kategori_id')
+                    ->relationship('kategori', 'nama'),
                 FileUpload::make('gambar')
                     ->required()
                     ->image()
                     ->disk('public')
+                    ->multiple()
                     ->directory('galeri')
                     ->columnSpanFull(),
                 TextInput::make('deskripsi')
-                    ->required()
                     ->columnSpanFull(),
+                
             ]);
     }
 
@@ -47,6 +52,8 @@ class GaleriResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('judul')
+                    ->searchable(),
                 ImageColumn::make('gambar')
                     ->disk('public'),
                 TextColumn::make('deskripsi')

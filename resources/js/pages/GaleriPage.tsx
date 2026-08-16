@@ -1,20 +1,33 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
 import { Heart, X, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, SmilePlus } from 'lucide-react';
 import GeneralCompPagination from '@/components/ui/GeneralComp-Pagination';
 
 
-interface GaleriItem {
-  id: string;
-  judul: string;
-  deskripsi: string;
-  tanggal: string; // ISO string
-  gambar: string[]; // 1 gambar = tanpa slider, >1 gambar = slider aktif
-  isFavorit: boolean;
-  reaksi: Record<string, number>; // emoji -> jumlah orang lain yang bereaksi
-  reaksiSaya: string | null; // emoji yang dipilih user saat ini (kalau ada)
+interface Kategori {
+    id: number;
+    nama: string;
 }
+
+interface GaleriItem {
+    id: number;
+    judul: string | null;
+    deskripsi: string | null;
+    gambar: string[];
+    ukuran: string;
+    isFavorit: boolean;
+    reaksi: Record<string, number> | null;
+    reaksiSaya: string | null;
+    created_at: string;
+    updated_at: string;
+    kategori: Kategori;
+}
+
+interface GaleriPageProps {
+    galeri: GaleriItem[];
+}
+
 
 // ============================ EMOJI DATA =================================
 // Dikelompokkan mirip keyboard emoji di HP, lengkap dengan pencarian.
@@ -96,70 +109,6 @@ const EMOJI_KATEGORI: { nama: string; emoji: string[] }[] = [
   },
 ];
 
-// ============================ MOCK DATA ==================================
-
-const DATA_AWAL: GaleriItem[] = [
-  {
-    id: 'g1',
-    judul: 'Study tour ke kantor startup',
-    deskripsi: 'Kunjungan kelas ke kantor salah satu startup lokal, belajar langsung soal kerja tim engineering sehari-hari.',
-    tanggal: '2026-07-14T09:30:00',
-    gambar: ['https://dummyimage.com/1600x900/000/fff', 'https://dummyimage.com/400x400/000/fff', 'https://dummyimage.com/400x600/000/fff'],
-    isFavorit: false,
-    reaksi: { '🔥': 6, '❤️': 3 },
-    reaksiSaya: null,
-  },
-  {
-    id: 'g2',
-    judul: 'Praktikum jaringan bareng',
-    deskripsi: 'Sesi konfigurasi router dan switch di Lab 3, sempat panik pas kabelnya ketuker semua.',
-    tanggal: '2026-07-10T13:15:00',
-    gambar: ['https://dummyimage.com/800x600/000/fff'],
-    isFavorit: true,
-    reaksi: { '😂': 9 },
-    reaksiSaya: '😂',
-  },
-  {
-    id: 'g3',
-    judul: 'Buka bersama kelas',
-    deskripsi: 'Ngabuburit bareng sebelum buka puasa di taman kampus, seru banget rame-rame.',
-    tanggal: '2026-06-02T18:00:00',
-    gambar: ['https://dummyimage.com/900x1600/000/fff', 'https://dummyimage.com/600x800/000/fff'],
-    isFavorit: false,
-    reaksi: { '❤️': 12, '🥰': 4 },
-    reaksiSaya: null,
-  },
-  {
-    id: 'g4',
-    judul: 'Presentasi proyek akhir',
-    deskripsi: 'Demo aplikasi kelompok 3 di depan dosen pembimbing, hasilnya lumayan memuaskan.',
-    tanggal: '2026-05-28T10:00:00',
-    gambar: ['https://dummyimage.com/800x400/000/fff'],
-    isFavorit: false,
-    reaksi: { '👏': 15 },
-    reaksiSaya: null,
-  },
-  {
-    id: 'g5',
-    judul: 'Futsal seru-seruan',
-    deskripsi: 'Tanding futsal antar kelompok setelah UTS selesai, kelompok A menang tipis 4-3.',
-    tanggal: '2026-05-15T16:30:00',
-    gambar: ['https://dummyimage.com/400x300/000/fff', 'https://dummyimage.com/400x300/000/fff', 'https://dummyimage.com/400x300/000/fff', 'https://dummyimage.com/400x300/000/fff'],
-    isFavorit: true,
-    reaksi: { '⚽': 7, '🔥': 5 },
-    reaksiSaya: '🔥',
-  },
-  {
-    id: 'g6',
-    judul: 'Ulang tahun ketua kelas',
-    deskripsi: 'Kejutan kecil buat Bagas di sela-sela jam kosong, ada kue dan lilin dadakan.',
-    tanggal: '2026-04-22T11:00:00',
-    gambar: ['https://dummyimage.com/300x400/000/fff'],
-    isFavorit: false,
-    reaksi: { '🎉': 10, '🥳': 6 },
-    reaksiSaya: null,
-  },
-];
 
 // ============================== HELPERS ==================================
 
@@ -213,6 +162,20 @@ function EmojiPicker({
   const pageEmojis = emojiList.slice(page * pageSize, (page + 1) * pageSize);
   const bisaPrev = page > 0;
   const bisaNext = page < pageCount - 1;
+
+  const groupedItems = useMemo(() => {
+    return ditampilkan.reduce((groups, item) => {
+        const namaKategori = item.kategori?.nama ?? 'Lainnya';
+
+        if (!groups[namaKategori]) {
+            groups[namaKategori] = [];
+        }
+
+        groups[namaKategori].push(item);
+
+        return groups;
+    }, {} as Record<string, GaleriItem[]>);
+  }, [ditampilkan]);
 
   return (
     <motion.div
@@ -311,7 +274,8 @@ function ReaksiBar({
   onReaksi: (emoji: string) => void;
 }) {
   const [picketTerbuka, setPickerTerbuka] = useState(false);
-  const entri = Object.entries(item.reaksi).filter(([, jumlah]) => jumlah > 0);
+  const entri = Object.entries(item.reaksi ?? {})
+    .filter(([, jumlah]) => jumlah > 0);
 
   return (
     <div className="relative flex flex-wrap items-center gap-2">
@@ -373,7 +337,11 @@ function GaleriCard({
   onReaksi: (emoji: string) => void;
   index: number;
 }) {
-  const totalReaksi = Object.values(item.reaksi).reduce((a, b) => a + b, 0);
+  const entri = Object.entries(item.reaksi ?? {})
+    .filter(([, jumlah]) => jumlah > 0);
+
+  const totalReaksi = Object.values(item.reaksi ?? {})
+    .reduce((total, jumlah) => total + jumlah, 0);
 
   return (
     <motion.div
@@ -386,8 +354,8 @@ function GaleriCard({
       
       <button onClick={onBuka} className="block w-full text-left">
         <img
-          src={item.gambar[0]}
-          alt={item.judul}
+          src={`/storage/${item.gambar[0]}`}
+          alt={item.judul ?? 'Galeri'}
           loading="lazy"
           className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
@@ -513,7 +481,7 @@ function Lightbox({
         <AnimatePresence initial={false} custom={arah} mode="wait">
           <motion.img
             key={indeks}
-            src={item.gambar[indeks]}
+            src={`/storage/${item.gambar[indeks]}`}
             alt={`${item.judul} - ${indeks + 1}`}
             custom={arah}
             drag={punyaSlider ? 'x' : false}
@@ -568,7 +536,7 @@ function Lightbox({
         <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-white/70">
           {item.deskripsi}
         </p>
-        <p className="mt-2 font-mono text-xs text-white/45">{formatTanggal(item.tanggal)}</p>
+        <p className="mt-2 font-mono text-xs text-white/45">{formatTanggal(item.created_at)}</p>
 
         <div className="mt-4">
           <ReaksiBarGelap item={item} onReaksi={onReaksi} />
@@ -581,7 +549,8 @@ function Lightbox({
 // Varian ReaksiBar dengan warna untuk latar gelap di dalam lightbox
 function ReaksiBarGelap({ item, onReaksi }: { item: GaleriItem; onReaksi: (emoji: string) => void }) {
   const [picketTerbuka, setPickerTerbuka] = useState(false);
-  const entri = Object.entries(item.reaksi).filter(([, jumlah]) => jumlah > 0);
+  const entri = Object.entries(item.reaksi ?? {})
+    .filter(([, jumlah]) => jumlah > 0);
 
   return (
     <div className="relative flex flex-wrap items-center gap-2">
@@ -632,9 +601,9 @@ function ReaksiBarGelap({ item, onReaksi }: { item: GaleriItem; onReaksi: (emoji
 
 const ITEMS_PER_PAGE = 6;
 
-export default function GaleriPage() {
-  const [items, setItems] = useState<GaleriItem[]>(DATA_AWAL);
-  const [dipilihId, setDipilihId] = useState<string | null>(null);
+export default function GaleriPage({ galeri }: GaleriPageProps) {
+  const [items, setItems] = useState(galeri);
+  const [dipilihId, setDipilihId] = useState<number | null>(null);
   const [filter, setFilter] = useState<'semua' | 'favorit'>('semua');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -642,6 +611,19 @@ export default function GaleriPage() {
   const ditampilkan = useMemo(() => {
     return filter === 'favorit' ? items.filter((i) => i.isFavorit) : items;
   }, [filter, items]);
+ const groupedItems = useMemo(() => {
+    return ditampilkan.reduce((groups, item) => {
+        const namaKategori = item.kategori?.nama ?? 'Lainnya';
+
+        if (!groups[namaKategori]) {
+            groups[namaKategori] = [];
+        }
+
+        groups[namaKategori].push(item);
+
+        return groups;
+    }, {} as Record<string, GaleriItem[]>);
+}, [ditampilkan]);
 
   const totalPages = Math.max(1, Math.ceil(ditampilkan.length / ITEMS_PER_PAGE));
   const paginatedItems = useMemo(() => {
@@ -657,13 +639,13 @@ export default function GaleriPage() {
     setCurrentPage((prev) => Math.min(prev, totalPages));
   }, [totalPages]);
 
-  function toggleFavorit(id: string) {
+  function toggleFavorit(id: number) {
     setItems((prev) =>
       prev.map((i) => (i.id === id ? { ...i, isFavorit: !i.isFavorit } : i))
     );
   }
 
-  function kirimReaksi(id: string, emoji: string) {
+  function kirimReaksi(id: number, emoji: string) {
     setItems((prev) =>
       prev.map((i) => {
         if (i.id !== id) return i;
@@ -730,18 +712,26 @@ export default function GaleriPage() {
           </div>
         ) : (
           <>
-            <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
-              {paginatedItems.map((item, i) => (
-                <GaleriCard
-                  key={item.id}
-                  item={item}
-                  index={i}
-                  onBuka={() => setDipilihId(item.id)}
-                  onToggleFavorit={() => toggleFavorit(item.id)}
-                  onReaksi={(emoji) => kirimReaksi(item.id, emoji)}
-                />
-              ))}
-            </div>
+            {Object.entries(groupedItems).map(([kategori, data]) => (
+                <section key={kategori} className="mb-10">
+                    <h2 className="mb-5 text-2xl font-bold">
+                        {kategori}
+                    </h2>
+
+                    <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
+                        {data.map((item, i) => (
+                            <GaleriCard
+                                key={item.id}
+                                item={item}
+                                index={i}
+                                onBuka={() => setDipilihId(item.id)}
+                                onToggleFavorit={() => toggleFavorit(item.id)}
+                                onReaksi={(emoji) => kirimReaksi(item.id, emoji)}
+                            />
+                        ))}
+                    </div>
+                </section>
+            ))}
 
             <GeneralCompPagination
               currentPage={currentPage}

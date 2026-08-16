@@ -13,9 +13,17 @@ return new class extends Migration
     {
         Schema::create('tb_galeri', function (Blueprint $table) {
             $table->id();
-            $table->string('gambar');
+            $table->unsignedBigInteger('kategori_id')->nullable();
+            $table->string('judul')->nullable();
+            $table->json('gambar');
+            $table->boolean('isFavorit')->nullable()->default(false);
             $table->text('deskripsi')->nullable();
+            $table->string('ukuran')->default('landscape');
+            $table->json('reaksi')->nullable();
+            $table->string('reaksiSaya')->nullable();
             $table->timestamps();
+
+            $table->foreign('kategori_id')->references('id')->on('tb_kategoriGaleri')->cascadeOnDelete();
         });
     }
 
