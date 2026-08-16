@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Jadwal;
 use App\Models\Mahasiswa;
 use App\Models\Pengumuman;
+use App\Models\Role;
 use App\Models\Testimoni;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -80,7 +81,12 @@ class DatabaseSeeder extends Seeder
         Jadwal::factory(10)->create();
         Pengumuman::factory(10)->create();
 
+        Role::create([
+            'namaRole' => 'admin',
+        ]);
+
         User::factory()->create([
+            'kodeRole' => Role::where('namaRole', 'admin')->value('kodeRole'),
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => 'admin111',

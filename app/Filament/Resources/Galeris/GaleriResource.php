@@ -26,7 +26,7 @@ class GaleriResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
     protected static ?string $recordTitleAttribute = 'Galeri';
     protected static ?string $navigationLabel = 'Galeri';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 5;
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen Galeri';
     public static function form(Schema $schema): Schema
     {

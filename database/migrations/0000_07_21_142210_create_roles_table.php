@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tb_role', function (Blueprint $table) {
             $table->id('kodeRole');
             $table->string('namaRole');
-            $table->text('deskripsi')->nullable;
+            $table->text('deskripsi')->nullable();
             $table->timestamps();
         });
     }

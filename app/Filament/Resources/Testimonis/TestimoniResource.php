@@ -25,7 +25,7 @@ class TestimoniResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleBottomCenterText;
     protected static ?string $recordTitleAttribute = 'Testimoni';
     protected static ?string $navigationLabel = 'Testimoni';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen Masukan';
 
     public static function form(Schema $schema): Schema

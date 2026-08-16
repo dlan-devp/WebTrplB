@@ -24,7 +24,7 @@ class RoleResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
     protected static ?string $recordTitleAttribute = 'Role';
     protected static ?string $navigationLabel = 'Role';
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 7;
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen Users';
     public static function form(Schema $schema): Schema
     {
@@ -33,7 +33,6 @@ class RoleResource extends Resource
                 TextInput::make('namaRole')
                     ->required(),
                 Textarea::make('deskripsi')
-                    ->required()
                     ->columnSpanFull(),
             ]);
     }

@@ -9,12 +9,14 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Hash;
 use UnitEnum;
 
 class UserResource extends Resource
@@ -23,14 +25,26 @@ class UserResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUser;
     protected static ?string $recordTitleAttribute = 'User';
     protected static ?string $navigationLabel = 'User';
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 8;
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen Users';
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('User')
+                TextInput::make('name')
                     ->required(),
+                TextInput::make('email')
+                    ->required(),
+                Select::make('kodeRole')
+                    ->relationship('role', 'namaRole'),
+                TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->revealable()
+                    ->required(fn (string $operation): bool => $operation === 'create')
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->helperText('Kosongkan jika tidak ingin mengubah password.'),
             ]);
     }
 

@@ -21,7 +21,7 @@ class KategoriGaleriResource extends Resource
 {
     protected static ?string $model = KategoriGaleri::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCircleStack;
 
     protected static ?string $recordTitleAttribute = 'KategoriGaleri';
     protected static ?string $navigationLabel = 'Kategori Galeri';
