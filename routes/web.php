@@ -32,9 +32,9 @@ Route::delete('/forumJawaban/{jawaban}', [ForumController::class, 'destroyJawaba
     ->middleware('auth');
 
 // balasanjawaban
-Route::put('/forum/{balasan}', [ForumController::class, 'updateBalasan'])
+Route::put('/forumBalasan/{balasan}', [ForumController::class, 'updateBalasan'])
     ->middleware('auth');
-Route::delete('/forum/{balasan}', [ForumController::class, 'destroyBalasan'])
+Route::delete('/forumBalasan/{balasan}', [ForumController::class, 'destroyBalasan'])
     ->middleware('auth');
 
 

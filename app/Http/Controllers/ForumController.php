@@ -148,7 +148,7 @@ class ForumController extends Controller
 
     public function updateBalasan(Request $request, balasanJawaban $balasan)
     {
-        abort_unless($balasan->authorId === auth()->id(), 403);
+        abort_unless($balasan->authorId == auth()->id(), 403);
 
         $validated = $request->validate([
             'isi' => ['required', 'string'],

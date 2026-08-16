@@ -136,7 +136,7 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
     balasanId: number,
     isiBaru: string
   ) => {
-    router.put(`/forum/${balasanId}`, {
+    router.put(`/forumBalasan/${balasanId}`, {
       isi: isiBaru,
     }, {
       preserveScroll: true,
@@ -144,7 +144,7 @@ export default function ThreadDetail({ post, onBack, onUpdatePost, onDeletePost,
   };
 
   const hapusBalasan = (jawabanId: number, balasanId: number) => {
-    router.delete(`/forum/${balasanId}`, {
+    router.delete(`/forumBalasan/${balasanId}`, {
       preserveScroll: true,
     });
   };
