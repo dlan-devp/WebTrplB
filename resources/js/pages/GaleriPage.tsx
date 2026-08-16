@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
 import { Heart, X, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, SmilePlus } from 'lucide-react';
 
@@ -560,7 +560,7 @@ function Lightbox({
 
       {/* Detail */}
       <div
-        className="max-h-[38vh] shrink-0 overflow-y-auto bg-white/[0.03] px-5 pb-6 pt-4 sm:px-10"
+        className="max-h-[38vh] shrink-0 overflow-y-auto bg-white/3 px-5 pb-6 pt-4 sm:px-10"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="font-['Space_Grotesk'] text-lg font-semibold text-white sm:text-xl">
@@ -675,12 +675,19 @@ export default function GaleriPage({ galeri }: GaleriPageProps) {
   }, [ditampilkan, itemDipilih]);
 
   function toggleFavorit(id: number) {
+    // optimistic update biar responsif, lalu kirim ke server
     setItems((prev) =>
       prev.map((i) => (i.id === id ? { ...i, isFavorit: !i.isFavorit } : i))
     );
+
+    router.post(`/galeri/${id}/favorit`, {}, {
+      preserveScroll: true,
+      preserveState: true,
+    });
   }
 
   function kirimReaksi(id: number, emoji: string) {
+    // optimistic update biar responsif, lalu kirim ke server
     setItems((prev) =>
       prev.map((i) => {
         if (i.id !== id) return i;
@@ -701,6 +708,11 @@ export default function GaleriPage({ galeri }: GaleriPageProps) {
         return { ...i, reaksi: reaksiBaru, reaksiSaya: emoji };
       })
     );
+
+    router.post(`/galeri/${id}/reaksi`, { emoji }, {
+      preserveScroll: true,
+      preserveState: true,
+    });
   }
 
   return (

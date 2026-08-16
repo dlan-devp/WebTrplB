@@ -29,4 +29,14 @@ class Galeri extends Model
     {
         return $this->belongsTo(KategoriGaleri::class, 'kategori_id');
     }
+
+    public function favorit()
+    {
+         return $this->hasMany(GaleriFavorit::class, 'galeriId');
+    }
+
+    public function reaksi()
+    {
+        return $this->hasMany(GaleriReaksi::class, 'galeriId');
+    }
 }

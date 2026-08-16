@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\GaleriFavoritController;
+use App\Http\Controllers\GaleriReaksiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\TestimoniController;
-// use App\Http\Controllers\UserAuthController;
-use App\Http\Controllers\GaleriController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MahasiswaController::class, 'index'])->name('home');
@@ -21,6 +22,8 @@ Route::post('/forum', [ForumController::class, 'store'])
 
 // diskusi
 Route::put('/forum/{diskusi}', [ForumController::class, 'update']);
+Route::delete('/forum/{diskusi}', [ForumController::class, 'destroy'])
+    ->name('forum.destroy');
 Route::put('/forum/{diskusi}/jawabanTerbaik/{jawaban}', [ForumController::class, 'tandaiJawabanTerbaik'])->name('forum.jawaban-terbaik');
 
 // jawaban dikusi
@@ -52,6 +55,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/testimoni/{testimoni}', [TestimoniController::class, 'destroy'])->name('testimoni.destroy');
     });
 });
+
+Route::middleware('auth')->group(function () {
+    Route::post('/galeri/{galeri}/favorit', [GaleriFavoritController::class, 'toggle'])
+        ->name('galeri.favorit.toggle');
+    Route::post('/galeri/{galeri}/reaksi', [GaleriReaksiController::class, 'simpan'])
+        ->name('galeri.reaksi.simpan');
+});  
 
 // Route::middleware(['auth', 'verified'])->group(function () {
 //     Route::inertia('dashboard', 'dashboard')->name('dashboard');

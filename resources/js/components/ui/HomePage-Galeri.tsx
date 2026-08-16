@@ -12,7 +12,6 @@ const BATAS_TAMPIL = 5;
 
 export default function Galeri({galeri}: galeriProps) {
   const ditampilkan = galeri.slice(0, BATAS_TAMPIL);
-  const adaLebih = galeri.length > BATAS_TAMPIL;
 
   return (
     <section id="galeri" className="section section--tint">
@@ -41,11 +40,10 @@ export default function Galeri({galeri}: galeriProps) {
         ))}
       </div>
 
-      {adaLebih && (
         <div className="galeri-lihat-semua">
           <Link href="/galeri">Lihat semua foto →</Link>
         </div>
-      )}
+
     </section>
   );
 }

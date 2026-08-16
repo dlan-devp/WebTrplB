@@ -53,6 +53,19 @@ class ForumController extends Controller
         return redirect()->back();
     }
 
+    public function destroy(Diskusi $diskusi)
+{
+    // pastikan hanya pemilik post (atau admin) yang boleh hapus
+    if ($diskusi->authorId !== auth()->id()) {
+        abort(403, 'Kamu tidak punya izin untuk menghapus diskusi ini.');
+    }
+ 
+    $diskusi->delete();
+ 
+    return back();
+}
+
+
     public function storeJawaban(Request $request)
     {
         $validated = $request->validate([

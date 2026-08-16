@@ -106,8 +106,17 @@ export default function ForumPage({diskusi}: DiskusiProps) {
 };
 
   const hapusPost = (id: number) => {
+    // optimistic update: hilangkan dulu dari UI & tutup detail
     setPosts((prev) => prev.filter((p) => p.id !== id));
     setActivePostId(null);
+
+    router.delete(`/forum/${id}`, {
+      preserveScroll: true,
+      onError: () => {
+        // gagal di server, kembalikan post yang sempat dihapus dari state
+        setPosts(diskusi);
+      },
+    });
   };
 
   const buatPost = (data: {
