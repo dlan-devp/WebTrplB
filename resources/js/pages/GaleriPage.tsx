@@ -2,8 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
 import { Heart, X, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, SmilePlus } from 'lucide-react';
-import GeneralCompPagination from '@/components/ui/GeneralComp-Pagination';
-
 
 interface Kategori {
     id: number;
@@ -163,20 +161,6 @@ function EmojiPicker({
   const bisaPrev = page > 0;
   const bisaNext = page < pageCount - 1;
 
-  const groupedItems = useMemo(() => {
-    return ditampilkan.reduce((groups, item) => {
-        const namaKategori = item.kategori?.nama ?? 'Lainnya';
-
-        if (!groups[namaKategori]) {
-            groups[namaKategori] = [];
-        }
-
-        groups[namaKategori].push(item);
-
-        return groups;
-    }, {} as Record<string, GaleriItem[]>);
-  }, [ditampilkan]);
-
   return (
     <motion.div
       ref={panelRef}
@@ -322,83 +306,89 @@ function ReaksiBar({
   );
 }
 
-// ============================= GALERI CARD ===============================
+// ============================= ALBUM CARD =================================
+// Satu kartu mewakili satu kategori (album). Cover pakai foto pertama,
+// badge menunjukkan 1/total foto dalam album, nama kategori muncul saat hover.
+// Favorit & reaksi ditempel ke foto cover, sama seperti kartu foto sebelumnya.
 
-function GaleriCard({
-  item,
+function AlbumCard({
+  kategori,
+  items,
   onBuka,
   onToggleFavorit,
   onReaksi,
   index,
 }: {
-  item: GaleriItem;
-  onBuka: () => void;
-  onToggleFavorit: () => void;
-  onReaksi: (emoji: string) => void;
+  kategori: string;
+  items: GaleriItem[];
+  onBuka: (id: number) => void;
+  onToggleFavorit: (id: number) => void;
+  onReaksi: (id: number, emoji: string) => void;
   index: number;
 }) {
-  const entri = Object.entries(item.reaksi ?? {})
-    .filter(([, jumlah]) => jumlah > 0);
-
-  const totalReaksi = Object.values(item.reaksi ?? {})
-    .reduce((total, jumlah) => total + jumlah, 0);
+  const cover = useMemo(
+    () =>
+      [...items].sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      )[0],
+    [items]
+  );
+  const total = items.length;
 
   return (
     <motion.div
       layout
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay: Math.min(index, 6) * 0.05, ease: 'easeOut' }}
-      className="group relative mb-5 break-inside-avoid overflow-hidden rounded-2xl bg-(--color-bg)"
+      transition={{ duration: 0.35, delay: Math.min(index, 8) * 0.04, ease: 'easeOut' }}
+      className="group relative mb-5 block w-full break-inside-avoid overflow-hidden rounded-2xl bg-(--color-bg)"
     >
-      
-      <button onClick={onBuka} className="block w-full text-left">
+      <button onClick={() => onBuka(cover.id)} className="block w-full text-left">
         <img
-          src={`/storage/${item.gambar[0]}`}
-          alt={item.judul ?? 'Galeri'}
+          src={`/storage/${cover.gambar[0]}`}
+          alt={kategori}
           loading="lazy"
           className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-        {item.gambar.length > 1 && (
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+        {total > 1 && (
           <span className="absolute right-3 top-3 rounded-full bg-black/40 px-2 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
-            1/{item.gambar.length}
+            1/{total}
           </span>
         )}
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           <p className="font-['Space_Grotesk'] text-sm font-semibold text-white line-clamp-1">
-            {item.judul}
+            {kategori}
           </p>
-          {totalReaksi > 0 && (
-            <p className="mt-0.5 text-xs text-white/80">{totalReaksi} reaksi</p>
-          )}
+          <p className="mt-0.5 text-xs text-white/80">{total} foto</p>
         </div>
       </button>
 
-      <div className="absolute top-3 left-3">
-        <ReaksiBar item={item} onReaksi={onReaksi} />
+      <div className="absolute top-3 left-3" onClick={(e) => e.stopPropagation()}>
+        <ReaksiBar item={cover} onReaksi={(emoji) => onReaksi(cover.id, emoji)} />
       </div>
 
       <motion.button
         whileTap={{ scale: 0.85 }}
         onClick={(e) => {
           e.stopPropagation();
-          onToggleFavorit();
+          onToggleFavorit(cover.id);
         }}
         aria-label="Tambah ke favorit"
         className="absolute -right-4 -bottom-1 flex h-10 w-10 items-center justify-center rounded-tl-xl bg-(--color-bg) text-slate-500 shadow-sm backdrop-blur-sm transition-colors hover:text-violet-600"
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
-            key={item.isFavorit ? 'penuh' : 'kosong'}
+            key={cover.isFavorit ? 'penuh' : 'kosong'}
             initial={{ scale: 0.6, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.6, opacity: 0 }}
             transition={{ duration: 0.15 }}
           >
-            <Heart size={16} fill={item.isFavorit ? '#7C3AED' : 'none'} color={item.isFavorit ? '#7C3AED' : 'currentColor'} />
+            <Heart size={16} fill={cover.isFavorit ? '#7C3AED' : 'none'} color={cover.isFavorit ? '#7C3AED' : 'currentColor'} />
           </motion.span>
         </AnimatePresence>
       </motion.button>
@@ -410,41 +400,70 @@ function GaleriCard({
 
 function Lightbox({
   item,
+  album,
   onTutup,
   onReaksi,
 }: {
   item: GaleriItem;
+  album: GaleriItem[];
   onTutup: () => void;
   onReaksi: (emoji: string) => void;
 }) {
-  const [indeks, setIndeks] = useState(0);
+  const indeksAwal = album.findIndex((i) => i.id === item.id);
+
+  const [indeks, setIndeks] = useState(
+    indeksAwal >= 0 ? indeksAwal : 0
+  );
+
   const [arah, setArah] = useState(1);
-  const punyaSlider = item.gambar.length > 1;
+
+  // Item yang sedang ditampilkan dalam album
+  const itemAktif = album[indeks] ?? item;
+
+  const punyaSlider = album.length > 1;
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onTutup();
-      if (e.key === 'ArrowRight') gantiSlide(1);
-      if (e.key === 'ArrowLeft') gantiSlide(-1);
+      if (e.key === 'Escape') {
+        onTutup();
+      }
+
+      if (e.key === 'ArrowRight') {
+        gantiSlide(1);
+      }
+
+      if (e.key === 'ArrowLeft') {
+        gantiSlide(-1);
+      }
     }
+
     document.addEventListener('keydown', handleKey);
     document.body.style.overflow = 'hidden';
+
     return () => {
       document.removeEventListener('keydown', handleKey);
       document.body.style.overflow = '';
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [indeks]);
+  }, [indeks, album]);
 
   function gantiSlide(delta: number) {
     if (!punyaSlider) return;
+
     setArah(delta);
-    setIndeks((i) => (i + delta + item.gambar.length) % item.gambar.length);
+
+    setIndeks((i) => {
+      return (i + delta + album.length) % album.length;
+    });
   }
 
   function handleDragAkhir(_: unknown, info: PanInfo) {
-    if (info.offset.x < -80) gantiSlide(1);
-    else if (info.offset.x > 80) gantiSlide(-1);
+    if (info.offset.x < -80) {
+      gantiSlide(1);
+    } else if (info.offset.x > 80) {
+      gantiSlide(-1);
+    }
   }
 
   return (
@@ -480,18 +499,30 @@ function Lightbox({
 
         <AnimatePresence initial={false} custom={arah} mode="wait">
           <motion.img
-            key={indeks}
-            src={`/storage/${item.gambar[indeks]}`}
-            alt={`${item.judul} - ${indeks + 1}`}
+            key={itemAktif.id}
+            src={`/storage/${itemAktif.gambar[0]}`}
+            alt={itemAktif.judul ?? 'Galeri'}
             custom={arah}
             drag={punyaSlider ? 'x' : false}
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.6}
             onDragEnd={handleDragAkhir}
-            initial={{ opacity: 0, x: arah > 0 ? 80 : -80 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: arah > 0 ? -80 : 80 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
+            initial={{
+              opacity: 0,
+              x: arah > 0 ? 80 : -80,
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+            }}
+            exit={{
+              opacity: 0,
+              x: arah > 0 ? -80 : 80,
+            }}
+            transition={{
+              duration: 0.25,
+              ease: 'easeOut',
+            }}
             className="max-h-full max-w-full cursor-grab select-none rounded-lg object-contain active:cursor-grabbing"
           />
         </AnimatePresence>
@@ -508,16 +539,18 @@ function Lightbox({
 
         {punyaSlider && (
           <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 gap-1.5">
-            {item.gambar.map((_, i) => (
+            {album.map((albumItem, i) => (
               <button
-                key={i}
+                key={albumItem.id}
                 onClick={() => {
                   setArah(i > indeks ? 1 : -1);
                   setIndeks(i);
                 }}
-                aria-label={`Ke gambar ${i + 1}`}
+                aria-label={`Ke foto ${i + 1}`}
                 className={`h-1.5 rounded-full transition-all ${
-                  i === indeks ? 'w-5 bg-white' : 'w-1.5 bg-white/40'
+                  i === indeks
+                    ? 'w-5 bg-white'
+                    : 'w-1.5 bg-white/40'
                 }`}
               />
             ))}
@@ -525,21 +558,28 @@ function Lightbox({
         )}
       </div>
 
-      {/* Detail: judul, deskripsi, tanggal, reaksi saja */}
+      {/* Detail */}
       <div
         className="max-h-[38vh] shrink-0 overflow-y-auto bg-white/[0.03] px-5 pb-6 pt-4 sm:px-10"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="font-['Space_Grotesk'] text-lg font-semibold text-white sm:text-xl">
-          {item.judul}
+          {itemAktif.judul}
         </h2>
+
         <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-white/70">
-          {item.deskripsi}
+          {itemAktif.deskripsi}
         </p>
-        <p className="mt-2 font-mono text-xs text-white/45">{formatTanggal(item.created_at)}</p>
+
+        <p className="mt-2 font-mono text-xs text-white/45">
+          {formatTanggal(itemAktif.created_at)}
+        </p>
 
         <div className="mt-4">
-          <ReaksiBarGelap item={item} onReaksi={onReaksi} />
+          <ReaksiBarGelap
+            item={itemAktif}
+            onReaksi={onReaksi}
+          />
         </div>
       </div>
     </motion.div>
@@ -599,53 +639,40 @@ function ReaksiBarGelap({ item, onReaksi }: { item: GaleriItem; onReaksi: (emoji
 
 // ================================ HALAMAN =================================
 
-const ITEMS_PER_PAGE = 6;
-
 export default function GaleriPage({ galeri }: GaleriPageProps) {
   const [items, setItems] = useState(galeri);
   const [dipilihId, setDipilihId] = useState<number | null>(null);
   const [filter, setFilter] = useState<'semua' | 'favorit'>('semua');
-  const [currentPage, setCurrentPage] = useState(1);
 
   const itemDipilih = items.find((i) => i.id === dipilihId) ?? null;
+
   const ditampilkan = useMemo(() => {
     return filter === 'favorit' ? items.filter((i) => i.isFavorit) : items;
   }, [filter, items]);
-  
- const totalPages = Math.max(
-    1,
-    Math.ceil(ditampilkan.length / ITEMS_PER_PAGE)
-);
 
-const paginatedItems = useMemo(() => {
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  // Kelompokkan foto menjadi album berdasarkan kategori.
+  const albums = useMemo(() => {
+    return ditampilkan.reduce((groups, item) => {
+      const namaKategori = item.kategori?.nama ?? 'Lainnya';
 
-    return ditampilkan.slice(
-        start,
-        start + ITEMS_PER_PAGE
-    );
-}, [ditampilkan, currentPage]);
+      if (!groups[namaKategori]) {
+        groups[namaKategori] = [];
+      }
 
-const groupedItems = useMemo(() => {
-    return paginatedItems.reduce((groups, item) => {
-        const namaKategori = item.kategori?.nama ?? 'Lainnya';
+      groups[namaKategori].push(item);
 
-        if (!groups[namaKategori]) {
-            groups[namaKategori] = [];
-        }
-
-        groups[namaKategori].push(item);
-
-        return groups;
+      return groups;
     }, {} as Record<string, GaleriItem[]>);
-}, [paginatedItems]);
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [filter]);
+  }, [ditampilkan]);
 
-  useEffect(() => {
-    setCurrentPage((prev) => Math.min(prev, totalPages));
-  }, [totalPages]);
+  // Album (satu kategori penuh) yang sedang dibuka di lightbox.
+  const albumDipilih = useMemo(() => {
+    if (!itemDipilih) return [];
+
+    return ditampilkan.filter(
+      (i) => i.kategori?.id === itemDipilih.kategori?.id
+    );
+  }, [ditampilkan, itemDipilih]);
 
   function toggleFavorit(id: number) {
     setItems((prev) =>
@@ -688,7 +715,7 @@ const groupedItems = useMemo(() => {
               Galeri Kegiatan
             </h1>
             <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-500">
-              Kumpulan momen kelas kita. Klik foto untuk lihat lebih detail, kasih favorit atau reaksi favoritmu.
+              Kumpulan momen kelas kita, dikelompokkan per album. Klik album untuk lihat semua foto di kategori itu.
             </p>
           </div>
 
@@ -714,40 +741,24 @@ const groupedItems = useMemo(() => {
           </div>
         </header>
 
-        {ditampilkan.length === 0 ? (
+        {Object.keys(albums).length === 0 ? (
           <div className="rounded-2xl border border-dashed py-20 text-center text-sm text-slate-400">
             Belum ada foto favorit. Tandai foto dengan ikon hati untuk menyimpannya di sini.
           </div>
         ) : (
-          <>
-            {Object.entries(groupedItems).map(([kategori, data]) => (
-                <section key={kategori} className="mb-10">
-                    <h2 className="mb-5 text-2xl font-bold">
-                        {kategori}
-                    </h2>
-
-                    <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
-                        {data.map((item, i) => (
-                            <GaleriCard
-                                key={item.id}
-                                item={item}
-                                index={i}
-                                onBuka={() => setDipilihId(item.id)}
-                                onToggleFavorit={() => toggleFavorit(item.id)}
-                                onReaksi={(emoji) => kirimReaksi(item.id, emoji)}
-                            />
-                        ))}
-                    </div>
-                </section>
+          <div className="columns-2 gap-5 sm:columns-3 lg:columns-4">
+            {Object.entries(albums).map(([kategori, data], i) => (
+              <AlbumCard
+                key={kategori}
+                kategori={kategori}
+                items={data}
+                index={i}
+                onBuka={setDipilihId}
+                onToggleFavorit={toggleFavorit}
+                onReaksi={kirimReaksi}
+              />
             ))}
-
-            <GeneralCompPagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-              className="mt-6"
-            />
-          </>
+          </div>
         )}
       </div>
 
@@ -755,6 +766,7 @@ const groupedItems = useMemo(() => {
         {itemDipilih && (
           <Lightbox
             item={itemDipilih}
+            album={albumDipilih}
             onTutup={() => setDipilihId(null)}
             onReaksi={(emoji) => kirimReaksi(itemDipilih.id, emoji)}
           />
