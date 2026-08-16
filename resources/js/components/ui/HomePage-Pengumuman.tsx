@@ -1,7 +1,8 @@
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
-import { pengumuman } from '../../../../database/dummyData';
 import type { Pengumuman } from '../../types/Pengumuman-Comp.props';
 import SectionHeading from './HomePage-SectionHeading';
+import GeneralCompPagination from '@/components/ui/GeneralComp-Pagination';
 import '../../../css/components/Pengumuman.css';
 import type { Pengumumans } from '@/types/Pengumuman-Comp.props';
 
@@ -9,6 +10,7 @@ interface PengumumansProps{
   pengumuman: Pengumumans[];
 }
 
+const ITEMS_PER_PAGE = 5;
 
 const URGENSI_LABEL: Record<Pengumuman['urgensi'], string> = {
   Info: 'Info',
@@ -17,7 +19,19 @@ const URGENSI_LABEL: Record<Pengumuman['urgensi'], string> = {
 };
 
 export default function Pengumuman({pengumuman}: PengumumansProps) {
-  const items = pengumuman.slice(0, 3);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.max(1, Math.ceil(pengumuman.length / ITEMS_PER_PAGE));
+
+  const items = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return pengumuman.slice(start, start + ITEMS_PER_PAGE);
+  }, [pengumuman, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage((prev) => Math.min(prev, totalPages));
+  }, [totalPages]);
+
   return (
     <section id="pengumuman" className="section section--tint">
       <SectionHeading
@@ -53,6 +67,13 @@ export default function Pengumuman({pengumuman}: PengumumansProps) {
           </motion.div>
         ))}
       </div>
+
+      <GeneralCompPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        className="mt-6"
+      />
     </section>
   );
 }
