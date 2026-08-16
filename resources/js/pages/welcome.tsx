@@ -42,7 +42,7 @@ export default function Welcome({ mahasiswa, testimoni, jadwal, pengumuman, thre
         <ForumDiskusi threadDiskusi={threadDiskusi} />
         <Galeri  galeri={galeri} />
         <TestimoniKelas testimoni={testimoni} />
-        <LinkGrup />
+        {/* <LinkGrup /> */}
       </main>
     </>
   );

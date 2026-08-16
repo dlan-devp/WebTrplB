@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Link } from '@inertiajs/react';
 import SectionHeading from './HomePage-SectionHeading';
 import '../../../css/components/Galeri.css';
 import type { FotoGaleri } from '@/types/Galeri-Comp.types';
@@ -7,7 +8,12 @@ interface galeriProps {
   galeri: FotoGaleri[];
 }
 
+const BATAS_TAMPIL = 5;
+
 export default function Galeri({galeri}: galeriProps) {
+  const ditampilkan = galeri.slice(0, BATAS_TAMPIL);
+  const adaLebih = galeri.length > BATAS_TAMPIL;
+
   return (
     <section id="galeri" className="section section--tint">
       <SectionHeading
@@ -17,7 +23,7 @@ export default function Galeri({galeri}: galeriProps) {
       />
 
       <div className="galeri-grid">
-        {galeri.map((foto, i) => (
+        {ditampilkan.map((foto, i) => (
           <motion.figure
             key={foto.id}
             className="galeri-item"
@@ -34,6 +40,12 @@ export default function Galeri({galeri}: galeriProps) {
           </motion.figure>
         ))}
       </div>
+
+      {adaLebih && (
+        <div className="galeri-lihat-semua">
+          <Link href="/galeri">Lihat semua foto →</Link>
+        </div>
+      )}
     </section>
   );
 }

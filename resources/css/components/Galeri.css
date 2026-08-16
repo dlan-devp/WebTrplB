@@ -12,6 +12,11 @@
   background: gray;
 }
 
+.galeri-lihat-semua {
+  margin-top: 5px;
+  color: blue;
+}
+
 .galeri-item:first-child {
   grid-column: span 2;
   grid-row: span 2;
