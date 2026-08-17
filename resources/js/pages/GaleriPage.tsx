@@ -14,12 +14,13 @@ interface GaleriItem {
     deskripsi: string | null;
     gambar: string[];
     ukuran: string;
-    isFavorit: boolean;
-    reaksi: Record<string, number> | null;
-    reaksiSaya: string | null;
     created_at: string;
     updated_at: string;
     kategori: Kategori;
+    isFavorit: boolean;
+    reaksi: Record<string, number> | null;
+    reaksiSaya: string | null;
+
 }
 
 interface GaleriPageProps {
@@ -248,23 +249,34 @@ function EmojiPicker({
   );
 }
 
+function gabungkanReaksi(items: GaleriItem[]): Record<string, number> {
+  return items.reduce((total, item) => {
+    for (const [emoji, jumlah] of Object.entries(item.reaksi ?? {})) {
+      total[emoji] = (total[emoji] ?? 0) + jumlah;
+    }
+    return total;
+  }, {} as Record<string, number>);
+}
+
 // ============================= REAKSI BAR ================================
 
 function ReaksiBar({
-  item,
+  reaksi,
+  reaksiSaya,
   onReaksi,
 }: {
-  item: GaleriItem;
+  reaksi: Record<string, number> | null;
+  reaksiSaya: string | null;
   onReaksi: (emoji: string) => void;
 }) {
   const [picketTerbuka, setPickerTerbuka] = useState(false);
-  const entri = Object.entries(item.reaksi ?? {})
+  const entri = Object.entries(reaksi ?? {})
     .filter(([, jumlah]) => jumlah > 0);
 
   return (
     <div className="relative flex flex-wrap items-center gap-2">
       {entri.map(([emoji, jumlah]) => {
-        const aktif = item.reaksiSaya === emoji;
+        const aktif = reaksiSaya === emoji;
         return (
           <motion.button
             key={emoji}
@@ -335,6 +347,15 @@ function AlbumCard({
   );
   const total = items.length;
 
+  // Gabungkan reaksi dari SEMUA foto di album, bukan cuma cover
+  const reaksiGabungan = useMemo(() => gabungkanReaksi(items), [items]);
+
+  // Tandai aktif kalau user sudah kasih reaksi di foto manapun dalam album ini
+  const reaksiSayaGabungan = useMemo(
+    () => items.find((i) => i.reaksiSaya)?.reaksiSaya ?? null,
+    [items]
+  );
+
   return (
     <motion.div
       layout
@@ -368,7 +389,11 @@ function AlbumCard({
       </button>
 
       <div className="absolute top-3 left-3" onClick={(e) => e.stopPropagation()}>
-        <ReaksiBar item={cover} onReaksi={(emoji) => onReaksi(cover.id, emoji)} />
+        <ReaksiBar
+          reaksi={reaksiGabungan}
+          reaksiSaya={reaksiSayaGabungan}
+          onReaksi={(emoji) => onReaksi(cover.id, emoji)}
+        />
       </div>
 
       <motion.button
@@ -407,8 +432,9 @@ function Lightbox({
   item: GaleriItem;
   album: GaleriItem[];
   onTutup: () => void;
-  onReaksi: (emoji: string) => void;
+  onReaksi: (id: number, emoji: string) => void;   // <- ubah dari (emoji: string) menjadi (id, emoji)
 }) {
+
   const indeksAwal = album.findIndex((i) => i.id === item.id);
 
   const [indeks, setIndeks] = useState(
@@ -576,10 +602,11 @@ function Lightbox({
         </p>
 
         <div className="mt-4">
-          <ReaksiBarGelap
-            item={itemAktif}
-            onReaksi={onReaksi}
-          />
+        <ReaksiBarGelap
+          item={itemAktif}
+          onReaksi={(emoji) => onReaksi(itemAktif.id, emoji)}
+        />
+
         </div>
       </div>
     </motion.div>
@@ -780,10 +807,11 @@ export default function GaleriPage({ galeri }: GaleriPageProps) {
             item={itemDipilih}
             album={albumDipilih}
             onTutup={() => setDipilihId(null)}
-            onReaksi={(emoji) => kirimReaksi(itemDipilih.id, emoji)}
+            onReaksi={kirimReaksi}
           />
         )}
       </AnimatePresence>
+
     </div>
   );
 }
