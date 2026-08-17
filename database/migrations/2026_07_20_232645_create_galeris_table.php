@@ -16,11 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('kategori_id')->nullable();
             $table->string('judul')->nullable();
             $table->json('gambar');
-            $table->boolean('isFavorit')->nullable()->default(false);
             $table->text('deskripsi')->nullable();
             $table->string('ukuran')->default('landscape');
-            $table->json('reaksi')->nullable();
-            $table->string('reaksiSaya')->nullable();
             $table->timestamps();
 
             $table->foreign('kategori_id')->references('id')->on('tb_kategoriGaleri')->cascadeOnDelete();
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('galeris');
+        Schema::dropIfExists('tb_galeri');
     }
 };

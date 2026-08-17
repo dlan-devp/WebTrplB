@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('galeri_favorits');
+        Schema::dropIfExists('tb_galeriFavorit');
     }
 };

@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kategori_galeris');
+        Schema::dropIfExists('tb_kategoriGaleri');
     }
 };

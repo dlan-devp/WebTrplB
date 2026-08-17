@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('userId');
             $table->unsignedBigInteger('galeriId');
-            $table->string('emoji')->nullable();
+            $table->string('emoji');
             $table->timestamps();
 
             $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('galeri_reaksis');
+        Schema::dropIfExists('tb_galeriReaksi');
     }
 };

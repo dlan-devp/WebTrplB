@@ -16,47 +16,46 @@ Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni
 
 // forumpage
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
+
 Route::middleware(['auth', 'verified'])->group(function () {
-Route::post('/forum', [ForumController::class, 'store'])
-    ->name('forum.store');
+    Route::post('/forum', [ForumController::class, 'store'])
+        ->name('forum.store');
 
-// diskusi
-Route::put('/forum/{diskusi}', [ForumController::class, 'update']);
-Route::delete('/forum/{diskusi}', [ForumController::class, 'destroy'])
-    ->name('forum.destroy');
-Route::put('/forum/{diskusi}/jawabanTerbaik/{jawaban}', [ForumController::class, 'tandaiJawabanTerbaik'])->name('forum.jawaban-terbaik');
+    // diskusi
+    Route::put('/forum/{diskusi}', [ForumController::class, 'update']);
+    Route::delete('/forum/{diskusi}', [ForumController::class, 'destroy'])
+        ->name('forum.destroy');
+    Route::put('/forum/{diskusi}/jawabanTerbaik/{jawaban}', [ForumController::class, 'tandaiJawabanTerbaik'])->name('forum.jawaban-terbaik');
 
-// jawaban dikusi
-Route::post('/forumJawaban', [ForumController::class, 'storeJawaban']);
-Route::post('/forumJawaban/{jawaban}/balasan', [ForumController::class, 'storeBalasan'])->name('forumJawaban.balasan.store');
-Route::put('/forumJawaban/{jawaban}', [ForumController::class, 'updateJawaban'])
-    ->middleware('auth');
-Route::delete('/forumJawaban/{jawaban}', [ForumController::class, 'destroyJawaban'])
-    ->middleware('auth');
+    // jawaban dikusi
+    Route::post('/forumJawaban', [ForumController::class, 'storeJawaban']);
+    Route::post('/forumJawaban/{jawaban}/balasan', [ForumController::class, 'storeBalasan'])->name('forumJawaban.balasan.store');
+    Route::put('/forumJawaban/{jawaban}', [ForumController::class, 'updateJawaban'])
+        ->middleware('auth');
+    Route::delete('/forumJawaban/{jawaban}', [ForumController::class, 'destroyJawaban'])
+        ->middleware('auth');
 
-// balasanjawaban
-Route::put('/forumBalasan/{balasan}', [ForumController::class, 'updateBalasan'])
-    ->middleware('auth');
-Route::delete('/forumBalasan/{balasan}', [ForumController::class, 'destroyBalasan'])
-    ->middleware('auth');
+    // balasanjawaban
+    Route::put('/forumBalasan/{balasan}', [ForumController::class, 'updateBalasan'])
+        ->middleware('auth');
+    Route::delete('/forumBalasan/{balasan}', [ForumController::class, 'destroyBalasan'])
+        ->middleware('auth');
 
 
-Route::put('/forum/{diskusi}/vote', [ForumController::class, 'vote'])
-    ->name('forum.vote');
+    Route::put('/forum/{diskusi}/vote', [ForumController::class, 'vote'])
+        ->name('forum.vote');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::middleware('verified')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/testimoni', [TestimoniController::class, 'store'])
         ->name('testimoniPage.store');
 
     Route::put('/testimoni/{testimoni}', [TestimoniController::class, 'update'])->name('testimoni.update');
 
     Route::delete('/testimoni/{testimoni}', [TestimoniController::class, 'destroy'])->name('testimoni.destroy');
-    });
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/galeri/{galeri}/favorit', [GaleriFavoritController::class, 'toggle'])
         ->name('galeri.favorit.toggle');
     Route::post('/galeri/{galeri}/reaksi', [GaleriReaksiController::class, 'simpan'])
