@@ -128,8 +128,8 @@
   padding: 3px 10px;
 }
 
-.testimoni-card__badge--pendapat { background: var(--color-green-400); }
-.testimoni-card__badge--saran { background: var(--color-yellow-300); }
+.testimoni-card__badge--pendapat { background: var(--color-blue-400); }
+.testimoni-card__badge--saran { background: var(--color-green-400); }
 .testimoni-card__badge--kritik { background: var(--color-red-400); }
 
 .tpage-card__actions {
@@ -155,7 +155,7 @@
 }
 
 .tpage-card__quote-icon {
-  color: var(--color-purple-dim);
+  color: var(--color-black);
   margin: 8px 0;
 }
 

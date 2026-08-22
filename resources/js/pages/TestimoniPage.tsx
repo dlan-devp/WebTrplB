@@ -88,7 +88,7 @@ export default function TestimoniPage({testimoni, auth}: PageProps) {
           <span className="section-heading__eyebrow mono">Suara Anak Kelas</span>
           <h1 className="tpage-title display">Semua Testimoni Kelas</h1>
           <p className="tpage-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ruang untuk berbagi pendapat, menyampaikan kritik, dan memberikan saran demi perkembangan bersama.
           </p>
         </div>
 

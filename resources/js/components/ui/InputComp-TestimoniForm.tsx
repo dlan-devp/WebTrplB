@@ -128,6 +128,7 @@ export default function TestimoniForm({ mode, initialData, onClose, onSubmit }: 
               onChange={(e) => setDeskripsi(e.target.value)}
               placeholder="Tulis pendapat, saran, atau kritik kamu untuk kelas..."
               rows={4}
+              maxLength={500}
               required
             />
           </label>

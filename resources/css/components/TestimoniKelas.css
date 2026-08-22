@@ -64,7 +64,7 @@
 }
 
 .testimoni-card__quote-icon {
-  color: var(--color-purple-dim);
+  color: var(--color-black);
   margin-bottom: 8px;
 }
 
@@ -73,12 +73,12 @@
   font-size: 11px;
   font-weight: 600;
   padding: 3px 10px;
-  color: #fff;
+  color: white;
   margin-bottom: 14px;
 }
 
-.testimoni-card__badge--pendapat { background: var(--color-green-400); }
-.testimoni-card__badge--saran { background: var(--color-yellow-200); }
+.testimoni-card__badge--pendapat { background: var(--color-blue-400); }
+.testimoni-card__badge--saran { background: var(--color-green-400); }
 .testimoni-card__badge--kritik { background: var(--color-red-400); }
 
 .testimoni-card__pesan {
