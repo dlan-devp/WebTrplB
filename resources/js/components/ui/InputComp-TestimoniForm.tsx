@@ -88,6 +88,7 @@ export default function TestimoniForm({ mode, initialData, onClose, onSubmit }: 
               value={nama}
               onChange={(e) => setNama(e.target.value)}
               placeholder="Nama kamu"
+              maxLength={40}
               required
               disabled={!isAnonymous}
               title={!isAnonymous ? 'Nama asli tidak bisa diubah' : ''}
@@ -128,7 +129,7 @@ export default function TestimoniForm({ mode, initialData, onClose, onSubmit }: 
               onChange={(e) => setDeskripsi(e.target.value)}
               placeholder="Tulis pendapat, saran, atau kritik kamu untuk kelas..."
               rows={4}
-              maxLength={500}
+              maxLength={255}
               required
             />
           </label>

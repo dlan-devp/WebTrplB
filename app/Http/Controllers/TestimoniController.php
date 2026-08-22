@@ -22,9 +22,9 @@ class TestimoniController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:40'],
             'type' => ['required', 'in:Pendapat,Saran,Kritik'],
-            'deskripsi' => ['required', 'string'],
+            'deskripsi' => ['required', 'string', 'max:255'],
             'is_anonymous' => ['nullable', 'boolean'],
         ]);
 

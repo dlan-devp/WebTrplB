@@ -124,6 +124,7 @@
 .testimoni-card__badge {
   display: inline-block;
   font-size: 11px;
+  color: white;
   font-weight: 600;
   padding: 3px 10px;
 }
@@ -160,6 +161,9 @@
 }
 
 .tpage-card__pesan {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: pre-wrap;
   font-size: 14px;
   line-height: 1.6;
   color: var(--color-ink);
@@ -187,6 +191,9 @@
 }
 
 .tpage-card__nama {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: pre-wrap;
   font-size: 13px;
   font-weight: 600;
   color: var(--color-ink);
