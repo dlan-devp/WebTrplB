@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import Navbar from '@/components/ui/Navbar';
 import { login } from '@/routes';
 import { email } from '@/routes/password';
+import '../../../css/pages/AuthPage.css';
 
 export default function ForgotPassword({ status }: { status?: string }) {
     return (
@@ -73,22 +74,21 @@ export default function ForgotPassword({ status }: { status?: string }) {
                         <Form {...email.form()}>
                             {({ processing, errors }) => (
                                 <>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="email">Email Kampus</Label>
-                                        <div className="relative">
-                                            <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                                            <Input
-                                                id="email"
-                                                type="email"
-                                                name="email"
-                                                autoComplete="off"
-                                                autoFocus
-                                                placeholder="email@kampus.ac.id"
-                                                className="pl-10 py-3.5 rounded-xl"
-                                            />
-                                        </div>
-                                        <InputError message={errors.email} />
-                                    </div>
+                                    <div style={{ position: 'relative' }} className="mb-4">
+    <input
+        id="email"
+        name="email"
+        type="email"
+        autoComplete="off"
+        autoFocus
+        placeholder=" "
+        className="field__input"
+    />
+    <label htmlFor="email" className="field__label">
+        Email Kampus
+    </label>
+    <InputError message={errors.email} />
+</div>
 
                                     <Button
                                         className="w-full mt-6 py-3.5 rounded-xl font-semibold text-white bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500"
