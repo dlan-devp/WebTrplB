@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { X } from 'lucide-react';
 import '../../../css/components/AuthModal.css';
+import '../../../css/components/TestimoniForm.css';
 
 
 export default function AuthModal() {
