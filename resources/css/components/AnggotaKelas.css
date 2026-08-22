@@ -30,6 +30,15 @@
   justify-content: center;
   margin: 0 auto 12px;
   position: relative;
+  overflow: hidden;
+}
+
+css
+.anggota-card__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .anggota-card__status {

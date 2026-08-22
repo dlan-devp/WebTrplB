@@ -114,11 +114,19 @@ export default function AnggotaKelas({ mahasiswa }: MahasiswaProps) {
             whileTap={{ scale: 0.98 }}
             onClick={() => setSelectedStudent(student)}
           >
-            <div className="anggota-card__avatar">
-              {student.nama.charAt(0).toUpperCase()}
-              {student.online && <span className="anggota-card__status" />}
-            </div>
-            <div className="anggota-card__nama">{student.nama}</div>
+<div className="anggota-card__avatar">
+  {student.foto ? (
+    <img
+      src={`/storage/${student.foto}`}
+      alt={student.nama}
+      className="anggota-card__avatar-img"
+    />
+  ) : (
+    student.nama.charAt(0).toUpperCase()
+  )}
+  {student.online && <span className="anggota-card__status" />}
+</div>
+<div className="anggota-card__nama">{student.nama}</div>
           </motion.button>
         ))}
       </div>
