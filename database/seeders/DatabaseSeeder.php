@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
         Pengumuman::factory(10)->create();
 
         Role::create([
-            'namaRole' => 'admin',
+            'namaRole' => 'Admin',
         ]);
 
         User::factory()->create([

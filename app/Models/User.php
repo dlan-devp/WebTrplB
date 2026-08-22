@@ -53,7 +53,7 @@ class User extends Authenticatable implements PasskeyUser, MustVerifyEmail, Fila
 
     public function canAccessPanel(Panel $panel): bool
     {
-        if($this->role->namaRole !== 'admin' && $this->role->namaRole !== 'Admin'){
+        if($this->role?->namaRole !== 'admin' && $this->role?->namaRole !== 'Admin'){
             abort('404');
         }
 
