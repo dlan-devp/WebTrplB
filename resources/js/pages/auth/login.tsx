@@ -438,6 +438,7 @@ function FloatingField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
+        maxLength={100}
         autoComplete={autoComplete}
         placeholder=" "
         className="field__input"
