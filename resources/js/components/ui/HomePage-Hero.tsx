@@ -85,9 +85,21 @@ export default function Hero({mahasiswa}: HeroProps) {
         <div className="hero__card-sub">Teknik Rekayasa Perangkat Lunak &middot; Semester 3</div>
         <div className="hero__card-avatars">
           {mahasiswa.slice(0, 6).map((a) => (
-            <span key={a.kodeMahasiswa} className="hero__avatar" title={a.nama}>
-              {a.nama.charAt(0).toUpperCase()}
-            </span>
+            <span
+              key={a.kodeMahasiswa}
+              className="hero__avatar"
+              title={a.nama}
+          >
+              {a.foto ? (
+                  <img
+                      src={`/storage/${a.foto}`}
+                      alt={a.nama}
+                      className="hero__avatar-image"
+                  />
+              ) : (
+                  a.nama.charAt(0).toUpperCase()
+              )}
+          </span>
           ))}
           <span className="hero__avatar hero__avatar--more">+{mahasiswa.length - 6}</span>
         </div>

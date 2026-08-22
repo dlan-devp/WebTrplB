@@ -68,7 +68,7 @@ export default function JawabanItem({
       }`}
     >
       <div className="flex gap-3">
-        <VoteControl votes={jawaban.votes} userVote={jawaban.userVote} onVote={onVote} size="sm" readOnly={!canInteract} />
+        {/* <VoteControl votes={jawaban.votes} userVote={jawaban.userVote} onVote={onVote} size="sm" readOnly={!canInteract} /> */}
 
         <div className="min-w-0 flex-1">
           <div className="mb-1.5 flex flex-wrap items-center gap-2">
